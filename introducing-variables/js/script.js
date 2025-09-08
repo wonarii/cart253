@@ -1,9 +1,8 @@
 /**
- * Title of Project
- * Author Name
+ * Circles
+ * Arielle Wong
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Magical circles that change based on mouse position
  */
 
 "use strict";
