@@ -22,7 +22,7 @@ function setup() {
  * Draws our beautiful landscape
 */
 function draw() {
-    background(47,44,97);
+    background("#0b0d53ff");
 
     drawLand();
     drawAstronaut();
@@ -100,5 +100,40 @@ function drawAstronaut(){
     
     //Right foot
     rect(350.5, 477.6, 60, 40, 10)
+    pop();
+
+    //Right arm
+    push();
+        stroke(217, 221, 222);
+    strokeWeight(40);
+    //right arm
+    line(377, 340, 450, 270);
+    pop();
+    //right wristband
+    push();
+    fill(54, 60, 61);
+    ellipse(450, 270, 60)
+    pop();
+    //Right hand
+    push();
+    fill(217, 221, 222);
+    ellipse(460, 260, 60)
+    pop();
+//Left arm
+    push();
+        stroke(217, 221, 222);
+    strokeWeight(40);
+    //left arm
+    line(270, 350, 210, 420);
+    pop();
+    //left wristband
+    push();
+    fill(54, 60, 61);
+    ellipse(210, 420, 60)
+    pop();
+    //left hand
+    push();
+    fill(217, 221, 222);
+    ellipse(201, 428, 60)
     pop();
 }
