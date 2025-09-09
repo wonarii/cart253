@@ -87,7 +87,8 @@ function drawAstronaut(){
     push();
     stroke(149, 160, 163);
     strokeWeight(10);
-    fill(149, 160, 163);
+    //fill(149, 160, 163);
+    noFill();
     curve(280, 230, 340, 230, 360, 270, 320, 320);
     pop();
 
