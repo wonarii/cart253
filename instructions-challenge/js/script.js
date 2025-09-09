@@ -75,6 +75,30 @@ function drawAstronaut(){
     fill(149, 160, 163);
     curve(280, 230, 340, 230, 360, 270, 320, 320);
     pop();
-    
 
+    //torso
+    push();
+    fill(217, 221, 222);
+    square(252.5, 330, 135, 20);
+    pop();
+
+   //legs
+    push();
+    stroke(217, 221, 222);
+    strokeWeight(40);
+    //left leg
+    line(275, 400, 270, 480);
+    //right leg
+    line(365, 400, 370, 480);
+    pop();
+
+    //feet
+    push();
+     fill(217, 221, 222);
+    //left foot
+    rect(230, 477.6, 60, 40, 10);
+    
+    //Right foot
+    rect(350.5, 477.6, 60, 40, 10)
+    pop();
 }
