@@ -25,6 +25,7 @@ function draw() {
     background(47,44,97);
 
     drawLand();
+    drawAstronaut();
 }
 
 /**
@@ -47,4 +48,33 @@ function drawLand(){
     ellipse(580, 630, 60);
     ellipse(240, 570,40);
     pop();
+}
+
+/**
+ * Draws the astronaut
+ */
+function drawAstronaut(){
+    noStroke();
+   
+    //head
+    push();
+    fill(217, 221, 222);
+    ellipse(320, 270, 150);
+    pop();
+    
+    //visor
+    push();
+    fill(54, 60, 61);
+    ellipse(320, 270, 120);
+    pop();
+
+    //shine
+    push();
+    stroke(149, 160, 163);
+    strokeWeight(10);
+    fill(149, 160, 163);
+    curve(280, 230, 340, 230, 360, 270, 320, 320);
+    pop();
+    
+
 }
