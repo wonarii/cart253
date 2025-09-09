@@ -11,7 +11,7 @@
 "use strict";
 
 /**
- * Creates a 
+ * Creates a 640x640 canvas
 */
 function setup() {
     createCanvas(640,640);
@@ -19,8 +19,22 @@ function setup() {
 
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * Draws our beautiful landscape
 */
 function draw() {
+    background(47,44,97);
 
+    drawLand();
+}
+
+/**
+ * Draws the lunar surface
+ */
+function drawLand(){
+    push();
+    fill(150,150,143);
+    noStroke();
+    ellipse(320, 700, 700, 400);
+    pop();
+    
 }
