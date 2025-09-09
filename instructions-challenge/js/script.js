@@ -1,6 +1,8 @@
 /**
- * Title of Project
- * Author Name
+ * A Beautiful Landscape
+ * Arielle Wong
+ * Lanna Check
+ * kerven-laurent casimir
  * 
  * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
  * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
@@ -9,10 +11,10 @@
 "use strict";
 
 /**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
+ * Creates a 
 */
 function setup() {
-
+    createCanvas(640,640);
 }
 
 
