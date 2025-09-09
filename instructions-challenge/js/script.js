@@ -1,11 +1,11 @@
 /**
- * A Beautiful Landscape
+ * Cute Lunar Landing
  * Arielle Wong
  * Lanna Check
  * kerven-laurent casimir
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * A cute astronaut waving at the 
+ * camera while standing on the moon 
  */
 
 "use strict";
@@ -23,11 +23,26 @@ function setup() {
 */
 function draw() {
     background("#0b0d53ff");
-
+    drawStars();
     drawLand();
     drawAstronaut();
 }
-
+/**
+ *  Draws yellow circle stars
+ */
+function drawStars(){
+ push();
+ fill("#d6ea53ff");
+ noStroke();
+ circle(60, 60, 10);
+ circle(500, 100, 20);
+ circle(100, 300, 20);
+ circle(270, 160, 8);
+ circle(520, 380, 20);
+ circle(580, 280, 11);
+ circle(65, 460, 15);
+ pop();
+}
 /**
  * Draws the lunar surface
  */
