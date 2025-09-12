@@ -32,9 +32,15 @@ function draw() {
     // Update the ego
     // Fill gets darker, symbolizing the negative energy
     ego.fill = ego.fill - 0.5;
+
+    //constrain the fill to normal range of colors(0-255)
+    ego.fill = constrain(ego.fill,0,255);
+
     // Size gets bigger, symbolizing taking up emotional space
     ego.size = ego.size + 1;
 
+    //constrain the ego between 0 and canvas width
+    ego.size = constrain(ego.size, 0 , width);
     // Draw the ego
     push();
     noStroke();
