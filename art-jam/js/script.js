@@ -8,12 +8,19 @@
 
 "use strict";
 
+
+/**
+ * Variables!!!
+ */
+let canvasSize = 640;
+
+
 /**
  * Creates a square canvas
 */
 function setup() {
     //640px x 640px canvas
-    createCanvas(640, 640);
+    createCanvas(canvasSize, canvasSize);
 }
 
 
