@@ -12,8 +12,18 @@
 /**
  * Variables!!!
  */
+
 let canvasSize = 640;
 
+let face={
+    colour:"#d8ab75ff",
+};
+
+let glasses={
+    frameColour:"#100a01ff",
+    lenseColour: "#e7e1d6ff",
+    
+};
 
 /**
  * Creates a square canvas
@@ -29,7 +39,11 @@ function setup() {
 */
 function draw() {
     background("#ebd487ff");
+    
+    noStroke();
+
     //testing colors
+
     //skin
     push();
     noStroke();
@@ -73,5 +87,37 @@ function draw() {
     fill("#6097a6ff");
     circle(70,400,50);
     pop();
+
+    //Draw face
+    drawFace();
+    //Draw glasses
+    drawGlasses();
     
+}
+
+function drawFace(){
+    push();
+    fill(face.colour);
+    rect(canvasSize/4, canvasSize/4,320,320,60);
+    pop();
+}
+
+function drawGlasses(){
+    push();
+    stroke(glasses.frameColour);
+    strokeWeight(10);
+    
+    //lense transparency https://p5js.org/reference/p5.Color/setAlpha/
+    //creating a color object
+    let lenseColour = color(231, 225, 214);
+    lenseColour.setAlpha(100);
+    fill(lenseColour);
+    
+
+    //left lense
+    rect(canvasSize/4-20, canvasSize/2+10, 160, 120, 20);
+    //right lense
+    rect(canvasSize/2+20, canvasSize/2+10, 160, 120, 20);
+    //nose bar thing
+    line(canvasSize/2-20, canvasSize/2+40 ,canvasSize/2+20, canvasSize/2+40);
 }
