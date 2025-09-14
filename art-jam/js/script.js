@@ -25,6 +25,10 @@ let glasses={
     
 };
 
+let hair={
+    colour1:"#573a16ff",
+    colour2:"#f4be2bff"
+};
 /**
  * Creates a square canvas
 */
@@ -88,12 +92,48 @@ function draw() {
     circle(70,400,50);
     pop();
 
+    //Draw hair (back of head)
+    drawHair();
+    //draw neck
+ //   drawNeck();
     //Draw face
     drawFace();
     //Draw glasses
     drawGlasses();
+    //Draw bangs
+    drawBangs();
     
 }
+
+function drawHair(){
+    push();
+    fill(hair.colour1);
+    //left side
+    triangle(180, 180, 80,540, 370, 500);
+    //small top triangle (left)
+    triangle(170, 200, 70, 400, 370, 300);
+    //right side
+    triangle(460, 180, 560,540, 300, 500);
+    //small top triangle (right)
+    triangle(470, 200, 570, 400, 300, 340);
+    pop();
+
+    //yellow bits
+    push();
+    fill(hair.colour2);
+    //left
+    triangle(100, 580, 300, 200, 340, 540);
+    //right
+    triangle(540, 580, 340, 200, 300, 540);
+    pop();
+}
+
+// function drawNeck(){
+//     push();
+//     fill(face.colour);
+//     rect(260, 400,120,180,10);
+//     pop();
+// }
 
 function drawFace(){
     push();
@@ -120,4 +160,20 @@ function drawGlasses(){
     rect(canvasSize/2+20, canvasSize/2+10, 160, 120, 20);
     //nose bar thing
     line(canvasSize/2-20, canvasSize/2+40 ,canvasSize/2+20, canvasSize/2+40);
+    pop();
+}
+
+function drawBangs(){
+    push();
+    fill(hair.colour1);
+   //left
+    triangle(180, 150, 100, 360, 400,160);
+    //right
+    triangle(460, 150, 540, 360, 200, 160);
+    //left detail
+    triangle(220, 180, 360, 180, 200, 340);
+
+
+
+    pop();
 }
