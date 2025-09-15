@@ -31,6 +31,10 @@ let hair={
     colour2:"#f4be2bff"
 };
 
+let soup={
+    colourSoup:"#f39017ff",
+    colourBowl:"#6097a6ff",
+}
 
 
 
@@ -51,52 +55,6 @@ function draw() {
     
     noStroke();
 
-    //testing colors
-
-    //skin
-    push();
-    noStroke();
-    fill("#d8ab75ff");
-    circle(320,320,50);
-    pop();
-    //hair
-    push();
-    noStroke();
-    fill("#573a16ff");
-    circle(380,380,50);
-    pop();
-    //hair2
-    push();
-    noStroke();
-    fill("#f4be2bff");
-    circle(360,360,50);
-    pop();
-    //glasses frame
-    push();
-    noStroke();
-    fill("#100a01ff");
-    circle(420,380,50);
-    pop();
-    //fog
-    push();
-    noStroke();
-    fill("#e7e1d6ff");
-    circle(360,330,50);
-    pop();
-
-    //soup
-    push();
-    noStroke();
-    fill("#f39017ff");
-    circle(40,400,50);
-    pop();
-    //bowl
-    push();
-    noStroke();
-    fill("#6097a6ff");
-    circle(70,400,50);
-    pop();
-
     //Draw hair (back of head)
     drawHair();
     //draw neck
@@ -113,6 +71,9 @@ function draw() {
     
 }
 
+/**
+ * Draws the hair behind the head (the longer parts)
+ */
 function drawHair(){
     push();
     fill(hair.colour1);
@@ -143,6 +104,9 @@ function drawHair(){
 //     pop();
 // }
 
+/**
+ * Draws the face (centered rounded square)
+ */
 function drawFace(){
     push();
     fill(face.colour);
@@ -150,7 +114,9 @@ function drawFace(){
     pop();
 }
 
-
+/**
+ * Draws eyes and mouth
+ */
 function drawFeatures(){
     push();
     fill(face.featuresColour);
@@ -169,6 +135,9 @@ function drawFeatures(){
     pop();
 }
 
+/**
+ * Draws the glasses (frame and lenses)
+ */
 function drawGlasses(){
     push();
     stroke(glasses.frameColour);
@@ -190,6 +159,9 @@ function drawGlasses(){
     pop();
 }
 
+/**
+ * Draws the bangs 
+ */
 function drawBangs(){
     push();
     fill(hair.colour1);
