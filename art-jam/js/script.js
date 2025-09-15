@@ -17,6 +17,7 @@ let canvasSize = 640;
 
 let face={
     colour:"#d8ab75ff",
+    featuresColour:"#573a16ff"
 };
 
 let glasses={
@@ -29,6 +30,10 @@ let hair={
     colour1:"#573a16ff",
     colour2:"#f4be2bff"
 };
+
+
+
+
 /**
  * Creates a square canvas
 */
@@ -98,10 +103,13 @@ function draw() {
  //   drawNeck();
     //Draw face
     drawFace();
+    //Draw eyes and mouth
+    drawFeatures();
     //Draw glasses
     drawGlasses();
     //Draw bangs
     drawBangs();
+ 
     
 }
 
@@ -138,7 +146,26 @@ function drawHair(){
 function drawFace(){
     push();
     fill(face.colour);
-    rect(canvasSize/4, canvasSize/4,320,320,60);
+    rect(canvasSize/4, canvasSize/4+10,320,320,60);
+    pop();
+}
+
+
+function drawFeatures(){
+    push();
+    fill(face.featuresColour);
+    //left eye
+    ellipse(220,400,80,40);
+    //right eye
+    ellipse(420,400,80,40);
+    pop();
+    
+    //little smile
+    push();
+    stroke(face.featuresColour);
+    noFill();
+    strokeWeight(6);
+    curve(280, 295, 294, 459, 350, 460, 380, 350);
     pop();
 }
 
