@@ -63,3 +63,23 @@ function drawCreature() {
     ellipse(creature.x, creature.y, creature.size);
     pop();
 }
+
+/**
+ * Responds to user input
+ */
+function checkInput() {
+    //checks if the mouse button is pressed
+    if (mouseIsPressed) {
+        // Change the colour of the creature to show it's happy
+        creature.fill = creature.fills.happy;
+    }
+    //if the keyboard is pressed
+    else if (keyIsPressed){
+        //creature is filled with rage (red)
+        creature.fill = creature.fills.angry;
+    }
+    else{
+        //mouse isn't pressed
+        creature.fill = creature.fills.bored;
+    }
+}
