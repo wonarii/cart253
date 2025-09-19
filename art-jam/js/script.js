@@ -35,6 +35,9 @@ let soup={
     colourSoup:"#f39017ff",
     colourBowl:"#6097a6ff",
     colourSpoon:"#444b53ff",
+    colourGlow:"#e7e1d6ff",
+    //array of the soup components
+    soupArray : [],
 }
 
 
@@ -184,10 +187,17 @@ function drawBangs(){
  * Draws the bowl of soup
  */
 function drawSoup(){
-    //bowl back
+
+    //invisible background square (solves all my problems)
+    push();
+    fill("#ebd487ff");
+    let invisRectangle = rect(20, 25, 150, 100);
+    pop();
+
+   //bowl back
     push();
     fill(soup.colourBowl);
-    ellipse(90, 80, 120, 80);
+    soup.soupArray[0] = ellipse(90, 80, 120, 80);
     pop();
 
 
@@ -196,13 +206,24 @@ function drawSoup(){
     fill(soup.colourSoup);
     stroke(soup.colourBowl);
     strokeWeight(5);
-    ellipse(90, 70, 110, 50);
+    soup.soupArray[1] = ellipse(90, 70, 110, 50);
     pop();
 
     //spoon
     push();
     fill(soup.colourSpoon);
     rotate(51);
-    rect(120, -90, 20,70, 5);
+    soup.soupArray[2] = rect(120, -90, 20,70, 5);
     pop();
+
+
+    //if user hovers over the soup bowl, 
+    // spoon should lift and soup should glow
+    invisRectangle.mouseOver(soupHover());
+      
+
+}
+
+function soupHover(){
+    soup.soupArray[0].stroke(soup.colourGlow);
 }
