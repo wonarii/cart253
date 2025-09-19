@@ -34,6 +34,7 @@ let hair={
 let soup={
     colourSoup:"#f39017ff",
     colourBowl:"#6097a6ff",
+    colourSpoon:"#444b53ff",
 }
 
 
@@ -68,7 +69,8 @@ function draw() {
     //Draw bangs
     drawBangs();
  
-    
+    //Draw soup
+    drawSoup();
 }
 
 /**
@@ -174,5 +176,33 @@ function drawBangs(){
 
 
 
+    pop();
+}
+
+
+/**
+ * Draws the bowl of soup
+ */
+function drawSoup(){
+    //bowl back
+    push();
+    fill(soup.colourBowl);
+    ellipse(90, 80, 120, 80);
+    pop();
+
+
+    //soup in bowl
+    push();
+    fill(soup.colourSoup);
+    stroke(soup.colourBowl);
+    strokeWeight(5);
+    ellipse(90, 70, 110, 50);
+    pop();
+
+    //spoon
+    push();
+    fill(soup.colourSpoon);
+    rotate(51);
+    rect(120, -90, 20,70, 5);
     pop();
 }
