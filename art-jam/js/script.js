@@ -32,12 +32,35 @@ let hair={
 };
 
 let soup={
+    soupPickedUp : false,
+
     colourSoup:"#f39017ff",
     colourBowl:"#6097a6ff",
     colourSpoon:"#444b53ff",
     colourGlow:"#e7e1d6ff",
-    //array of the soup components
-    soupArray : [],
+    bowlBack:{
+        x:90,
+        y:80,
+        width:120,
+        height:80
+    },
+    soupEllipse:{
+        x:90,
+        y:70,
+        width: 110,
+        height: 50
+    },
+    spoon:{
+        x:0,
+        y:0,
+        width: 20,
+        height: 70,
+        roundedness: 5,
+        rotation: 51,
+        translationX:155,
+        translationY:15, 
+    }
+    
 }
 
 let soupZone={
@@ -45,7 +68,7 @@ let soupZone={
     x:98,
     y:70,
     size:150,
-
+    inZone:false,
 
 }
 
@@ -196,6 +219,17 @@ function drawBangs(){
  */
 function drawSoup(){
 
+    if(soup.soupPickedUp){
+               soup.bowlBack.x = mouseX;
+        soup.bowlBack.y = mouseY;
+        
+        soup.soupEllipse.x = mouseX;
+        soup.soupEllipse.y = mouseY-10;
+
+        soup.spoon.translationX = mouseX+65;
+        soup.spoon.translationY = mouseY-65;
+    }
+
     //invisible background circle (solves all my problems)
     push();
     fill(soupZone.colour);
@@ -203,16 +237,20 @@ function drawSoup(){
     pop();
 
     //if user hovers over the soup bowl, 
-    // spoon should lift and soup should glow
+    //it glows
     let distanceMouseInvisCircle = dist(soupZone.x, soupZone.y, mouseX, mouseY);
     if(distanceMouseInvisCircle < soupZone.size/2){
         soupHover();
     }
+    else{
+        soupZone.inZone=false;
+    }
+
 
    //bowl back
     push();
     fill(soup.colourBowl);
-    soup.soupArray[0] = ellipse(90, 80, 120, 80);
+    ellipse(soup.bowlBack.x, soup.bowlBack.y, soup.bowlBack.width, soup.bowlBack.height);
     pop();
 
 
@@ -221,23 +259,28 @@ function drawSoup(){
     fill(soup.colourSoup);
     stroke(soup.colourBowl);
     strokeWeight(5);
-    soup.soupArray[1] = ellipse(90, 70, 110, 50);
+    ellipse(soup.soupEllipse.x, soup.soupEllipse.y, soup.soupEllipse.width, soup.soupEllipse.height);
     pop();
 
     //spoon
     push();
     fill(soup.colourSpoon);
-    rotate(51);
-    soup.soupArray[2] = rect(120, -90, 20,70, 5);
+    translate(soup.spoon.translationX, soup.spoon.translationY);
+    rotate(soup.spoon.rotation);
+    rect(soup.spoon.x, soup.spoon.y, soup.spoon.width, soup.spoon.height, soup.spoon.roundedness);
     pop();
 
 
 
 }
 
-function soupHover(){
-    console.log("hello");
 
+/**
+ * Adds a white outline to the bowl of soup
+ */
+function soupHover(){
+
+    //just redraws the soup bowl behind but with a white stroke
     //back
     push();
     fill(soup.colourGlow);
@@ -255,4 +298,20 @@ function soupHover(){
     rect(120, -90, 20,70, 5);
     pop();
 
+    soupZone.inZone = true;
+
+}
+
+/**
+ * Reacts to user clickss
+ */
+function mouseClicked(){
+    //if user clicks on the soup bowl
+    //the soup bowl should follow the mouse
+    if(soupZone.inZone){
+        soup.soupPickedUp = !soup.soupPickedUp;
+;
+ 
+    }
+    
 }
