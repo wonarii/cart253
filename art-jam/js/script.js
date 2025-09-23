@@ -199,8 +199,15 @@ function drawSoup(){
     //invisible background circle (solves all my problems)
     push();
     fill(soupZone.colour);
-    let invisCircle= circle(soupZone.x, soupZone.y, soupZone.size);
+    circle(soupZone.x, soupZone.y, soupZone.size);
     pop();
+
+    //if user hovers over the soup bowl, 
+    // spoon should lift and soup should glow
+    let distanceMouseInvisCircle = dist(soupZone.x, soupZone.y, mouseX, mouseY);
+    if(distanceMouseInvisCircle < soupZone.size/2){
+        soupHover();
+    }
 
    //bowl back
     push();
@@ -225,14 +232,27 @@ function drawSoup(){
     pop();
 
 
-    //if user hovers over the soup bowl, 
-    // spoon should lift and soup should glow
-    let distanceMouseInvisCircle = dist(soupZone.x, soupZone.y, mouseX, mouseY);
-    if(distanceMouseInvisCircle < soupZone.size/2){
-        soupHover();
-    }
+
 }
 
 function soupHover(){
     console.log("hello");
+
+    //back
+    push();
+    fill(soup.colourGlow);
+    stroke(soup.colourGlow);
+    strokeWeight(20);
+    ellipse(90, 80, 120, 80);
+    pop();
+
+     //spoon
+    push();
+    fill(soup.colourGlow);
+    stroke(soup.colourGlow);
+    strokeWeight(20);
+    rotate(51);
+    rect(120, -90, 20,70, 5);
+    pop();
+
 }
