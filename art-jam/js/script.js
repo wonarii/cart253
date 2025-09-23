@@ -229,6 +229,16 @@ function drawSoup(){
         soup.spoon.translationX = mouseX+65;
         soup.spoon.translationY = mouseY-65;
     }
+    else{
+        soup.bowlBack.x = 90;
+        soup.bowlBack.y = 80;
+        
+        soup.soupEllipse.x = 90;
+        soup.soupEllipse.y = 70;
+
+        soup.spoon.translationX = 155;
+        soup.spoon.translationY = 15; 
+    }
 
     //invisible background circle (solves all my problems)
     push();
