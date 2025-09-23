@@ -31,7 +31,8 @@ let face={
 let glasses={
     frameColour:"#100a01ff",
     lenseColour: "#e7e1d6ff",
-    
+    lenseAlphaL: 100,
+    lenseAlphaR: 100,
 };
 
 let hair={
@@ -199,13 +200,37 @@ function drawFeatures(){
  */
 function drawGlasses(){
 
-    //calculates the distance between the soup bowl (mouse)
-    //and the glasses
-    //const soupNearGlasses = ()
-    //if soup bowl is near the glasses
+   //if user has the soup
     if(soup.soupPickedUp){
+        //calculates the distance between the soup bowl (mouse)
+        //and the glasses
+        let soupNearGlassesL = dist(mouseX, mouseY, collisionShapes.xLeft, collisionShapes.y);
+        let soupNearGlassesR = dist(mouseX, mouseY, collisionShapes.xRight, collisionShapes.y);
+       
+        //constraining the alpha to 0-100
+        glasses.lenseAlphaL=constrain(glasses.lenseAlphaL, 100, 1000);
+        glasses.lenseAlphaR=constrain(glasses.lenseAlphaR, 100, 1000);
 
+        //if soup bowl is near the left lense
+        if(soupNearGlassesL < collisionShapes.size/2){
+            glasses.lenseAlphaL += 1;
+        }
+        else{
+            glasses.lenseAlphaL -= 1;
+        }
+         //if soup bowl is near the right lense
+        if(soupNearGlassesR < collisionShapes.size/2){
+            glasses.lenseAlphaR += 1;
+        }
+        else{
+            glasses.lenseAlphaR -= 1;
+        }
     }
+    else{
+        glasses.lenseAlphaR -= 1;
+        glasses.lenseAlphaL -= 1;
+    }
+   
 
     push();
     stroke(glasses.frameColour);
@@ -213,13 +238,25 @@ function drawGlasses(){
     
     //lense transparency https://p5js.org/reference/p5.Color/setAlpha/
     //creating a color object
-    let lenseColour = color(231, 225, 214);
-    lenseColour.setAlpha(100);
-    fill(lenseColour);
+    let lenseColourL = color(231, 225, 214);
+    lenseColourL.setAlpha(glasses.lenseAlphaL);
+    fill(lenseColourL);
     
 
     //left lense
     rect(canvasSize/4-20, canvasSize/2+10, 160, 120, 20);
+    pop();
+    
+    push();
+    stroke(glasses.frameColour);
+    strokeWeight(10);
+    
+    //lense transparency https://p5js.org/reference/p5.Color/setAlpha/
+    //creating a color object
+    let lenseColourR = color(231, 225, 214);
+    lenseColourR.setAlpha(glasses.lenseAlphaR);
+    fill(lenseColourR);
+    
     //right lense
     rect(canvasSize/2+20, canvasSize/2+10, 160, 120, 20);
     //nose bar thing
