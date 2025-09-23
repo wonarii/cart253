@@ -13,6 +13,14 @@
  * Variables!!!
  */
 
+const collisionShapes={
+    colour:"#ebd487ff",
+    xLeft:220,
+    xRight:420,
+    y: 390,
+    size: 160,
+}
+
 let canvasSize = 640;
 
 let face={
@@ -89,6 +97,9 @@ function draw() {
     background("#ebd487ff");
     
     noStroke();
+    
+    //Glasses Collision shape
+    drawCollisionShape();
 
     //Draw hair (back of head)
     drawHair();
@@ -100,13 +111,25 @@ function draw() {
     drawFeatures();
     //Draw glasses
     drawGlasses();
+   
     //Draw bangs
     drawBangs();
  
     //Draw soup
     drawSoup();
 }
-
+/**
+ * Draws invisible circles where the glasses lenses are
+ */
+function drawCollisionShape(){
+    push();
+    fill(collisionShapes.colour);
+    //left lense
+    circle(collisionShapes.xLeft, collisionShapes.y, collisionShapes.size);
+    //right lense
+    circle(collisionShapes.xRight, collisionShapes.y, collisionShapes.size);
+    pop();
+}
 /**
  * Draws the hair behind the head (the longer parts)
  */
@@ -175,6 +198,15 @@ function drawFeatures(){
  * Draws the glasses (frame and lenses)
  */
 function drawGlasses(){
+
+    //calculates the distance between the soup bowl (mouse)
+    //and the glasses
+    //const soupNearGlasses = ()
+    //if soup bowl is near the glasses
+    if(soup.soupPickedUp){
+
+    }
+
     push();
     stroke(glasses.frameColour);
     strokeWeight(10);
@@ -220,7 +252,7 @@ function drawBangs(){
 function drawSoup(){
 
     if(soup.soupPickedUp){
-               soup.bowlBack.x = mouseX;
+        soup.bowlBack.x = mouseX;
         soup.bowlBack.y = mouseY;
         
         soup.soupEllipse.x = mouseX;
@@ -325,3 +357,4 @@ function mouseClicked(){
     }
     
 }
+
