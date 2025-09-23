@@ -40,6 +40,14 @@ let soup={
     soupArray : [],
 }
 
+let soupZone={
+    colour: "#ebd487ff",
+    x:98,
+    y:70,
+    size:150,
+
+
+}
 
 
 /**
@@ -188,10 +196,10 @@ function drawBangs(){
  */
 function drawSoup(){
 
-    //invisible background square (solves all my problems)
+    //invisible background circle (solves all my problems)
     push();
-    fill("#ebd487ff");
-    let invisRectangle = rect(20, 25, 150, 100);
+    fill(soupZone.colour);
+    let invisCircle= circle(soupZone.x, soupZone.y, soupZone.size);
     pop();
 
    //bowl back
@@ -219,11 +227,12 @@ function drawSoup(){
 
     //if user hovers over the soup bowl, 
     // spoon should lift and soup should glow
-    invisRectangle.mouseOver(soupHover());
-      
-
+    let distanceMouseInvisCircle = dist(soupZone.x, soupZone.y, mouseX, mouseY);
+    if(distanceMouseInvisCircle < soupZone.size/2){
+        soupHover();
+    }
 }
 
 function soupHover(){
-    soup.soupArray[0].stroke(soup.colourGlow);
+    console.log("hello");
 }
