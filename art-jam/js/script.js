@@ -81,6 +81,12 @@ let soupZone={
 
 }
 
+let bowlSound;
+
+//sound
+function preload(){
+    bowlSound = loadSound('assets/sounds/bowlSound.wav');
+}
 
 /**
  * Creates a square canvas
@@ -390,8 +396,9 @@ function mouseClicked(){
     //the soup bowl should follow the mouse
     if(soupZone.inZone){
         soup.soupPickedUp = !soup.soupPickedUp;
-;
- 
+
+        //plays bowl sound effect
+        bowlSound.play();
     }
     
 }
