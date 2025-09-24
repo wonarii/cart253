@@ -2,7 +2,7 @@
 
 Arielle Wong
 
-[View this project online]<https://wonarii.github.io/cart253/art-jam/>
+View this project [online]<https://wonarii.github.io/cart253/art-jam/>
 
 ## Description
 
