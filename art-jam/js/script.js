@@ -2,7 +2,17 @@
  * Ari and Soup
  * Arielle Wong
  * 
- * Self portrait
+ * INteractive self portrait.
+ * You can pick up the bowl of soup. When it is brought close
+ * to my glasses, they fog up!
+ * 
+ * Controls:
+ * -mouse to click on the bowl (pick up and put down)
+ * -mouse tracking to move the bowl around (once it is picked up/clicked on)
+ * 
+ * Uses:
+ * p5.js
+ * https://p5js.org
  * 
  */
 
@@ -13,6 +23,7 @@
  * Variables!!!
  */
 
+//theses are for detection of soup near glasses
 const collisionShapes={
     colour:"#ebd487ff",
     xLeft:220,
@@ -81,9 +92,10 @@ let soupZone={
 
 }
 
+//so the variable is accessible globally
 let bowlSound;
 
-//sound
+//preloads the sound at the beginning of the program
 function preload(){
     bowlSound = loadSound('assets/sounds/bowlSound.wav');
 }
@@ -110,18 +122,14 @@ function draw() {
 
     //Draw hair (back of head)
     drawHair();
-    //draw neck
- //   drawNeck();
     //Draw face
     drawFace();
     //Draw eyes and mouth
     drawFeatures();
     //Draw glasses
     drawGlasses();
-   
     //Draw bangs
     drawBangs();
- 
     //Draw soup
     drawSoup();
 }
@@ -162,13 +170,6 @@ function drawHair(){
     triangle(540, 580, 340, 200, 300, 540);
     pop();
 }
-
-// function drawNeck(){
-//     push();
-//     fill(face.colour);
-//     rect(260, 400,120,180,10);
-//     pop();
-// }
 
 /**
  * Draws the face (centered rounded square)
@@ -213,57 +214,57 @@ function drawGlasses(){
         let soupNearGlassesL = dist(mouseX, mouseY, collisionShapes.xLeft, collisionShapes.y);
         let soupNearGlassesR = dist(mouseX, mouseY, collisionShapes.xRight, collisionShapes.y);
        
-        
-
         //if soup bowl is near the left lense
         if(soupNearGlassesL < collisionShapes.size){
+            //glasses get foggy
             glasses.lenseAlphaL += 1;
         }
         else{
+            //glasses unfog
             glasses.lenseAlphaL -= 1;
         }
          //if soup bowl is near the right lense
         if(soupNearGlassesR < collisionShapes.size){
+            //glasses get foggy
             glasses.lenseAlphaR += 1;
         }
         else{
+            //glasses unfog
             glasses.lenseAlphaR -= 1;
         }
     }
     else{
+        //if you don't have the soup bowl, glasses will unfog
         glasses.lenseAlphaR -= 1;
         glasses.lenseAlphaL -= 1;
     }
    
-    //constraining the alpha to 0-100
+    //constraining the alpha to 100-1000
         glasses.lenseAlphaL=constrain(glasses.lenseAlphaL, 100, 1000);
         glasses.lenseAlphaR=constrain(glasses.lenseAlphaR, 100, 1000);
 
+    //For the LEFT lense
     push();
     stroke(glasses.frameColour);
     strokeWeight(10);
-    
     //lense transparency https://p5js.org/reference/p5.Color/setAlpha/
     //creating a color object
     let lenseColourL = color(231, 225, 214);
     lenseColourL.setAlpha(glasses.lenseAlphaL);
     fill(lenseColourL);
-    
-
     //left lense
     rect(canvasSize/4-20, canvasSize/2+10, 160, 120, 20);
     pop();
     
+    //For the RIGHT lense
     push();
     stroke(glasses.frameColour);
     strokeWeight(10);
-    
     //lense transparency https://p5js.org/reference/p5.Color/setAlpha/
     //creating a color object
     let lenseColourR = color(231, 225, 214);
     lenseColourR.setAlpha(glasses.lenseAlphaR);
     fill(lenseColourR);
-    
     //right lense
     rect(canvasSize/2+20, canvasSize/2+10, 160, 120, 20);
     //nose bar thing
@@ -283,9 +284,6 @@ function drawBangs(){
     triangle(460, 150, 540, 360, 200, 160);
     //left detail
     triangle(220, 180, 360, 180, 200, 340);
-
-
-
     pop();
 }
 
@@ -295,17 +293,20 @@ function drawBangs(){
  */
 function drawSoup(){
 
+    //if user has the soup, the soup will be drawn at the mouse position
     if(soup.soupPickedUp){
+        //bowl
         soup.bowlBack.x = mouseX;
         soup.bowlBack.y = mouseY;
-        
+        //soup
         soup.soupEllipse.x = mouseX;
         soup.soupEllipse.y = mouseY-10;
-
+        //spoon
         soup.spoon.translationX = mouseX+65;
         soup.spoon.translationY = mouseY-65;
     }
     else{
+        //resets to the regular values
         soup.bowlBack.x = 90;
         soup.bowlBack.y = 80;
         
@@ -329,6 +330,7 @@ function drawSoup(){
         soupHover();
     }
     else{
+        //we are not in the soup zone, so nothing happens
         soupZone.inZone=false;
     }
 
@@ -384,6 +386,7 @@ function soupHover(){
     rect(120, -90, 20,70, 5);
     pop();
 
+    //toggle to help the rest of the program know about the soup zone status
     soupZone.inZone = true;
 
 }
@@ -395,8 +398,8 @@ function mouseClicked(){
     //if user clicks on the soup bowl
     //the soup bowl should follow the mouse
     if(soupZone.inZone){
+        //toggles the pick ups
         soup.soupPickedUp = !soup.soupPickedUp;
-
         //plays bowl sound effect
         bowlSound.play();
     }
