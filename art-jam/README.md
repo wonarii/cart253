@@ -2,20 +2,21 @@
 
 Arielle Wong
 
-[View this project online]([https://wonarii.github.io/cart253/art-jam/])
+[View this project online]<https://wonarii.github.io/cart253/art-jam/>
 
 ## Description
 
-Ari and Soup is an interactive self portrait of myself with soup
+Ari and Soup is an interactive self portrait of myself with soup.
 
  To pick up the bowl of soup, click on it!
+
  To set the bowl back down, bring it back to its original spot and click again.
+
  See what happens if you bring the bowl of soup near my glasses!
+
  This project is meant to show how it is for me when I try to eat hot soup.
 
 ## Screenshot(s)
-
-Screenshot of the program:
 
  ![A self portrait of me with a bowl of soup](./assets/images/AriAndSoupWebsiteScreenshot.png)
 
