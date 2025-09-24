@@ -8,23 +8,22 @@ Arielle Wong
 
 Ari and Soup is an interactive self portrait of myself with soup
 
-> To pick up the bowl of soup, click on it!
-> To set the bowl back down, bring it back to its original spot and click again.
-> See what happens if you bring the bowl of soup near my glasses!
-> This project is meant to show how it is for me when I try to eat hot soup.
+ To pick up the bowl of soup, click on it!
+ To set the bowl back down, bring it back to its original spot and click again.
+ See what happens if you bring the bowl of soup near my glasses!
+ This project is meant to show how it is for me when I try to eat hot soup.
 
 ## Screenshot(s)
 
 Screenshot of the program:
 
-> ![A self portrait of me with a bowl of soup](./assets/images/AriAndSoupWebsiteScreenshot.png)
+ ![A self portrait of me with a bowl of soup](./assets/images/AriAndSoupWebsiteScreenshot.png)
 
 ## Attribution
 
-This bit should attribute any code, assets or other elements used taken from other sources. For example:
+This project uses [p5.js](https://p5js.org).
 
-> - This project uses [p5.js](https://p5js.org).
-> - The bowl sound effect is "hit - wooden spoon - dropped onto counter 03" by Anthousai from freesound.org: <https://freesound.org/people/Anthousai/sounds/406286/>
+The bowl sound effect is "hit - wooden spoon - dropped onto counter 03" by Anthousai from freesound.org: <https://freesound.org/people/Anthousai/sounds/406286/>
 
 ## License
 
