@@ -207,19 +207,17 @@ function drawGlasses(){
         let soupNearGlassesL = dist(mouseX, mouseY, collisionShapes.xLeft, collisionShapes.y);
         let soupNearGlassesR = dist(mouseX, mouseY, collisionShapes.xRight, collisionShapes.y);
        
-        //constraining the alpha to 0-100
-        glasses.lenseAlphaL=constrain(glasses.lenseAlphaL, 100, 1000);
-        glasses.lenseAlphaR=constrain(glasses.lenseAlphaR, 100, 1000);
+        
 
         //if soup bowl is near the left lense
-        if(soupNearGlassesL < collisionShapes.size/2){
+        if(soupNearGlassesL < collisionShapes.size){
             glasses.lenseAlphaL += 1;
         }
         else{
             glasses.lenseAlphaL -= 1;
         }
          //if soup bowl is near the right lense
-        if(soupNearGlassesR < collisionShapes.size/2){
+        if(soupNearGlassesR < collisionShapes.size){
             glasses.lenseAlphaR += 1;
         }
         else{
@@ -231,6 +229,9 @@ function drawGlasses(){
         glasses.lenseAlphaL -= 1;
     }
    
+    //constraining the alpha to 0-100
+        glasses.lenseAlphaL=constrain(glasses.lenseAlphaL, 100, 1000);
+        glasses.lenseAlphaR=constrain(glasses.lenseAlphaR, 100, 1000);
 
     push();
     stroke(glasses.frameColour);
