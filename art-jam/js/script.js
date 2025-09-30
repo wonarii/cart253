@@ -2,7 +2,7 @@
  * Ari and Soup
  * Arielle Wong
  * 
- * INteractive self portrait.
+ * Interactive self portrait.
  * You can pick up the bowl of soup. When it is brought close
  * to my glasses, they fog up!
  * 
