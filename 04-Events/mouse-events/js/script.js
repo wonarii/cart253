@@ -45,3 +45,28 @@ function draw() {
     ellipse(ball.x, ball.y, ball.size);
     pop();
 }
+
+/**
+ * Starts the ball moving on mouse pressed
+ */
+function mousePressed() {
+    ball.velocity.x = ball.speed;
+}
+
+/**
+ * Stops the ball moving
+ */
+function mouseReleased() {
+    ball.velocity.x = 0;
+}
+
+/**
+ * Grows the ball when the mouse wheel is rolled
+ */
+function mouseWheel(event) {
+    //add the number of pixels scrolled to the ball size 
+    //will be postive for up, negative for down
+    ball.size += event.delta;
+     // Constrain the size of the ball so it doesn't get silly
+    ball.size = constrain(ball.size, 10, width);
+}
