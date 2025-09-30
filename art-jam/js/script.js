@@ -79,6 +79,17 @@ let soup={
         rotation: 51,
         translationX:155,
         translationY:15, 
+    },
+    steam:{
+         colour:"#e7e1d6ff",
+         offsetY1: 1,
+         offsetY2: 20,
+         offsetY3: 30,
+         offsetY4: 10,
+         alpha1: 200,
+         alpha2: 200,
+         alpha3: 200,
+         alpha4: 200,
     }
     
 }
@@ -132,6 +143,8 @@ function draw() {
     drawBangs();
     //Draw soup
     drawSoup();
+    //draw steam
+    drawSteam();
 }
 /**
  * Draws invisible circles where the glasses lenses are
@@ -362,7 +375,88 @@ function drawSoup(){
 
 }
 
+/**
+ * Steam floats over the soup bowl
+ */
+function drawSteam(){
+    //steam movement and colour
+    moveSteam();
 
+    //makes a colour object
+    let steamColour1 = color(231, 225, 214);
+    //sets the alpha of the colour object
+    steamColour1.setAlpha(soup.steam.alpha1);
+    //first steam bubble
+    push();
+    fill(steamColour1);
+    ellipse(soup.bowlBack.x, soup.bowlBack.y - soup.steam.offsetY1, 20, 10);
+    pop();
+
+    //SECOND steam bubble
+    let steamColour2 = color(231, 225, 214);
+    steamColour2.setAlpha(soup.steam.alpha2);
+    push();
+    fill(steamColour2);
+    ellipse(soup.bowlBack.x + 60, soup.bowlBack.y - soup.steam.offsetY2, 30, 10);
+    pop();
+
+    //THIRD steam bubble
+    let steamColour3 = color(231, 225, 214);
+    steamColour3.setAlpha(soup.steam.alpha3);
+    push();
+    fill(steamColour3);
+   ellipse(soup.bowlBack.x -20, soup.bowlBack.y - soup.steam.offsetY3, 40, 10);
+    pop();
+
+    //FOURTH steam bubble
+     let steamColour4 = color(231, 225, 214);
+    steamColour4.setAlpha(soup.steam.alpha4);
+    push();
+    fill(steamColour4);
+    ellipse(soup.bowlBack.x -10, soup.bowlBack.y - soup.steam.offsetY4, 25, 10);
+    pop();
+}
+/**
+ * Moves the steam up and makes it fade 
+ */
+
+function moveSteam(){
+    //resets to the original position and alpha steam 1
+    if(soup.steam.offsetY1 === 80){
+        soup.steam.offsetY1 = 1;
+        soup.steam.alpha1 = 200;
+    }
+
+     //resets to the original position and alpha steam 2
+    if(soup.steam.offsetY2 === 80){
+        soup.steam.offsetY2 = 1;
+        soup.steam.alpha2 = 200;
+    }
+
+     //resets to the original position and alpha steam 3
+    if(soup.steam.offsetY3 === 80){
+        soup.steam.offsetY3 = 1;
+        soup.steam.alpha3 = 200;
+    }
+
+    //resets to the original position and alpha steam 4
+    if(soup.steam.offsetY4 === 80){
+        soup.steam.offsetY4 = 1;
+        soup.steam.alpha4 = 200;
+    }
+
+
+    //increases the offset with time
+    soup.steam.offsetY1 += 1;
+    soup.steam.offsetY2 += 1;
+    soup.steam.offsetY3 += 1;
+    soup.steam.offsetY4 += 1;
+    //decreases the alpha (will slowly fade away)
+    soup.steam.alpha1 -=1;
+    soup.steam.alpha2 -=1;
+    soup.steam.alpha3 -=1;
+    soup.steam.alpha4 -=1;
+}
 /**
  * Adds a white outline to the bowl of soup
  */
