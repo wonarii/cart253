@@ -44,7 +44,7 @@ function setup() {
     document.addEventListener("keypress", controlsHandler);
 
     // End the game after its duration
-    setTime(endTheGame, gameDuration);
+    setTimeout(endTheGame, gameDuration);
 }
 
 /**
@@ -98,7 +98,7 @@ function drawBug() {
 /**
  * Sets the game to be over
  */
-function endGame() {
+function endTheGame() {
     gameOver === true;
 }
 
@@ -114,12 +114,13 @@ function drawGameOver() {
     textStyle(BOLD);
     text("GAME OVER", width / 2, height / 2);
     pop();
+    console.log("game over");
 }
 
 /**
  * Arrow keys increase bug velocity in that direction (infinitely)
  */
-function controlsHandler() {
+function controlsHandler(event) {
     if (event.keyCode === LEFT_ARROW) {
         bug.velocity.x += -bug.speedUp;
     }
@@ -137,7 +138,7 @@ function controlsHandler() {
 /**
  * If the bug gets clicked it dies
  */
-function mouseIsPressed() {
+function mousePressed() {
     // Don't check clicks when the game is over
     if (gameOver) {
         return;
