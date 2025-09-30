@@ -13,6 +13,12 @@ let score = 0;
 // Is the game over?
 let gameOver = false;
 
+//keypress  only listens to letters and space
+//window.addEventListener("keypress", lose);
+//keydown listens to all keyboard buttons
+window.addEventListener("keydown", lose);
+
+
 /**
  * Create the canvas
  */
@@ -68,3 +74,4 @@ function displayScore() {
 function lose(){
     gameOver = true;
 }
+
