@@ -21,6 +21,11 @@ const ball = {
         white: "#ffffff",
         red: "#ff0000",
         blue: "#0000ff"
+    },
+    // Keys that control the ball's colour
+    keys: {
+        redKey: 82, // R
+        blueKey: 66 // B
     }
 }
 
@@ -43,4 +48,27 @@ function draw() {
     fill(ball.fill);
     ellipse(ball.x, ball.y, ball.size);
     pop();
+}
+/**
+ * Handle keypress:
+ * - R = make the ball red
+ * - B = make the ball blue
+ */
+function keyPressed(event) {
+    if (event.keyCode === ball.keys.redKey) {
+        ball.fill = ball.fills.red;
+    }
+    else if (event.keyCode === ball.keys.blueKey) {
+        ball.fill = ball.fills.blue;
+    }
+}
+
+/**
+ * Handle keyreleased:
+ * - R or B = Set the ball back to default
+ */
+function keyReleased(event) {
+    if (event.keyCode === ball.keys.redKey || event.keyCode === ball.keys.blueKey) {
+        ball.fill = ball.fills.white;
+    }
 }
