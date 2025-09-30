@@ -434,13 +434,13 @@ function moveSteam(){
     }
 
      //resets to the original position and alpha steam 3
-    if(soup.steam.offsetY3 === 80){
+    if(soup.steam.offsetY3 === 90){
         soup.steam.offsetY3 = 1;
         soup.steam.alpha3 = 200;
     }
 
     //resets to the original position and alpha steam 4
-    if(soup.steam.offsetY4 === 80){
+    if(soup.steam.offsetY4 === 70){
         soup.steam.offsetY4 = 1;
         soup.steam.alpha4 = 200;
     }
@@ -452,9 +452,9 @@ function moveSteam(){
     soup.steam.offsetY3 += 1;
     soup.steam.offsetY4 += 1;
     //decreases the alpha (will slowly fade away)
-    soup.steam.alpha1 -=1;
-    soup.steam.alpha2 -=1;
-    soup.steam.alpha3 -=1;
+    soup.steam.alpha1 -=4;
+    soup.steam.alpha2 -=2;
+    soup.steam.alpha3 -=3;
     soup.steam.alpha4 -=1;
 }
 /**
