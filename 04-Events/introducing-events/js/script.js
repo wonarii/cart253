@@ -1,29 +1,35 @@
 /**
- * Time
+ * events
  * pippin
  * 
- * Ball moves right
+ * Draws a yellow cricle where you click
  */
 
 "use strict";
-
-const ball = {
-    x: 0,
-    y: 200,
-    size: 50
-};
-
 function setup() {
-    createCanvas(400, 400);
+  createCanvas(400, 400);
+  
+  // Filling the background here so it DOESN'T
+  // happen every frame
+  background(0);
 }
 
 function draw() {
-    background(0);
-    
-    ball.x += 1;
-    
-    push();
-    noStroke();
-    ellipse(ball.x, ball.y, ball.size);
-    pop();
+  // This is empty!
+  // All the action happens when the mouse is pressed
+  // By not refilling the background every frame we can see
+  // the cumulative effect of the mouse presses!
+}
+
+/**
+ * The mousePressed() function is AUTOMATICALLY CALLED BY p5
+ * whenever the mouse button is pressed down! Handy!
+ */
+function mousePressed() {
+  // Draw an ellipse on the canvas when the mouse is pressed down
+  push();
+  noStroke();
+  fill(255, 255, 0);
+  ellipse(mouseX, mouseY, 50);
+  pop();
 }
