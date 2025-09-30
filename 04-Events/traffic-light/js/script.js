@@ -23,12 +23,14 @@ const trafficLight = {
 };
 
 /**
- * Create the canvas
+ * Create the canvas and start the timer
  */
 function setup() {
     createCanvas(400, 400);
+    
+    // Start the timer after the traffic light's delay
+    setInterval(changeLight, trafficLight.delay);
 }
-
 /**
  * Display the traffic light
  */
@@ -41,4 +43,21 @@ function draw() {
     fill(trafficLight.fill);
     ellipse(trafficLight.x, trafficLight.y, trafficLight.size);
     pop();
+}
+/**
+ * Change the light through the cycle
+ */
+function changeLight() {
+    // Green goes to orange
+    if (trafficLight.fill === trafficLight.fills.go) {
+        trafficLight.fill = trafficLight.fills.slow;
+    }
+    // Orange goes to red
+    else if (trafficLight.fill === trafficLight.fills.slow) {
+        trafficLight.fill = trafficLight.fills.stop;
+    }
+    // Red goes to green
+    else if (trafficLight.fill === trafficLight.fills.stop) {
+        trafficLight.fill = trafficLight.fills.go;
+    }
 }
