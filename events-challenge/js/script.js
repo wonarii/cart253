@@ -28,6 +28,20 @@ function setup() {
 //when the user presses a key, they will lose
 window.addEventListener("keydown", lose);
 
+//when user changes the internet settings
+window.addEventListener("offline", lose);
+window.addEventListener("online", lose);
+
+//when user switches tabs
+window.addEventListener("visibilitychange", lose);
+
+//when mouse is moved
+window.addEventListener("mousemove", lose);
+
+//when mouse is clicked
+window.addEventListener("mousedown", lose);
+//when mouse wheel
+window.addEventListener("wheel", lose);
 
 }
 
@@ -43,6 +57,8 @@ function draw() {
     score += 0.05;
   }
   displayUI();
+
+  
 }
 
 /**
@@ -79,24 +95,23 @@ function lose(){
     gameOver = true;
 }
 
-/**
- * Mouse clicked
- */
-function mousePressed(){
-    lose();
-}
+// /**
+//  * Mouse clicked
+//  */
+// function mousePressed(){
+//     lose();
+// }
 
-/**
- * Mouse scroll
- */
-function mouseWheel(){
-    lose();
-}
+// /**
+//  * Mouse scroll
+//  */
+// function mouseWheel(){
+//     lose();
+// }
 
-/**
- * Mouse moved
- */
-function mouseMoved(){
-    lose();
-}
-
+// /**
+//  * Mouse moved
+//  */
+// function mouseMoved(){
+//     lose();
+// }
