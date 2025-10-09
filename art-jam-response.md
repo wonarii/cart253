@@ -15,6 +15,7 @@ I was very intrigued by the sliders when I first opened the page and it was a ni
 I like how it also uncovers parts of the drawings it makes it engaging and gives a nice sense of surprise to the viewer. The initial self-portrait stares into your soul but then you add colour and it’s just a nice little guy!
 
 I also really like the drawing aspect. A simple feature that adds so much interaction. Just think of all the hats I could give to this portrait. As an example, I turned you into a goldfish:
+
 ![Jordan as a goldfish](JordanAsAGoldfish.png)
 
 I also tried out the drawing function in different browsers and it was interesting to see how each browser had a different colour picker. Safari had some preset colours to choose from while edge had more of a colour wheel thing.
