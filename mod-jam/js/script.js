@@ -69,6 +69,19 @@ const fly = {
     speed: 3
 };
 
+const UI = {
+    colour:{
+health:"#17B617" ,
+wisdom:"#5c42b1ff",
+fun:"#f0c60dff",
+empty: "#b3b3b3ff"
+    },
+    points:{
+        health:100,
+        wisdom:100,
+        fun:100,
+    }
+}
 /**
  * Creates the canvas and initializes the fly
  */
@@ -89,6 +102,7 @@ function draw() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawUI();
     //when the timer runs out
     if (timerValue == 0) {
     text('game over', width / 2, height / 2 + 15);
@@ -199,6 +213,12 @@ function getOlder(){
     //make eye bags and wrinkles appear 
    frog.wrinkles.alpha += 0.005;
     frog.wrinkles.alpha = constrain(frog.wrinkles.alpha, 0 ,100);
+
+    //health decreases as you get older
+    //that's life:/
+    UI.points.health -=0.75;
+    UI.points.health = constrain(UI.points.health, 0 ,100);
+
 }
 
 /**
@@ -293,4 +313,75 @@ function mousePressed() {
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
+}
+
+/**
+ * Displays the user interface (three points bars)
+ * 
+ */
+
+function drawUI(){
+    drawHealthBar();
+   drawWisdomBar();
+    drawFunBar();
+}
+
+function drawHealthBar(){
+    //back bar
+    push();
+    noStroke();
+    fill(UI.colour.empty);
+    rect(50, 30, 150, 20, 5);
+    pop();
+    //color bar
+    push();
+    noStroke();
+    fill(UI.colour.health);
+    rect(50, 30, 50+UI.points.health, 20, 5, 0, 0, 5);
+    pop();
+    //border bar
+    push();
+    noFill();
+    strokeWeight(3);
+    rect(50, 30, 150, 20, 5);
+    pop();
+    //icon
+    //stroke
+    push();
+    strokeWeight(6);
+    noFill();
+    rect(20, 25, 10, 30, 2);
+    rect(10, 35, 30, 10, 2);
+    pop();
+    //colour
+    push();
+    noStroke();
+    fill(UI.colour.health);
+    rect(20, 25, 10, 30, 2);
+    rect(10, 35, 30, 10, 2);
+    pop();
+  
+}
+
+function drawWisdomBar(){
+    //back bar
+    push();
+    noStroke();
+    fill(UI.colour.empty);
+    rect(width/3+50, 30, 150, 20, 5);
+    pop();
+    //color
+    push();
+    noStroke();
+    fill(UI.colour.wisdom);
+    rect(width/3+50, 30, 150, 20,  5, 0, 0, 5);
+    pop();
+
+}
+
+function drawFunBar(){
+    push();
+fill(UI.colour.fun);
+rect(width/3*2+50, 30, 150, 20);
+    pop();
 }
