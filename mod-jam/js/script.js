@@ -16,8 +16,8 @@
 "use strict";
 
 //game timer
-//start with 30 seconds
-let timerValue = 30*3;
+//start with 60 seconds
+let timerValue = 60*3;
 
 
 // Our frog
@@ -73,13 +73,13 @@ const UI = {
     colour:{
 health:"#17B617" ,
 wisdom:"#5c42b1ff",
-fun:"#f0c60dff",
-empty: "#b3b3b3ff"
+fun:"#eba708ff",
+empty: "#d1d1d2ff"
     },
     points:{
-        health:100,
-        wisdom:100,
-        fun:100,
+        health:150,
+        wisdom:150,
+        fun:150,
     }
 }
 /**
@@ -105,7 +105,7 @@ function draw() {
     drawUI();
     //when the timer runs out
     if (timerValue == 0) {
-    text('game over', width / 2, height / 2 + 15);
+    win();
   }
 }
 
@@ -216,9 +216,18 @@ function getOlder(){
 
     //health decreases as you get older
     //that's life:/
-    UI.points.health -=0.75;
-    UI.points.health = constrain(UI.points.health, 0 ,100);
+    UI.points.health -=2;
+    UI.points.health = constrain(UI.points.health, -1 ,150);
 
+    //wisdom will also decrease over time
+    UI.points.wisdom -=1;
+    UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
+
+        //fun will also decrease over time
+    UI.points.fun -=1;
+    UI.points.fun = constrain(UI.points.fun, 0 ,150);
+
+    
 }
 
 /**
@@ -287,7 +296,11 @@ function drawFrog() {
     ellipse(frog.eyes.rightX, frog.eyes.y-10, frog.eyes.pupils.size);
     pop();
 
-   
+   //check if frog dies
+    //death = health points at 0
+    if(UI.points.health <= 0){
+        gameOver();
+    }
 }
 
 /**
@@ -337,7 +350,7 @@ function drawHealthBar(){
     push();
     noStroke();
     fill(UI.colour.health);
-    rect(50, 30, 50+UI.points.health, 20, 5, 0, 0, 5);
+    rect(50, 30, UI.points.health, 20, 5, 0, 0, 5);
     pop();
     //border bar
     push();
@@ -368,20 +381,68 @@ function drawWisdomBar(){
     push();
     noStroke();
     fill(UI.colour.empty);
-    rect(width/3+50, 30, 150, 20, 5);
+    rect(width/3+50, 30,150 , 20, 5);
     pop();
     //color
     push();
     noStroke();
     fill(UI.colour.wisdom);
-    rect(width/3+50, 30, 150, 20,  5, 0, 0, 5);
+    rect(width/3+50, 30, UI.points.wisdom, 20,  5, 0, 0, 5);
     pop();
-
+    //stroke
+    push();
+    noFill();
+    strokeWeight(3);
+    rect(width/3+50, 30, 150, 20,  5);
+    pop();
+    //icon
+    //stroke
+    push();
+   strokeWeight(6);
+    noFill();
+    ellipse(width/3+18, 38, 36,25);
+    ellipse(width/3+29, 44, 20,29);
+    pop();
+    //colour
+    push();
+    noStroke();
+    fill(UI.colour.wisdom);
+    ellipse(width/3+18, 38, 36,25);
+    ellipse(width/3+29, 44, 20,29);
+    pop();
+    
 }
 
 function drawFunBar(){
+    //back bar
     push();
-fill(UI.colour.fun);
-rect(width/3*2+50, 30, 150, 20);
+    noStroke();
+    fill(UI.colour.empty);
+    rect(width/3*2+50, 30, 150, 20,5);
     pop();
+    //colour bar
+    push();
+    noStroke();
+    fill(UI.colour.fun);
+    rect(width/3*2+50, 30, UI.points.fun, 20,5, 0, 0, 5);
+    pop();
+    //stroke bar
+    push();
+    strokeWeight(3);
+    noFill();
+    rect(width/3*2+50, 30, 150, 20,5);
+    pop();
+
 }
+
+//--------ENDGAME STUFF--------------//
+
+//placeholders for now
+function gameOver(){
+    text('Game Over', width / 2, height / 2 + 15);
+}
+
+function win(){
+    text('Win', width / 2, height / 2 + 15);
+}
+
