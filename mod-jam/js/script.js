@@ -20,7 +20,7 @@ const frog = {
     // The frog's body has a position and size
     body: {
         x: 320,
-        y: 520,
+        y: 510,
         size: 150
     },
     // The frog's tongue has a position, size, speed, and state
@@ -32,12 +32,15 @@ const frog = {
         // Determines how the tongue moves each frame
         state: "idle" // State can be: idle, outbound, inbound
     },
-    //frog's eyes
+    //frog's eyes (white part)
     eyes:{
         leftX:320,
         rightX:320,
         y:455,
-        size: 30
+        size: 30,
+        pupils:{
+        size: 10,
+        }
     }
 };
 
@@ -170,6 +173,15 @@ function drawFrog() {
     noStroke();
     ellipse(frog.eyes.leftX, frog.eyes.y, frog.eyes.size);
     ellipse(frog.eyes.rightX, frog.eyes.y, frog.eyes.size);
+    pop();
+
+    //drawing the pupils
+    push();
+    fill("#000000");
+    noStroke();
+
+    ellipse(frog.eyes.leftX, frog.eyes.y-10, frog.eyes.pupils.size);
+    ellipse(frog.eyes.rightX, frog.eyes.y-10, frog.eyes.pupils.size);
     pop();
 }
 
