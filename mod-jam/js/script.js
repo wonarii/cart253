@@ -15,10 +15,20 @@
 
 "use strict";
 
+//game timer
+//start with 30 seconds
+let timerValue = 30*3;
+
+
 // Our frog
 const frog = {
     // The frog's body has a position and size
     body: {
+        fill:{
+            h:120,
+            s:87,
+            b:71,
+        },
         x: 320,
         y: 510,
         size: 150
@@ -41,6 +51,12 @@ const frog = {
         pupils:{
         size: 10,
         }
+    },
+    wrinkles:{
+        h:106,
+        s: 51,
+        b:42,
+        alpha:0,
     }
 };
 
@@ -58,6 +74,8 @@ const fly = {
  */
 function setup() {
     createCanvas(640, 480);
+//game timer, every third of a second, the timeIt method gets called
+    setInterval(timeIt, 1000/3);
 
     // Give the fly its first random position
     resetFly();
@@ -71,7 +89,27 @@ function draw() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    //when the timer runs out
+    if (timerValue == 0) {
+    text('game over', width / 2, height / 2 + 15);
+  }
 }
+
+/**
+ * Controls the frog's aging and game time
+ * The game ends when the timer runs out
+ * https://editor.p5js.org/denaplesk2/sketches/ryIBFP_lG
+ */
+function timeIt(){
+    if(timerValue > 0){
+        //decreases the timer value
+        timerValue --;
+        //agse the frog
+        getOlder();
+    }
+}
+
+
 
 /**
  * Moves the fly according to its speed
@@ -143,6 +181,27 @@ function moveTongue() {
 }
 
 /**
+ * Modifies the frog's attributes to make it look older.
+ */
+function getOlder(){
+    //modify frog colour 
+    frog.body.fill.h -= 0.5;
+    frog.body.fill.s -= 0.5;
+    frog.body.fill.b += 0.5;
+    //constrain frog colour
+    frog.body.fill.h = constrain(frog.body.fill.h, 72, 120);
+    frog.body.fill.s = constrain(frog.body.fill.s, 32, 87);
+    frog.body.fill.b = constrain(frog.body.fill.b, 71, 82);
+
+    //make frog thinner
+    frog.body.size -=0.2;
+
+    //make eye bags and wrinkles appear 
+   frog.wrinkles.alpha += 0.005;
+    frog.wrinkles.alpha = constrain(frog.wrinkles.alpha, 0 ,100);
+}
+
+/**
  * Displays the tongue (tip and line connection) and the frog (body)
  */
 function drawFrog() {
@@ -162,9 +221,33 @@ function drawFrog() {
 
     // Draw the frog's body
     push();
-    fill("#17b617ff");
+    //changes colours to hsb
+    colorMode(HSB);
+    fill(frog.body.fill.h, frog.body.fill.s, frog.body.fill.b);
     noStroke();
     ellipse(frog.body.x, frog.body.y, frog.body.size);
+    pop();
+
+     //eye bags
+    push();
+    noStroke();
+    colorMode(HSB);
+    let wrinkleColour = color(frog.wrinkles.h, frog.wrinkles.s, frog.wrinkles.b);
+    wrinkleColour.setAlpha(frog.wrinkles.alpha);
+    fill(wrinkleColour);
+    //eye bags
+    ellipse(frog.eyes.leftX-5, frog.eyes.y+6, frog.eyes.size+2);
+    ellipse(frog.eyes.rightX+5, frog.eyes.y+6, frog.eyes.size+2);
+    pop();
+    push();
+    colorMode(HSB);
+    stroke(wrinkleColour);
+    noFill();
+    strokeWeight(4);
+    //forehead wrinkles
+    curve(frog.eyes.leftX + 10, frog.eyes.y+6 ,frog.eyes.leftX+30, frog.eyes.y,frog.eyes.leftX+50, frog.eyes.y,frog.eyes.leftX+75, frog.eyes.y+6);
+    curve(frog.eyes.leftX, frog.eyes.y+15 ,frog.eyes.leftX+20, frog.eyes.y+9,frog.eyes.leftX+60, frog.eyes.y+9,frog.eyes.leftX+85, frog.eyes.y+15);
+    curve(frog.eyes.leftX + 10, frog.eyes.y+23 ,frog.eyes.leftX+30, frog.eyes.y+17,frog.eyes.leftX+50, frog.eyes.y+17,frog.eyes.leftX+75, frog.eyes.y+23);
     pop();
 
     //drawing the eyes
@@ -183,6 +266,8 @@ function drawFrog() {
     ellipse(frog.eyes.leftX, frog.eyes.y-10, frog.eyes.pupils.size);
     ellipse(frog.eyes.rightX, frog.eyes.y-10, frog.eyes.pupils.size);
     pop();
+
+   
 }
 
 /**
