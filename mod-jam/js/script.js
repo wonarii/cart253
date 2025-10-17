@@ -432,7 +432,32 @@ function drawFunBar(){
     noFill();
     rect(width/3*2+50, 30, 150, 20,5);
     pop();
-
+    //icon 
+    //stroke
+    push();
+    strokeWeight(6);
+    noFill();
+    circle(width/3*2 +20, 40, 37);
+    pop();
+    //colour
+    push();
+    noStroke();
+    fill(UI.colour.fun);
+    circle(width/3*2 +20, 40, 37);
+    pop();
+    //smile 
+    push();
+    strokeWeight(3);
+    noFill();
+    curve(width/3*2, 20, width/3*2 +10, 47, width/3*2 +30, 47,width/3*2 +35,20)
+    pop();
+    //eyes
+    push();
+    noStroke();
+    fill("#000000");
+    ellipse(width/3*2+11, 36, 5,10);
+    ellipse(width/3*2+28, 36, 5,10);
+    pop();
 }
 
 //--------ENDGAME STUFF--------------//
