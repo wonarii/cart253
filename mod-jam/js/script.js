@@ -585,32 +585,38 @@ function flyEffect(){
 
 //--------START SCREEN--------------//
 function startScreen(){
-    //faded background frog
-    push();
-    noStroke();
-    colorMode(HSB);
-    let frogColour = color(frog.body.fill.h, frog.body.fill.s, frog.body.fill.b);
-    frogColour.setAlpha(0.3);
-    fill(frogColour);
-    ellipse(-10, 400, 400, 500);
-    pop();
-    //eyes of faded bg frog
-    push();
-    noStroke();
-    let eyeColour = color(255);
-    eyeColour.setAlpha(30);
-    fill(eyeColour);
-    ellipse(100, 280, 100);
-    pop();
-    //pupils
-    push();
-    noStroke();
-    let pupilColour = color(0);
-    pupilColour.setAlpha(30);
-    fill(pupilColour);
-    ellipse(100, 280, 40);
-    pop();
+    // //faded background frog
+    // push();
+    // noStroke();
+    // colorMode(HSB);
+    // let frogColour = color(frog.body.fill.h, frog.body.fill.s, frog.body.fill.b);
+    // frogColour.setAlpha(0.3);
+    // fill(frogColour);
+    // ellipse(-10, 400, 400, 500);
+    // pop();
+    // //eyes of faded bg frog
+    // push();
+    // noStroke();
+    // let eyeColour = color(255);
+    // eyeColour.setAlpha(30);
+    // fill(eyeColour);
+    // ellipse(100, 280, 100);
+    // pop();
+    // //pupils
+    // push();
+    // noStroke();
+    // let pupilColour = color(0);
+    // pupilColour.setAlpha(30);
+    // fill(pupilColour);
+    // ellipse(100, 280, 40);
+    // pop();
 
+     moveTongue();
+    //set frog coords to bottom corner of screen
+    frog.body.x = 100;
+    frog.eyes.leftX = 100 -40;
+    frog.eyes.rightX= 100 +40;
+    drawFrog();
 
 
     //yellow rectangle
