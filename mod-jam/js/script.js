@@ -66,7 +66,14 @@ const fly = {
     x: 0,
     y: 200, // Will be random
     size: 10,
-    speed: 3
+    speed: 3,
+    wings:{
+        x:undefined,
+        y:undefined,
+        sizeX: 10,
+        sizeY: 5,
+        colour: 255,
+    },
 };
 
 const UI = {
@@ -120,6 +127,7 @@ function timeIt(){
         timerValue --;
         //agse the frog
         getOlder();
+        
     }
 }
 
@@ -147,6 +155,23 @@ function drawFly() {
     fill("#000000");
     ellipse(fly.x, fly.y, fly.size);
     pop();
+//draws the wings of the fly
+push();
+noStroke();
+let wingColour = color(fly.wings.colour);
+wingColour.setAlpha(1000);
+fill(wingColour);
+ellipse(fly.wings.x, fly.wings.y, fly.wings.sizeX, fly.wings.sizeY);
+//moveWings
+moveWings();
+pop();
+
+
+}
+
+function moveWings(){
+    fly.wings.x = fly.x - Math.floor(Math.random() * 3);
+    fly.wings.y = fly.y -Math.floor(Math.random() * 8);
 }
 
 /**
