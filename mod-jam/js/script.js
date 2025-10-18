@@ -19,6 +19,8 @@
 //start with 60 seconds
 let timerValue = 60*3;
 
+//keeps track of which state the game is in
+let gameState = "start"
 
 // Our frog
 const frog = {
@@ -100,6 +102,28 @@ empty: "#d1d1d2ff"
         fun:150,
     }
 }
+
+const title = {
+    frogTitleFont: undefined,
+    subtitleFont: undefined,
+    glowAlpha: 230,
+    glowChange: 1,
+    x:150,
+    y:180,
+    offset: 140,
+    angle: 0,
+    scalar: 5,
+    speedOfSine: 0.05,
+}
+
+
+function preload(){
+    title.frogTitleFont = loadFont('/assets/Chewy-Regular.ttf');
+    title.subtitleFont = loadFont('/assets/TradeWinds-Regular.ttf'); 
+}
+
+
+
 /**
  * Creates the canvas and initializes the fly
  */
@@ -114,6 +138,8 @@ function setup() {
 
 function draw() {
     background("#87ceeb");
+
+    if(gameState === "play"){
     moveFly();
     drawFly();
     moveFrog();
@@ -126,6 +152,10 @@ function draw() {
     win();
   }
 }
+else if(gameState === "start"){
+    startScreen();
+}
+}
 
 /**
  * Controls the frog's aging and game time
@@ -133,7 +163,8 @@ function draw() {
  * https://editor.p5js.org/denaplesk2/sketches/ryIBFP_lG
  */
 function timeIt(){
-    if(timerValue > 0){
+    //only runs the timer during gameplay
+    if(timerValue > 0 && gameState === "play"){
         //decreases the timer value
         timerValue --;
         //agse the frog
@@ -551,6 +582,92 @@ function flyEffect(){
         }
     }
 }
+
+//--------START SCREEN--------------//
+function startScreen(){
+    //faded background frog
+    push();
+    noStroke();
+    colorMode(HSB);
+    let frogColour = color(frog.body.fill.h, frog.body.fill.s, frog.body.fill.b);
+    frogColour.setAlpha(0.3);
+    fill(frogColour);
+    ellipse(-10, 400, 400, 500);
+    pop();
+    //eyes of faded bg frog
+    push();
+    noStroke();
+    let eyeColour = color(255);
+    eyeColour.setAlpha(30);
+    fill(eyeColour);
+    ellipse(100, 280, 100);
+    pop();
+    //pupils
+    push();
+    noStroke();
+    let pupilColour = color(0);
+    pupilColour.setAlpha(30);
+    fill(pupilColour);
+    ellipse(100, 280, 40);
+    pop();
+
+
+
+    //yellow rectangle
+    push();
+    noStroke();
+    fill(UI.colour.fun);
+    rect(20, 70, 600, 150, 20);
+
+    pop();
+    //frogfrogfrog title
+    push();
+    textSize(32);
+    fill(UI.colour.health);
+    stroke("#000000");
+    strokeWeight(10);
+    textFont(title.frogTitleFont);
+    text('FrogFrogFrog:', 230, 80);
+    pop();
+    //text shine
+    titleAnimation();
+    //subtitle
+    push();
+    textSize(48);
+    fill("#000000");
+    textFont(title.subtitleFont);
+    text('The Quest for', title.x, title.y);
+    text('Immortality', title.x+20, title.y+50);
+    pop();
+
+    
+}
+
+function titleAnimation(){
+
+    if(title.glowAlpha > 230){
+        title.glowChange = -2;
+    }
+    else if(title.glowAlpha < 180){
+        title.glowChange = 1;
+    }
+
+    title.glowAlpha += title.glowChange;
+    
+    title.y = title.offset + sin(title.angle) * title.scalar;
+    title.angle += title.speedOfSine;
+    push();
+    textSize(48);
+    let titleGlow = color(255);
+    titleGlow.setAlpha(title.glowAlpha);
+    stroke(titleGlow);
+    strokeWeight(10);
+    textFont(title.subtitleFont);
+    text('The Quest for', title.x, title.y);
+    text('Immortality', title.x+20, title.y+50);
+    pop();
+}
+
 
 //--------ENDGAME STUFF--------------//
 
