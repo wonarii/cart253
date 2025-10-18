@@ -67,6 +67,12 @@ const fly = {
     y: 200, // Will be random
     size: 10,
     speed: 3,
+    color:"#000000",
+    //i'm using ints for the fly type to use the randomizer but the types are as follows:
+    //0: healthy
+    //1: wise
+    //2: fun
+    type:0,
     wings:{
         x:undefined,
         y:undefined,
@@ -152,7 +158,8 @@ function moveFly() {
 function drawFly() {
     push();
     noStroke();
-    fill("#000000");
+    //new randomized fly colours!
+    fill(fly.color);
     ellipse(fly.x, fly.y, fly.size);
     pop();
 //draws the wings of the fly
@@ -165,7 +172,6 @@ ellipse(fly.wings.x, fly.wings.y, fly.wings.sizeX, fly.wings.sizeY);
 //moveWings
 moveWings();
 pop();
-
 
 }
 
@@ -180,6 +186,24 @@ function moveWings(){
 function resetFly() {
     fly.x = 0;
     fly.y = random(0, 300);
+    //randomizing the fly types and giving them differetn colours
+    fly.type = Math.floor(Math.random() * 3);
+    console.log(fly.type);
+    switch(fly.type){
+        case 0: {
+        fly.color = UI.colour.health;
+        break;
+        }
+        case 1: {
+        fly.color = UI.colour.wisdom;
+        break;
+        }
+        case 2:{
+        fly.color = UI.colour.fun;
+        break;
+        }
+    };
+    
 }
 
 /**
