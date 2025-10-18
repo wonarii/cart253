@@ -65,7 +65,12 @@ const frog = {
 const fly = {
     x: 0,
     y: 200, // Will be random
+    //for the sine wave
+    offset: 100,
+    angle: 0,
+    scalar: 20,
     size: 10,
+    speedOfSine: 0.15,
     speed: 3,
     color:"#000000",
     //i'm using ints for the fly type to use the randomizer but the types are as follows:
@@ -144,6 +149,9 @@ function timeIt(){
  * Resets the fly if it gets all the way to the right
  */
 function moveFly() {
+    //trying out a sine wave
+    fly.y = fly.offset + sin(fly.angle) * fly.scalar;
+    fly. angle+= fly.speedOfSine;
     // Move the fly
     fly.x += fly.speed;
     // Handle the fly going off the canvas
