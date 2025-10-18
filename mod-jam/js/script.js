@@ -186,9 +186,16 @@ function moveWings(){
 function resetFly() {
     fly.x = 0;
     fly.y = random(0, 300);
+    //i want green flies more frequently so:
+    let diceRoll = Math.floor(Math.random() * 6);
+    if(diceRoll > 3){
+        //1/3 chance of getting green fly automatically
+        fly.type = 0;
+    }
+    else{
     //randomizing the fly types and giving them differetn colours
     fly.type = Math.floor(Math.random() * 3);
-    console.log(fly.type);
+    }
     switch(fly.type){
         case 0: {
         fly.color = UI.colour.health;
