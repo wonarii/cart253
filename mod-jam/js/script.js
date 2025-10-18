@@ -368,6 +368,8 @@ function checkTongueFlyOverlap() {
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size/2 + fly.size/2);
     if (eaten) {
+        //do fly effect
+        flyEffect();
         // Reset the fly
         resetFly();
         // Bring back the tongue
@@ -514,6 +516,32 @@ function drawFunBar(){
     ellipse(width/3*2+11, 36, 5,10);
     ellipse(width/3*2+28, 36, 5,10);
     pop();
+}
+
+function flyEffect(){
+    //checks the type of fly and then adds/removes points from the bars accordingly!
+    switch(fly.type){
+        case 0:{
+            //increases health points!
+            UI.points.health += 20;
+            //decreases fun:(
+            //we don't like vegetables here
+            UI.points.fun -= 2;
+            break;
+        }
+        case 1:{
+            //increases wisdom!
+            UI.points.wisdom += 10;
+            //lowers fun
+            UI.points.fun -=2;
+        }
+        case 2:{
+            //increases fun
+            UI.points.fun += 20;
+            //lowers health
+            UI.points.health -= 2;
+        }
+    }
 }
 
 //--------ENDGAME STUFF--------------//
