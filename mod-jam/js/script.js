@@ -624,6 +624,7 @@ function startScreen(){
 
     //button 1: PLAY
     drawPlayButton();
+    
     //button 2: TUTORIAL
     drawTutorialButton();
 }
@@ -654,24 +655,42 @@ function titleAnimation(){
 }
 
 function drawPlayButton(){
+  
     //back shadow
-        push();
-noStroke();
-fill(UI.colour.wisdom);
-rect(220, 255, 205, 85, 20);
+    push();
+    noStroke();
+    fill(UI.colour.wisdom);
+    if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+  	rect(218, 253, 209, 89, 20);
+    }else{
+  	rect(220, 255, 205, 85, 20);
+    } 
     pop();
     //yellow button
     push();
-noStroke();
-fill(UI.colour.fun);
-rect(220, 250, 200, 80, 20);
+    noStroke();
+    fill(UI.colour.fun);
+    if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+  	rect(218, 248, 204, 84, 20);
+    }else{
+  	rect(220, 250, 200, 80, 20);
+    } 
+    
     pop();
     //text
     push();
     textSize(32);
     textFont(UI.font);
+    //create a hover https://editor.p5js.org/ehersh/sketches/Fb6hxZmzQ
+    if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+  	fill(UI.colour.health);
+    }else{
+  	fill(0);
+    } 
     text('PLAY', 277, 302);
     pop();
+
+    
 }
 
 function drawTutorialButton(){
@@ -679,18 +698,29 @@ function drawTutorialButton(){
     push();
     noStroke();
     fill(UI.colour.wisdom);
-    rect(220, 355, 205, 85, 20);
+    if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
+  	rect(218, 353, 209, 89, 20);
+    }else{
+  	rect(220, 355, 205, 85, 20);}
     pop();
     //yellow button
     push();
     noStroke();
     fill(UI.colour.fun);
-    rect(220, 350, 200, 80, 20);
+    if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
+  	rect(218, 348, 209, 84, 20);
+    }else{
+  	rect(220, 350, 205, 80, 20);}
     pop();
     //text
     push();
     textSize(32);
     textFont(UI.font);
+    if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
+  	fill(UI.colour.health);
+    }else{
+  	fill(0);
+    } 
     text('TUTORIAL', 237, 402);
     pop();
 }
