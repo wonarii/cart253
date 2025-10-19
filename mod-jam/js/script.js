@@ -90,6 +90,7 @@ const fly = {
 };
 
 const UI = {
+    font: undefined,
     colour:{
 health:"#17B617" ,
 wisdom:"#5c42b1ff",
@@ -120,6 +121,7 @@ const title = {
 function preload(){
     title.frogTitleFont = loadFont('/assets/Chewy-Regular.ttf');
     title.subtitleFont = loadFont('/assets/TradeWinds-Regular.ttf'); 
+    UI.font = loadFont('/assets/TitanOne-Regular.ttf');
 }
 
 
@@ -585,32 +587,6 @@ function flyEffect(){
 
 //--------START SCREEN--------------//
 function startScreen(){
-    // //faded background frog
-    // push();
-    // noStroke();
-    // colorMode(HSB);
-    // let frogColour = color(frog.body.fill.h, frog.body.fill.s, frog.body.fill.b);
-    // frogColour.setAlpha(0.3);
-    // fill(frogColour);
-    // ellipse(-10, 400, 400, 500);
-    // pop();
-    // //eyes of faded bg frog
-    // push();
-    // noStroke();
-    // let eyeColour = color(255);
-    // eyeColour.setAlpha(30);
-    // fill(eyeColour);
-    // ellipse(100, 280, 100);
-    // pop();
-    // //pupils
-    // push();
-    // noStroke();
-    // let pupilColour = color(0);
-    // pupilColour.setAlpha(30);
-    // fill(pupilColour);
-    // ellipse(100, 280, 40);
-    // pop();
-
      moveTongue();
     //set frog coords to bottom corner of screen
     frog.body.x = 100;
@@ -646,7 +622,10 @@ function startScreen(){
     text('Immortality', title.x+20, title.y+50);
     pop();
 
-    
+    //button 1: PLAY
+    drawPlayButton();
+    //button 2: TUTORIAL
+    drawTutorialButton();
 }
 
 function titleAnimation(){
@@ -674,7 +653,47 @@ function titleAnimation(){
     pop();
 }
 
+function drawPlayButton(){
+    //back shadow
+        push();
+noStroke();
+fill(UI.colour.wisdom);
+rect(220, 255, 205, 85, 20);
+    pop();
+    //yellow button
+    push();
+noStroke();
+fill(UI.colour.fun);
+rect(220, 250, 200, 80, 20);
+    pop();
+    //text
+    push();
+    textSize(32);
+    textFont(UI.font);
+    text('PLAY', 277, 302);
+    pop();
+}
 
+function drawTutorialButton(){
+    //back shadow
+    push();
+    noStroke();
+    fill(UI.colour.wisdom);
+    rect(220, 355, 205, 85, 20);
+    pop();
+    //yellow button
+    push();
+    noStroke();
+    fill(UI.colour.fun);
+    rect(220, 350, 200, 80, 20);
+    pop();
+    //text
+    push();
+    textSize(32);
+    textFont(UI.font);
+    text('TUTORIAL', 237, 402);
+    pop();
+}
 //--------ENDGAME STUFF--------------//
 
 //placeholders for now
