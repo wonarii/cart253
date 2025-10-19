@@ -20,6 +20,7 @@
 let timerValue = 60*3;
 
 //keeps track of which state the game is in
+//options: start, play, tutorial, gameOver
 let gameState = "start"
 
 // Our frog
@@ -117,6 +118,15 @@ const title = {
     speedOfSine: 0.05,
 }
 
+const endGame = {
+    frogDeathMessages : ["Frog has died of tuberculosis.", "Frog just wasn't feeling it.", "Frog has succumbed to a heart attack.", "Frog sneezed too hard."],
+    funNotWise: ["Live fast, die young", 'Maybe buying that "vintage" motorcycle wasn\'t the best idea', "No matter how tempting, do not eat the deep fried icecream", "A life filled with fun is a life well lived."],
+    wiseNotFun: ["Perhaps the greatest wisdom of all is learning to have fun", "So wise yet so unhappy..."],
+    noWiseNoFun: ["A life spent only to extend it is a life wasted away", "All those chia seed smoothies, and for what?", "Time is so short"],
+    
+    
+    subtitle: "Oops.",
+}
 
 function preload(){
     title.frogTitleFont = loadFont('/assets/Chewy-Regular.ttf');
@@ -151,11 +161,14 @@ function draw() {
     drawUI();
     //when the timer runs out
     if (timerValue == 0) {
-    win();
+    gameState = "gameOver";
   }
 }
 else if(gameState === "start"){
     startScreen();
+}
+else if(gameState === "gameOver"){
+    gameOver();
 }
 }
 
@@ -396,7 +409,7 @@ function drawFrog() {
    //check if frog dies
     //death = health points at 0
     if(UI.points.health <= 0){
-        gameOver();
+        gameState = "gameOver";
     }
 }
 
@@ -440,11 +453,21 @@ function mousePressed() {
         }
 
     }
+    //END SCREEN
+    if(gameState === "gameOver"){
+        //if you press on the play button
+        if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+        //game state switches to play
+            gameState = "play";
+            gameReset();
+        }
+        //if you press on tutorial button
+        if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
+            //gamestate swtches to tutorial
+            gameState = "tutorial";
+        }
 
-
-    
-
-
+    }
 
 }
 
@@ -586,22 +609,28 @@ function flyEffect(){
         case 0:{
             //increases health points!
             UI.points.health += 20;
+            UI.points.health = constrain(UI.points.health, -1 ,150);
             //decreases fun:(
             //we don't like vegetables here
             UI.points.fun -= 2;
+            UI.points.fun = constrain(UI.points.fun, 0 ,150);
             break;
         }
         case 1:{
             //increases wisdom!
             UI.points.wisdom += 10;
+            UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
             //lowers fun
             UI.points.fun -=2;
+            UI.points.fun = constrain(UI.points.fun, 0 ,150);
         }
         case 2:{
             //increases fun
             UI.points.fun += 20;
+            UI.points.fun = constrain(UI.points.fun, 0 ,150);
             //lowers health
             UI.points.health -= 2;
+            UI.points.health = constrain(UI.points.health, -1 ,150);
         }
     }
 }
@@ -749,10 +778,120 @@ function drawTutorialButton(){
 
 //placeholders for now
 function gameOver(){
-    text('Game Over', width / 2, height / 2 + 15);
+    //different situations based on points bars
+
+    //a route of balance leads to immortality
+    if(UI.points.health > 0 && UI.points.fun > 50 && UI.points.wisdom >50){
+    //achieves immortality
+    //TITLE
+    push();
+    textFont(title.subtitleFont);
+    textSize(54);
+    text('CONGRATULATIONS!', width/20, height/4);
+    pop();
+
+    //subtitle
+    endGame.subtitle = "Frog has achieved immortality through inner balance."
+    }
+    //anything else is considered a loss
+    else{
+    //frog dies before timer ends
+    if(UI.points.health <= 0){
+        //randomize a death message
+        if(endGame.subtitle === "Oops."){
+            let arrayIndex = Math.floor(Math.random() * 4);
+            endGame.subtitle = endGame.frogDeathMessages[arrayIndex];
+        }
+    }
+    //survives but wisdom is low
+    else if(UI.points.fun > 50 && UI.points.wisdom <= 50){
+         if(endGame.subtitle === "Oops."){
+        let arrayIndex = Math.floor(Math.random() * 4);
+        endGame.subtitle = endGame.funNotWise[arrayIndex];
+         }
+    }
+    //survives but fun is low
+    else if(UI.points.fun <=50 && UI.points.wisdom > 50){
+         if(endGame.subtitle === "Oops."){
+        let arrayIndex = Math.floor(Math.random() * 2);
+        endGame.subtitle = endGame.wiseNotFun[arrayIndex];
+         }
+    }
+    //survives but both wisdom and fun are low
+    else if(UI.points.fun <=50 && UI.points.wisdom <= 50){
+         if(endGame.subtitle === "Oops."){
+        let arrayIndex = Math.floor(Math.random() * 3);
+        endGame.subtitle = endGame.noWiseNoFun[arrayIndex];
+         }
+    }
+
+
+
+    //TITLE
+    push();
+    textFont(title.subtitleFont);
+    textSize(64);
+    text('GAME OVER', width/6, height/4);
+    pop();
+}
+    //subtitle
+    push();
+    textStyle(BOLD);
+    textSize(16);
+    text(endGame.subtitle, 120,190);
+    pop();
+
+
+    //Buttons 
+    drawPlayAgainButton();
+    drawTutorialButton();
+
 }
 
-function win(){
-    text('Win', width / 2, height / 2 + 15);
+
+function drawPlayAgainButton(){
+  
+    //back shadow
+    push();
+    noStroke();
+    fill(UI.colour.wisdom);
+    if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+  	rect(218, 253, 209, 89, 20);
+    }else{
+  	rect(220, 255, 205, 85, 20);
+    } 
+    pop();
+    //yellow button
+    push();
+    noStroke();
+    fill(UI.colour.fun);
+    if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+  	rect(218, 248, 204, 84, 20);
+    }else{
+  	rect(220, 250, 200, 80, 20);
+    } 
+    
+    pop();
+    //text
+    push();
+    textSize(32);
+    textFont(UI.font);
+    //create a hover https://editor.p5js.org/ehersh/sketches/Fb6hxZmzQ
+    if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+  	fill(UI.colour.health);
+    }else{
+  	fill(0);
+    } 
+    text('RETRY', 267, 302);
+    pop();
+
+    
 }
 
+function gameReset(){
+    UI.points.health = 150;
+    UI.points.fun = 150;
+    UI.points.wisdom = 150;
+    timerValue= 60*3;
+    endGame.subtitle = "Oops."
+}
