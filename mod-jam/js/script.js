@@ -147,7 +147,6 @@ function preload(){
 }
 
 
-
 /**
  * Creates the canvas and initializes the fly
  */
