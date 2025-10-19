@@ -420,11 +420,32 @@ function checkTongueFlyOverlap() {
 
 /**
  * Launch the tongue on click (if it's not launched yet)
+ * also controls button presses
  */
 function mousePressed() {
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
+    //START SCREEN
+    if(gameState === "start"){
+        //if you press on the play button
+        if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+        //game state switches to play
+            gameState = "play";
+        }
+        //if you press on tutorial button
+        if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
+            //gamestate swtches to tutorial
+            gameState = "tutorial";
+        }
+
+    }
+
+
+    
+
+
+
 }
 
 /**
