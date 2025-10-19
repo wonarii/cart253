@@ -23,6 +23,13 @@ let timerValue = 60*3;
 //options: start, play, tutorial, gameOver
 let gameState = "start"
 
+//counts the number of clicks per second
+//affects back pain
+let clickCounter = 0;
+
+//minimum clicks before you get back pain
+let backPainMin = 10;
+
 // Our frog
 const frog = {
     // The frog's body has a position and size
@@ -102,7 +109,8 @@ empty: "#d1d1d2ff"
         health:150,
         wisdom:150,
         fun:150,
-    }
+    },
+    notificationText: "",
 }
 
 const title = {
@@ -128,6 +136,9 @@ const endGame = {
     subtitle: "Oops.",
 }
 
+
+let backgroundColour = "#87ceeb";
+
 function preload(){
     title.frogTitleFont = loadFont('/assets/Chewy-Regular.ttf');
     title.subtitleFont = loadFont('/assets/TradeWinds-Regular.ttf'); 
@@ -143,13 +154,14 @@ function setup() {
     createCanvas(640, 480);
 //game timer, every third of a second, the timeIt method gets called
     setInterval(timeIt, 1000/3);
-
+    //for the click counter, it will -1 click every second
+    setInterval(decreaseClickCount, 1000);
     // Give the fly its first random position
     resetFly();
 }
 
 function draw() {
-    background("#87ceeb");
+    background(backgroundColour);
 
     if(gameState === "play"){
     moveFly();
@@ -159,6 +171,7 @@ function draw() {
     drawFrog();
     checkTongueFlyOverlap();
     drawUI();
+    backPain();
     //when the timer runs out
     if (timerValue == 0) {
     gameState = "gameOver";
@@ -337,7 +350,12 @@ function getOlder(){
     UI.points.fun -=1;
     UI.points.fun = constrain(UI.points.fun, 0 ,150);
 
-    
+}
+/**
+ * Decreases the clickCounter by 1 every second
+ */
+function decreaseClickCount(){
+    clickCounter -= 1;
 }
 
 /**
@@ -436,6 +454,10 @@ function checkTongueFlyOverlap() {
  * also controls button presses
  */
 function mousePressed() {
+
+    //increases the click counter
+    clickCounter += 1;
+
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
@@ -633,6 +655,55 @@ function flyEffect(){
             UI.points.health = constrain(UI.points.health, -1 ,150);
         }
     }
+}
+
+/**
+ * If the user clicks too much, the frog gets back pain
+ */
+function backPain(){
+    //over 45 seconds left
+    if(timerValue > 45*3){
+        backPainMin = 10;
+    }
+    //over half time left
+    else if(timerValue> 30*3){
+        backPainMin = 8;
+    }//over 15 sseconds time left
+    else if(timerValue > 15*3){
+        backPainMin = 6;
+    }
+    //under 15 seconds left
+    else{
+        backPainMin = 3;
+    }
+    //if you exceed the backPain number, you get back pain
+    if(clickCounter > backPainMin){
+        //red flash
+        backgroundColour = "#ff0000";
+        //reset clickCounter
+        clickCounter = 0;
+        //ouch text is written
+        UI.notificationText = "OUCH! My back!";
+
+        //reduces health by 30 points
+        UI.points.health -= 30;
+        UI.points.health = constrain(UI.points.health, -1, 150);
+     
+    //sets background to blue
+   //this is a reset from the red if you get back pain
+    setTimeout(resetBg, 1000/2);
+    }
+       //ouch text
+        push();
+        textStyle(BOLD);
+        textSize(32);
+        text(UI.notificationText, 250, 200)
+        pop();
+}
+
+function resetBg(){
+    backgroundColour = "#87ceeb";
+    UI.notificationText = "";
 }
 
 //--------START SCREEN--------------//
@@ -894,4 +965,7 @@ function gameReset(){
     UI.points.wisdom = 150;
     timerValue= 60*3;
     endGame.subtitle = "Oops."
+    UI.notificationText = "";
+    clickCounter = 0;
+
 }
