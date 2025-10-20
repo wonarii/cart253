@@ -173,9 +173,9 @@ const cataracts = {
 let backgroundColour = "#87ceeb";
 
 function preload(){
-    title.frogTitleFont = loadFont('../assets/Chewy-Regular.ttf');
-    title.subtitleFont = loadFont('../assets/TradeWinds-Regular.ttf'); 
-    UI.font = loadFont('../assets/TitanOne-Regular.ttf');
+    title.frogTitleFont = loadFont('./assets/Chewy-Regular.ttf');
+    title.subtitleFont = loadFont('./assets/TradeWinds-Regular.ttf'); 
+    UI.font = loadFont('./assets/TitanOne-Regular.ttf');
 }
 
 
