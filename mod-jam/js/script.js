@@ -138,6 +138,16 @@ const endGame = {
 }
 
 
+const cataracts = {
+    colour:{
+        r:217,
+        g:188,
+        b:122,
+    },
+    alpha: 0,
+    blur:0,
+}
+
 let backgroundColour = "#87ceeb";
 
 function preload(){
@@ -170,6 +180,7 @@ function draw() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawCataracts();
     drawUI();
     backPain();
     //when the timer runs out
@@ -350,6 +361,16 @@ function getOlder(){
     UI.points.fun -=1;
     UI.points.fun = constrain(UI.points.fun, 0 ,150);
 
+    //frog cataracts
+    //at a certain age, frog will develop cataracts and it will be harder to see
+    if(timerValue < 20*3){
+        cataracts.alpha += 1;
+        cataracts.blur += 0.02;
+        cataracts.alpha = constrain(cataracts.alpha, 0, 40);
+        cataracts.blur = constrain(cataracts.blur, 0 , 4);
+    }
+
+
 }
 /**
  * Decreases the clickCounter by 1 every second
@@ -491,6 +512,21 @@ function mousePressed() {
 
     }
 
+}
+
+function drawCataracts(){
+    //draws a big rectangle over whole screen
+    push();
+    let cataractsColour = color(cataracts.colour.r, cataracts.colour.g, cataracts.colour.b);
+    cataractsColour.setAlpha(cataracts.alpha);
+    fill(cataractsColour);
+    noStroke();
+    rect(0,0,width,height);
+    pop();
+
+    if(timerValue <= 20*3){
+        filter(BLUR, cataracts.blur);
+    }
 }
 
 /**
@@ -967,5 +1003,7 @@ function gameReset(){
     endGame.subtitle = "Oops."
     UI.notificationText = "";
     clickCounter = 0;
+    frog.body.size = 150;
+    frog.wrinkles.alpha = 0;
 
 }
