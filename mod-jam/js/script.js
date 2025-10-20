@@ -220,7 +220,6 @@ else if(gameState === "gameOver"){
 }
 else if(gameState === "math"){
 
-    drawMathProblem();
     drawFrog();
     drawCataracts();
     drawUI();
@@ -315,8 +314,8 @@ function drawMathFly(){
 
     if(diceRoll === 1){
         mathFly.appears = true;
-        //math fly goes away after 4 seconds
-        setInterval(mathFlyDisappears, 4000);
+        //math fly goes away after 2 seconds
+        setTimeout(mathFlyDisappears, 2000);
     }
     }
     
@@ -575,14 +574,35 @@ function mathProblem(){
     timerValue += 5*3;
     mathFly.value1 = Math.floor(Math.random()*10);
     mathFly.value2 = Math.floor(Math.random()*10);
+    UI.notificationText = mathFly.value1 + " + " + mathFly.value2+ " = ";
     gameState = "math";
 
 }
 
-function drawMathProblem(){
-    //display math problem
-    UI.notificationText = mathFly.value1 + " + " + mathFly.value2+ " = ";
-    
+function checkAnswer(){
+   //verifies answer
+   //gets only what is entered after the =
+   let answer = UI.notificationText.split("=");
+   //get rid of whitespace
+   answer = answer[1].trim();
+   if(answer == (mathFly.value1 + mathFly.value2)){
+    //correct answer
+    UI.notificationText = "Correct!";
+    UI.points.wisdom += 40;
+    UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
+
+   }
+   else{
+     UI.notificationText = "Incorrect.";
+     UI.points.wisdom -= 10;
+    UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
+   }
+   setTimeout(backToPlay, 1000);
+}
+
+function backToPlay(){
+    gameState = "play";
+    UI.notificationText="";
 }
 /**
  * Launch the tongue on click (if it's not launched yet)
@@ -626,6 +646,24 @@ function mousePressed() {
 
     }
 
+}
+
+function keyPressed(event){
+    if( gameState === "math"){
+        if(event.key === "Enter"){
+            checkAnswer();
+        }
+        else if(event.key === "Backspace"){
+            //if the last two characters are not = then delete
+            if(UI.notificationText.substring(UI.notificationText.length -2, UI.notificationText.length) != "= "){
+                UI.notificationText = UI.notificationText.substring(0, UI.notificationText.length-1);
+            }
+            
+        }
+        else{
+            UI.notificationText += event.key;
+        }
+    }
 }
 
 function drawCataracts(){
