@@ -159,7 +159,6 @@ const endGame = {
     subtitle: "Oops.",
 }
 
-
 const cataracts = {
     colour:{
         r:217,
