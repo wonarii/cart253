@@ -79,7 +79,7 @@ const fly = {
     //for the sine wave
     offset: 100,
     angle: 0,
-    scalar: 20,
+    scalar: 30,
     size: 10,
     speedOfSine: 0.15,
     speed: 3,
@@ -96,6 +96,28 @@ const fly = {
         sizeY: 5,
         colour: 255,
     },
+};
+//math fly
+const mathFly = {
+    appears: false,
+    x: 100,
+    y: 100, // Will be random
+    //for the sine wave
+    offset: 100,
+    angle: 0,
+    scalar: 20,
+    size: 10,
+    speedOfSine: 0.15,
+    direction: 3,
+    wings:{
+        x:undefined,
+        y:undefined,
+        sizeX: 10,
+        sizeY: 5,
+        colour: 255,
+    },
+    value1: 0,
+    value2: 0,
 };
 
 const UI = {
@@ -176,6 +198,8 @@ function draw() {
     if(gameState === "play"){
     moveFly();
     drawFly();
+    moveMathFly();
+    drawMathFly();
     moveFrog();
     moveTongue();
     drawFrog();
@@ -193,6 +217,14 @@ else if(gameState === "start"){
 }
 else if(gameState === "gameOver"){
     gameOver();
+}
+else if(gameState === "math"){
+
+    drawMathProblem();
+    drawFrog();
+    drawCataracts();
+    drawUI();
+    backPain();
 }
 }
 
@@ -248,22 +280,77 @@ wingColour.setAlpha(1000);
 fill(wingColour);
 ellipse(fly.wings.x, fly.wings.y, fly.wings.sizeX, fly.wings.sizeY);
 //moveWings
-moveWings();
+moveWings(fly.x, fly.y);
 pop();
 
 }
 
-function moveWings(){
-    fly.wings.x = fly.x - Math.floor(Math.random() * 3);
-    fly.wings.y = fly.y -Math.floor(Math.random() * 8);
+function moveWings(x,y){
+    fly.wings.x = x - Math.floor(Math.random() * 3);
+    fly.wings.y = y -Math.floor(Math.random() * 8);
 }
 
+function moveMathWings(x,y){
+    mathFly.wings.x = x - Math.floor(Math.random() * 3);
+    mathFly.wings.y = y - Math.floor(Math.random() * 8);
+}
+
+
+
+function moveMathFly() {
+    //trying out a sine wave
+    mathFly.y = mathFly.offset + sin(mathFly.angle) * mathFly.scalar;
+    mathFly.angle+= mathFly.speedOfSine;
+    //random number between -2 and 2
+    mathFly.direction = Math.floor(Math.random()*(2 +2)) - 2;
+    mathFly.x += mathFly.direction;
+    mathFly.x = constrain(mathFly.x, 30, width-30);
+}
+
+function drawMathFly(){
+
+    if(mathFly.appears === false){
+    //rolls a dice to see if math fly appears
+    let diceRoll = Math.floor(Math.random()*200);
+
+    if(diceRoll === 1){
+        mathFly.appears = true;
+        //math fly goes away after 4 seconds
+        setInterval(mathFlyDisappears, 4000);
+    }
+    }
+    
+    if(mathFly.appears === true){
+     push();
+    noStroke();
+    fill(UI.colour.wisdom);
+    ellipse(mathFly.x, mathFly.y, mathFly.size);
+    pop();
+    //draws the wings of the fly
+    push();
+    noStroke();
+    let wingColour = color(fly.wings.colour);
+    wingColour.setAlpha(1000);
+    fill(wingColour);
+    ellipse(mathFly.wings.x, mathFly.wings.y, mathFly.wings.sizeX, mathFly.wings.sizeY);
+    //moveWings
+    moveMathWings(mathFly.x, mathFly.y);
+    pop();
+    }
+}
+
+
+function mathFlyDisappears(){
+    mathFly.appears = false;
+    mathFly.x = random(30, width-30);
+    mathFly.y = random(80, 300);
+}
 /**
  * Resets the fly to the left with a random y
  */
 function resetFly() {
     fly.x = 0;
-    fly.y = random(0, 300);
+    fly.offset = random(50, 300);
     //i want green flies more frequently so:
     let diceRoll = Math.floor(Math.random() * 6);
     if(diceRoll > 3){
@@ -468,8 +555,35 @@ function checkTongueFlyOverlap() {
         // Bring back the tongue
         frog.tongue.state = "inbound";
     }
+
+    if(mathFly.appears){
+        //check if you catch the math fly
+         // Get distance from tongue to fly
+        const dmf = dist(frog.tongue.x, frog.tongue.y, mathFly.x, mathFly.y);
+        // Check if it's an overlap
+        const mathFlyEaten = (dmf < frog.tongue.size/2 + mathFly.size/2);
+        if (mathFlyEaten) {
+        mathProblem();
+        // Bring back the tongue
+        frog.tongue.state = "inbound";
+    }
+    }
 }
 
+function mathProblem(){
+    //get an extra 5 seconds of game time
+    timerValue += 5*3;
+    mathFly.value1 = Math.floor(Math.random()*10);
+    mathFly.value2 = Math.floor(Math.random()*10);
+    gameState = "math";
+
+}
+
+function drawMathProblem(){
+    //display math problem
+    UI.notificationText = mathFly.value1 + " + " + mathFly.value2+ " = ";
+    
+}
 /**
  * Launch the tongue on click (if it's not launched yet)
  * also controls button presses
