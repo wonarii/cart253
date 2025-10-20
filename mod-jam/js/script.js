@@ -1005,5 +1005,8 @@ function gameReset(){
     clickCounter = 0;
     frog.body.size = 150;
     frog.wrinkles.alpha = 0;
+    frog.body.fill.h= 120;
+    frog.body.fill.s= 87;
+    frog.body.fill.b= 71;
 
 }
