@@ -31,6 +31,9 @@ let clickCounter = 0;
 //minimum clicks before you get back pain
 let backPainMin = 10;
 
+//keeps track of how many times draw is called while user hasn't moved
+let stillnessCounter = 0;
+
 // Our frog
 const frog = {
     // The frog's body has a position and size
@@ -219,6 +222,7 @@ function setup() {
     setInterval(decreaseClickCount, 1000);
     // Give the fly its first random position
     resetFly();
+
 }
 
 function draw() {
@@ -237,6 +241,7 @@ function draw() {
     drawUI();
     backPain();
     dialog();
+    checkMovement();
     //when the timer runs out
     if (timerValue == 0) {
     gameState = "gameOver";
@@ -1076,6 +1081,48 @@ function printDialog(dialog){
     }
 
    
+}
+
+function checkMovement(){
+    if(!mouseIsMoving()){
+        stillnessCounter += 1;
+    }
+    else{
+        stillnessCounter = 0;
+    }
+    //if stay still too long you start meditating:)
+
+    if(stillnessCounter > 400){
+        meditate();
+    }
+    console.log(stillnessCounter);
+
+}
+
+function mouseIsMoving(){
+    //checks if mouse is moving
+    if(movedX !== 0 || movedY !== 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function meditate(){
+    console.log("meditating");
+    //draw eyes closed(just green)
+    push();
+    colorMode(HSB);
+    fill(frog.body.fill.h, frog.body.fill.b);
+    noStroke();
+    ellipse(frog.eyes.leftX, frog.eyes.y, frog.eyes.size);
+    ellipse(frog.eyes.rightX, frog.eyes.y, frog.eyes.size);
+    pop();
+
+
+    //increase wisdom
+    UI.points.wisdom += 0.1;
 }
 
 //-------CHAT GAME STATE--------//
