@@ -644,6 +644,15 @@ function mousePressed() {
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
+    //if you click on a speech bubble
+    if(frogDialog.isTalking){
+        //Bubble on left
+
+
+        //Bubble on right
+
+
+    }
     //START SCREEN
     if(gameState === "start"){
         //if you press on the play button
@@ -962,6 +971,25 @@ function drawSpeechBubble(){
     //check which side to draw the sppech bubble
     //if frog in right half
     if(frog.body.x > width/2){
+        //hover?
+        if(mouseX> frog.body.x-200 && mouseX<frog.body.x-80 && mouseY>frog.body.y - 150 && mouseY < frog.body.y -50){
+            //mouse is overlapping bubble
+            //bubble will be bigger
+            //bubble on left
+        push();
+        noStroke();
+        fill(255);
+        //main body
+        rect(frog.body.x - 210, frog.body.y -160, 125, 105, 20);
+         //little tail
+        triangle(frog.body.x -100, frog.body.y -100, frog.body.x -80, frog.body.y-120, frog.body.x -50, frog.body.y - 80);
+        pop();
+
+        }
+        else{
+
+
+
         //bubble on left
         push();
         noStroke();
@@ -971,6 +999,7 @@ function drawSpeechBubble(){
          //little tail
         triangle(frog.body.x -100, frog.body.y -100, frog.body.x -80, frog.body.y-120, frog.body.x -50, frog.body.y - 80);
         pop();
+        }
     }
     else{
         //bubble on right
@@ -992,13 +1021,11 @@ function decideDialog(){
         if(coinflip === 0){
             //generate random wise dialog
             let wiseDialogIndex = Math.floor(Math.random()*4);
-            console.log("wise", wiseDialogIndex);
             return frogDialog.wiseSayings[wiseDialogIndex];
         }
     }
     //generate random dialog from filler
     let fillerDialogIndex = Math.floor(Math.random()*6);
-    console.log("filler", fillerDialogIndex);
     return frogDialog.filler[fillerDialogIndex];
 }
 
