@@ -171,7 +171,7 @@ const cataracts = {
 
 const frogDialog = {
 
-    isTalking: true,
+    isTalking: false,
 wiseSayings : ["\“Appear weak when you are strong, and strong when you are weak.\” - Sun Tzu",
     "\“If you know the enemy and know yourself, you need not fear the result of a hundred battles.\” -Sun Tzu",
     "\“Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.\” - Sun Tzu",
@@ -191,8 +191,8 @@ wiseSayings : ["\“Appear weak when you are strong, and strong when you are wea
     "Hahah, you always say such silly things!",
     "Someone once said something similar to me…",
     "I love talking to you!",
- ]
-
+ ],
+dialogToPrint:"hi",
 };
 
 
@@ -930,8 +930,8 @@ function dialog(){
     if(frogDialog.isTalking){
         //draw speech bubble
         drawSpeechBubble();
-        //decide if dialog is wise
         //display dialog
+        printDialog(frogDialog.dialogToPrint);
 
     }
 }
@@ -942,12 +942,13 @@ function dialog(){
 function checkTalking(){
     if(!frogDialog.isTalking){
         //randomly rolls a dice to check if it should be talking
-        let diceroll = Math.floor(Math.random()*300);
+        let diceroll = Math.floor(Math.random()*200);
         if(diceroll === 1){
             //lucky roll, frog starts talking
             frogDialog.isTalking = true;
+            frogDialog.dialogToPrint = decideDialog();
             //after 3 seconds, the dialog will be reset
-            setTimeout(resetDialog, 3000);
+            setTimeout(resetDialog, 4000);
         }
     }
 }
@@ -982,8 +983,46 @@ function drawSpeechBubble(){
         triangle(frog.body.x +100, frog.body.y -100, frog.body.x +80, frog.body.y-120, frog.body.x +50, frog.body.y - 80);
         pop();
     }
-     
 }
+
+function decideDialog(){
+    //if frog wisdom is over half, it might say wise things
+    if(UI.points.wisdom > 75){
+        let coinflip = Math.floor(Math.random()*2);
+        if(coinflip === 0){
+            //generate random wise dialog
+            let wiseDialogIndex = Math.floor(Math.random()*4);
+            console.log("wise", wiseDialogIndex);
+            return frogDialog.wiseSayings[wiseDialogIndex];
+        }
+    }
+    //generate random dialog from filler
+    let fillerDialogIndex = Math.floor(Math.random()*6);
+    console.log("filler", fillerDialogIndex);
+    return frogDialog.filler[fillerDialogIndex];
+}
+
+function printDialog(dialog){
+    if(frog.body.x > width/2){
+    //bubble on left
+    push();
+    textAlign(CENTER);
+    textSize(10);
+    text(dialog, frog.body.x - 190, frog.body.y - 140, 100);
+    pop();
+    }
+    else{
+        //bubble on right
+    push();
+    textAlign(CENTER);
+    textSize(10);
+    text(dialog, frog.body.x + 90, frog.body.y - 140, 100);
+    pop();
+    }
+
+   
+}
+
 //--------START SCREEN--------------//
 function startScreen(){
      moveTongue();
