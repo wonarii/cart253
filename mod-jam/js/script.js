@@ -706,7 +706,7 @@ function keyPressed(event){
             gameState = "chat";
         }
     }
-    if( gameState === "math"){
+    else if( gameState === "math"){
         if(event.key === "Enter"){
             checkAnswer();
         }
@@ -721,7 +721,7 @@ function keyPressed(event){
             UI.notificationText += event.key;
         }
     }
-    if(gameState === "chat"){
+    else if(gameState === "chat"){
         if(event.key === "Enter"){
             gameState = "submitDialog"
         }
@@ -730,6 +730,19 @@ function keyPressed(event){
         }
         else{
             frogDialog.userDialog += event.key;
+        }
+    }
+    else if(gameState === "submitDialog"){
+        if(event.key === "Enter"){
+            //only get points if you say something to the frog
+            if(frogDialog.userDialog != ""){
+            UI.points.fun += 50;
+            UI.points.fun = constrain(UI.points.fun, 0, 150);
+            }
+            //reset user dialog
+            frogDialog.userDialog = "";
+            frogDialog.isTalking = false;
+            gameState = "play";   
         }
     }
 }
@@ -1123,9 +1136,9 @@ function submitDialog(){
     push();
     noStroke();
     fill(255);
-    rect(30, 300, 320, 150, 20);
+    rect(30, 300, 220, 150, 20);
      //bubble's tail
-    triangle(40, 310, 50,335, 10, 340);
+    triangle(40, 410, 50,435, 10, 440);
     pop();
    
     //text inside the bubble
@@ -1133,11 +1146,8 @@ function submitDialog(){
     fill(0);
     textAlign(LEFT);
     textSize(18);
-    text(frogDialog.responses[frogDialog.answerIndex],60,430, 260);
+    text(frogDialog.responses[frogDialog.answerIndex],60,330, 200);
     pop();
-
-    //increase fun by 50
-    //go back to game play
 }
 
 //--------START SCREEN--------------//
@@ -1305,32 +1315,30 @@ function gameOver(){
         //randomize a death message
         if(endGame.subtitle === "Oops."){
             let arrayIndex = Math.floor(Math.random() * 4);
-            endGame.subtitle = endGame.frogDeathMessages[arrayIndex];
+            endGame.subtitle = "Health points at 0: " + endGame.frogDeathMessages[arrayIndex];
         }
     }
     //survives but wisdom is low
     else if(UI.points.fun > 50 && UI.points.wisdom <= 50){
          if(endGame.subtitle === "Oops."){
         let arrayIndex = Math.floor(Math.random() * 4);
-        endGame.subtitle = endGame.funNotWise[arrayIndex];
+        endGame.subtitle = "Not enough wisdom: " + endGame.funNotWise[arrayIndex];
          }
     }
     //survives but fun is low
     else if(UI.points.fun <=50 && UI.points.wisdom > 50){
          if(endGame.subtitle === "Oops."){
         let arrayIndex = Math.floor(Math.random() * 2);
-        endGame.subtitle = endGame.wiseNotFun[arrayIndex];
+        endGame.subtitle = "Not enough fun: " + endGame.wiseNotFun[arrayIndex];
          }
     }
     //survives but both wisdom and fun are low
     else if(UI.points.fun <=50 && UI.points.wisdom <= 50){
          if(endGame.subtitle === "Oops."){
         let arrayIndex = Math.floor(Math.random() * 3);
-        endGame.subtitle = endGame.noWiseNoFun[arrayIndex];
+        endGame.subtitle = "Not wise nor happy: " + endGame.noWiseNoFun[arrayIndex];
          }
     }
-
-
 
     //TITLE
     push();
