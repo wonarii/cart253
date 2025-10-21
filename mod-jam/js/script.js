@@ -21,7 +21,7 @@
 let timerValue = 60*3;
 
 //keeps track of which state the game is in
-//options: start, play, tutorial, gameOver
+//options: start, play, tutorial, gameOver, chat
 let gameState = "start"
 
 //counts the number of clicks per second
@@ -193,6 +193,7 @@ wiseSayings : ["\“Appear weak when you are strong, and strong when you are wea
     "I love talking to you!",
  ],
 dialogToPrint:"hi",
+userDialog:"",
 };
 
 
@@ -252,6 +253,15 @@ else if(gameState === "math"){
     drawCataracts();
     drawUI();
     backPain();
+}
+else if(gameState === "chat"){
+    drawFrog();
+    drawCataracts();
+    drawUI();
+    //add a slight opacity filter 
+    fadeBackground();
+    drawFrogBubble();
+    drawUserBubble();
 }
 }
 
@@ -644,15 +654,7 @@ function mousePressed() {
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
-    //if you click on a speech bubble
-    if(frogDialog.isTalking){
-        //Bubble on left
-
-
-        //Bubble on right
-
-
-    }
+  
     //START SCREEN
     if(gameState === "start"){
         //if you press on the play button
@@ -686,6 +688,12 @@ function mousePressed() {
 }
 
 function keyPressed(event){
+    if(frogDialog.isTalking && gameState === "play"){
+        
+        if(event.key === "Enter"){
+            gameState = "chat";
+        }
+    }
     if( gameState === "math"){
         if(event.key === "Enter"){
             checkAnswer();
@@ -699,6 +707,17 @@ function keyPressed(event){
         }
         else{
             UI.notificationText += event.key;
+        }
+    }
+    if(gameState === "chat"){
+        if(event.key === "Enter"){
+            submitDialog();
+        }
+        else if(event.key === "Backspace"){
+            frogDialog.userDialog = frogDialog.userDialog.substring(0, frogDialog.userDialog.length -1);
+        }
+        else{
+            frogDialog.userDialog += event.key;
         }
     }
 }
@@ -971,25 +990,6 @@ function drawSpeechBubble(){
     //check which side to draw the sppech bubble
     //if frog in right half
     if(frog.body.x > width/2){
-        //hover?
-        if(mouseX> frog.body.x-200 && mouseX<frog.body.x-80 && mouseY>frog.body.y - 150 && mouseY < frog.body.y -50){
-            //mouse is overlapping bubble
-            //bubble will be bigger
-            //bubble on left
-        push();
-        noStroke();
-        fill(255);
-        //main body
-        rect(frog.body.x - 210, frog.body.y -160, 125, 105, 20);
-         //little tail
-        triangle(frog.body.x -100, frog.body.y -100, frog.body.x -80, frog.body.y-120, frog.body.x -50, frog.body.y - 80);
-        pop();
-
-        }
-        else{
-
-
-
         //bubble on left
         push();
         noStroke();
@@ -999,7 +999,7 @@ function drawSpeechBubble(){
          //little tail
         triangle(frog.body.x -100, frog.body.y -100, frog.body.x -80, frog.body.y-120, frog.body.x -50, frog.body.y - 80);
         pop();
-        }
+        
     }
     else{
         //bubble on right
@@ -1048,6 +1048,62 @@ function printDialog(dialog){
     }
 
    
+}
+
+//-------CHAT GAME STATE--------//
+
+function drawFrogBubble(){
+    //bg white bubble
+    push();
+    noStroke();
+    fill(255);
+    rect(30, 40, 320, 150, 20);
+     //bubble's tail
+    triangle(40, 150, 50,175, 10, 180);
+    pop();
+   
+    //text inside the bubble
+    push();
+    fill(0);
+    textAlign(LEFT);
+    textSize(18);
+    text(frogDialog.dialogToPrint,60,70, 260);
+    pop();
+}
+
+function drawUserBubble(){
+    //bg white bubble
+    push();
+    noStroke();
+    fill(255);
+    rect(width-350, 200, 320, 150, 20);
+     //bubble's tail
+    triangle(width-40, 310, width-50,335, width-10, 340);
+    pop();
+   
+    //text inside the bubble
+    push();
+    fill(0);
+    textAlign(LEFT);
+    textSize(18);
+    text(frogDialog.userDialog,width-320,230, 260);
+    pop();
+}
+
+function fadeBackground(){
+    push();
+    noStroke();
+    let rectColor = color(0);
+    rectColor.setAlpha(100);
+    fill(rectColor);
+    rect(0,0,width,height);
+    pop();
+}
+
+function submitDialog(){
+    //print answer for 4 seconds
+    //increase fun by 50
+    //go back to game play
 }
 
 //--------START SCREEN--------------//
