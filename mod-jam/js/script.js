@@ -21,7 +21,7 @@
 let timerValue = 60*3;
 
 //keeps track of which state the game is in
-//options: start, play, tutorial, gameOver, chat
+//options: start, play, tutorial, gameOver, chat, submitDialog
 let gameState = "start"
 
 //counts the number of clicks per second
@@ -194,6 +194,7 @@ wiseSayings : ["\“Appear weak when you are strong, and strong when you are wea
  ],
 dialogToPrint:"hi",
 userDialog:"",
+answerIndex:0,
 };
 
 
@@ -262,6 +263,17 @@ else if(gameState === "chat"){
     fadeBackground();
     drawFrogBubble();
     drawUserBubble();
+}
+else if(gameState === "submitDialog"){
+    drawFrog();
+    drawCataracts();
+    drawUI();
+    //add a slight opacity filter 
+    fadeBackground();
+    drawFrogBubble();
+    drawUserBubble();
+    submitDialog();
+
 }
 }
 
@@ -711,7 +723,7 @@ function keyPressed(event){
     }
     if(gameState === "chat"){
         if(event.key === "Enter"){
-            submitDialog();
+            gameState = "submitDialog"
         }
         else if(event.key === "Backspace"){
             frogDialog.userDialog = frogDialog.userDialog.substring(0, frogDialog.userDialog.length -1);
@@ -1026,6 +1038,9 @@ function decideDialog(){
     }
     //generate random dialog from filler
     let fillerDialogIndex = Math.floor(Math.random()*6);
+    //generates random answer to the dialog
+    //yes, the answer is decided before you even type anything
+    frogDialog.answerIndex = Math.floor(Math.random()*4);
     return frogDialog.filler[fillerDialogIndex];
 }
 
@@ -1086,6 +1101,7 @@ function drawUserBubble(){
     fill(0);
     textAlign(LEFT);
     textSize(18);
+    textWrap(CHAR);
     text(frogDialog.userDialog,width-320,230, 260);
     pop();
 }
@@ -1101,7 +1117,25 @@ function fadeBackground(){
 }
 
 function submitDialog(){
+    console.log("submitDialog");
     //print answer for 4 seconds
+    //bg white bubble
+    push();
+    noStroke();
+    fill(255);
+    rect(30, 300, 320, 150, 20);
+     //bubble's tail
+    triangle(40, 310, 50,335, 10, 340);
+    pop();
+   
+    //text inside the bubble
+    push();
+    fill(0);
+    textAlign(LEFT);
+    textSize(18);
+    text(frogDialog.responses[frogDialog.answerIndex],60,430, 260);
+    pop();
+
     //increase fun by 50
     //go back to game play
 }
