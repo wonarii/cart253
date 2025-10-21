@@ -169,6 +169,32 @@ const cataracts = {
     blur:0,
 }
 
+const frogDialog = {
+wiseSayings : ["\“Appear weak when you are strong, and strong when you are weak.\” - Sun Tzu",
+    "\“If you know the enemy and know yourself, you need not fear the result of a hundred battles.\” -Sun Tzu",
+    "\“Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.\” - Sun Tzu",
+    "Great power comes with great responsibility - Uncle Ben",
+
+ ],
+ filler:[
+    "The weather these days… The farmers won’t be too happy.",
+    "Did you know that my neighbour bought new types of trash bags? Wonder if it’s the divorce making them crazy.",
+    "Back in my days, we didn’t have any of these weefees in our homes. We just had lead and arsenic.",
+    "You should come visit more often. I made this new thing called strawberry-chicken pot pie.",
+    "This reminds me of when my cousin drowned in the sewers.",
+    "Remember my aunt’s best friend’s daughter’s husband’s uncles’ cousin? Yes, well, he’s studying to be a doctor. "
+ ],
+ responses:[
+    "Oh! Interesting opinion…",
+    "Hahah, you always say such silly things!",
+    "Someone once said something similar to me…",
+    "I love talking to you!",
+ ]
+
+};
+
+
+
 let backgroundColour = "#87ceeb";
 
 function preload(){
