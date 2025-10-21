@@ -170,6 +170,8 @@ const cataracts = {
 }
 
 const frogDialog = {
+
+    isTalking: true,
 wiseSayings : ["\“Appear weak when you are strong, and strong when you are weak.\” - Sun Tzu",
     "\“If you know the enemy and know yourself, you need not fear the result of a hundred battles.\” -Sun Tzu",
     "\“Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.\” - Sun Tzu",
@@ -232,6 +234,7 @@ function draw() {
     drawCataracts();
     drawUI();
     backPain();
+    dialog();
     //when the timer runs out
     if (timerValue == 0) {
     gameState = "gameOver";
@@ -919,6 +922,68 @@ function resetBg(){
     UI.notificationText = "";
 }
 
+/**
+ * Displays the frog's dialog
+ */
+function dialog(){
+    checkTalking();
+    if(frogDialog.isTalking){
+        //draw speech bubble
+        drawSpeechBubble();
+        //decide if dialog is wise
+        //display dialog
+
+    }
+}
+
+/**
+ * Decides if the frog is talking
+ */
+function checkTalking(){
+    if(!frogDialog.isTalking){
+        //randomly rolls a dice to check if it should be talking
+        let diceroll = Math.floor(Math.random()*300);
+        if(diceroll === 1){
+            //lucky roll, frog starts talking
+            frogDialog.isTalking = true;
+            //after 3 seconds, the dialog will be reset
+            setTimeout(resetDialog, 3000);
+        }
+    }
+}
+
+function resetDialog(){
+    frogDialog.isTalking = false;
+}
+
+
+function drawSpeechBubble(){
+    //check which side to draw the sppech bubble
+    //if frog in right half
+    if(frog.body.x > width/2){
+        //bubble on left
+        push();
+        noStroke();
+        fill(255);
+        //main body
+        rect(frog.body.x - 200, frog.body.y -150, 120, 100, 20);
+         //little tail
+        triangle(frog.body.x -100, frog.body.y -100, frog.body.x -80, frog.body.y-120, frog.body.x -50, frog.body.y - 80);
+        pop();
+    }
+    else{
+        //bubble on right
+        push();
+        noStroke();
+        fill(255);
+        //main body
+        rect(frog.body.x + 80, frog.body.y - 150, 120, 100, 20);
+         //little tail
+        triangle(frog.body.x +100, frog.body.y -100, frog.body.x +80, frog.body.y-120, frog.body.x +50, frog.body.y - 80);
+        pop();
+    }
+     
+}
 //--------START SCREEN--------------//
 function startScreen(){
      moveTongue();
