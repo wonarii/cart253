@@ -932,6 +932,7 @@ function flyEffect(){
             //lowers fun
             UI.points.fun -=2;
             UI.points.fun = constrain(UI.points.fun, 0 ,150);
+            break;
         }
         case 2:{
             //increases fun
@@ -940,6 +941,7 @@ function flyEffect(){
             //lowers health
             UI.points.health -= 2;
             UI.points.health = constrain(UI.points.health, -1 ,150);
+            break;
         }
     }
 }
@@ -1411,7 +1413,7 @@ function gameOver(){
     push();
     textStyle(BOLD);
     textSize(16);
-    text(endGame.subtitle, 120,190);
+    text(endGame.subtitle, 120,190, 5*width/6);
     pop();
 
 
