@@ -1114,7 +1114,7 @@ function meditate(){
     //draw eyes closed(just green)
     push();
     colorMode(HSB);
-    fill(frog.body.fill.h, frog.body.fill.b);
+    fill(frog.body.fill.h, frog.body.fill.s, frog.body.fill.b);
     noStroke();
     ellipse(frog.eyes.leftX, frog.eyes.y, frog.eyes.size);
     ellipse(frog.eyes.rightX, frog.eyes.y, frog.eyes.size);
