@@ -234,6 +234,7 @@ function draw() {
     moveMathFly();
     drawMathFly();
     moveFrog();
+    depression();
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
@@ -439,6 +440,18 @@ function moveFrog() {
     frog.body.x = mouseX;
     frog.eyes.leftX = mouseX -40;
     frog.eyes.rightX= mouseX +40;
+}
+
+
+function depression(){
+    if(UI.points.fun < 50){
+        //halves the speed
+        frog.tongue.speed = 10;
+    }
+    else{
+        //regular speed
+        frog.tongue.speed = 20;
+    }
 }
 
 /**
@@ -904,7 +917,7 @@ function flyEffect(){
     switch(fly.type){
         case 0:{
             //increases health points!
-            UI.points.health += 20;
+            UI.points.health += 30;
             UI.points.health = constrain(UI.points.health, -1 ,150);
             //decreases fun:(
             //we don't like vegetables here
@@ -914,7 +927,7 @@ function flyEffect(){
         }
         case 1:{
             //increases wisdom!
-            UI.points.wisdom += 10;
+            UI.points.wisdom += 20;
             UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
             //lowers fun
             UI.points.fun -=2;
