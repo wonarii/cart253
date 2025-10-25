@@ -22,7 +22,7 @@ let timerValue = 60*3;
 
 //keeps track of which state the game is in
 //options: start, play, tutorial, gameOver, chat, submitDialog
-let gameState = "start"
+let gameState = "tutorial"
 
 //counts the number of clicks per second
 //affects back pain
@@ -33,6 +33,8 @@ let backPainMin = 10;
 
 //keeps track of how many times draw is called while user hasn't moved
 let stillnessCounter = 0;
+
+let tutorialStage = 0;
 
 // Our frog
 const frog = {
@@ -200,6 +202,24 @@ userDialog:"",
 answerIndex:0,
 };
 
+const nextButton = {
+    box:{
+        x:500,
+        y:420,
+        width:120,
+        height:40,
+        roundedness:5
+    },
+    text:{
+        size:24,
+        fill:0,
+        x:525,
+        y:448,
+        width:100,
+    },
+    glowIntensity: 0,
+
+}
 
 
 let backgroundColour = "#87ceeb";
@@ -266,7 +286,7 @@ else if(gameState === "chat"){
     drawCataracts();
     drawUI();
     //add a slight opacity filter 
-    fadeBackground();
+    fadeBackground(0,0);
     drawFrogBubble();
     drawUserBubble();
 }
@@ -275,11 +295,14 @@ else if(gameState === "submitDialog"){
     drawCataracts();
     drawUI();
     //add a slight opacity filter 
-    fadeBackground();
+    fadeBackground(0,0);
     drawFrogBubble();
     drawUserBubble();
     submitDialog();
 
+}
+if(gameState === "tutorial"){
+    drawTutorial();
 }
 }
 
@@ -296,6 +319,9 @@ function timeIt(){
         //agse the frog
         getOlder();
         
+    }
+    if(gameState === "tutorial" && (tutorialStage === 7 || tutorialStage === 11)){
+        getOlder();
     }
 }
 
@@ -497,6 +523,8 @@ function getOlder(){
 
     //make frog thinner
     frog.body.size -=0.2;
+    //constrain frog thinness
+    frog.body.size = constrain(frog.body.size, 90, 150);
 
     //make eye bags and wrinkles appear 
    frog.wrinkles.alpha += 0.005;
@@ -506,6 +534,10 @@ function getOlder(){
     //that's life:/
     UI.points.health -=2;
     UI.points.health = constrain(UI.points.health, -1 ,150);
+    //ensure you can't die during the tutorial
+    if(gameState === "tutorial"){
+        UI.points.health = constrain(UI.points.health, 1, 150);
+    }
 
     //wisdom will also decrease over time
     UI.points.wisdom -=1;
@@ -713,6 +745,13 @@ function mousePressed() {
             gameState = "tutorial";
         }
 
+    }
+    //Tutorial
+    if(gameState === 'tutorial'){
+        if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width && mouseY > nextButton.box.y && mouseY < nextButton.box.y + nextButton.box.height){
+            //moves the tutorial stage over by 1
+            tutorialStage += 1;
+        }
     }
 
 }
@@ -1181,13 +1220,13 @@ function drawUserBubble(){
     pop();
 }
 
-function fadeBackground(){
+function fadeBackground(x,y){
     push();
     noStroke();
     let rectColor = color(0);
     rectColor.setAlpha(100);
     fill(rectColor);
-    rect(0,0,width,height);
+    rect(x,y,width,height);
     pop();
 }
 
@@ -1477,4 +1516,365 @@ function gameReset(){
     frog.body.fill.s= 87;
     frog.body.fill.b= 71;
 
+};
+
+
+
+//-----------------------TUTORIAL RELATED THINGS HERE!!!!!!!!!!---------------//
+
+function drawTutorial(){
+
+    
+    //using a switch to control the tutorial's flow
+    switch(tutorialStage){
+        case 0:{
+            
+            //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0,0);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("Achieving immortality is not easy…\n\nTo do so, you must achieve balance through...");
+        
+            break;
+        }    
+        case 1:{
+             //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 80);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("Achieving immortality is not easy…\n\nTo do so, you must achieve balance through...");
+
+            drawTextBox(20, 70, 175, 100, "HEALTH! \n If the meter reaches 0, frog dies.");
+            break;
+        }  
+        case 2:{
+             //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 80);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("Achieving immortality is not easy…\n\nTo do so, you must achieve balance through...");
+
+            drawTextBox(235, 70, 175, 100, "WISDOM! \n Frog becomes more insightful with higher wisdom.");
+            
+            break;
+        }  
+        case 3:{
+                 //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 80);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("Achieving immortality is not easy…\n\nTo do so, you must achieve balance through...");
+
+            drawTextBox(450, 70, 175, 100, "HAPPINESS! \n Watch out for depression.");
+            
+            break;
+        }
+        case 4:{
+                 //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 80);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("Immortality will come with time (about 60 seconds) if you maintain balance of all three meters.");
+            break;
+        }
+          case 5:{
+                 //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 0);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("One thing stands in your way...");
+            break;
+        }
+        case 6:{
+            //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 0);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("One thing stands in your way... \n\nOLD AGE!!!");
+            break;
+        }
+        case 7:{
+            //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 80);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("As time moves forward, frog will lose health, wisdom and happiness.");
+            break;
+        }
+        case 8:{
+
+            //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
+
+            drawUI();
+
+            //fly appears
+            fly.offset = 120;
+            fly.type = 0;
+            fly.color = UI.colour.health;
+            drawFly();
+            moveFly();
+
+            fadeBackground(0, -height+80);
+            fadeBackground(0, 170);
+
+            //eating flies
+            drawTextBox(50, 230, 250, 60, "Eating flies will help replenish your meters");
+
+            //next button
+            drawNextButton();
+            break;
+        }
+
+        case 9:{
+            //set frog coords to bottom corner of screen
+            drawFrog();
+            moveFrog();
+
+            drawUI();
+
+            //fly appears
+            fly.offset = 120;
+            fly.type = 0;
+            fly.color = UI.colour.health;
+            drawFly();
+            moveFly();
+
+            fadeBackground(0, -height+80);
+            fadeBackground(0, 170);
+
+            //eating flies
+            drawTextBox(50, 230, 250, 60, "Move the frog by sliding your mouse left or right");
+
+            //next button
+            drawNextButton();
+            break;
+        }
+        case 10:{
+              //set frog coords to bottom corner of screen
+            drawFrog();
+            moveFrog();
+
+            moveTongue();
+            checkTongueFlyOverlap();
+
+            drawUI();
+
+            //fly appears
+            fly.offset = 120;
+            fly.type = 0;
+            fly.color = UI.colour.health;
+            drawFly();
+            moveFly();
+
+            fadeBackground(0, -height+80);
+            fadeBackground(0, 170);
+
+            //eating flies
+            drawTextBox(50, 230, 245, 100, "When aligned with the fly, press the left mouse button to shoot out your tongue!");
+
+            //next button
+            drawNextButton();
+            break;
+        }
+        case 11:{
+            //set frog coords to bottom corner of screen
+            drawFrog();
+            moveFrog();
+
+            moveTongue();
+            checkTongueFlyOverlap();
+
+            drawUI();
+
+            //fly appears
+            drawFly();
+            moveFly();
+
+            //eating flies
+            drawTextBox(50, 230, 245, 100, "Different coloured flies will increase the meter of the corresponding color. Try it out!");
+
+            //next button
+            drawNextButton();
+            break;
+
+        }
+    }
+
+
+};
+
+function drawNextButton(){
+
+    //next glow
+    nextButton.glowIntensity +=0.05;
+    if(nextButton.glowIntensity > 5){
+        nextButton.glowIntensity = 0;
+    }
+
+    push();
+    fill(255);
+    noStroke();
+    rect(nextButton.box.x-nextButton.glowIntensity, nextButton.box.y-nextButton.glowIntensity, nextButton.box.width+nextButton.glowIntensity*2, nextButton.box.height+nextButton.glowIntensity*2, nextButton.box.roundedness);
+    pop();
+
+
+//hover?
+if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width && mouseY > nextButton.box.y && mouseY < nextButton.box.y + nextButton.box.height){
+
+//yellow box
+    push();
+    fill(UI.colour.health);
+    noStroke();
+    rect(nextButton.box.x-5, nextButton.box.y-5, nextButton.box.width+10, nextButton.box.height+10, nextButton.box.roundedness);
+    pop();
+
+    //next text
+    push();
+    textFont(UI.font);
+    fill(255);
+    textSize(nextButton.text.size);
+    text("NEXT",nextButton.text.x, nextButton.text.y, nextButton.text.width);
+    pop();
+
+}
+else{
+//yellow box
+    push();
+    fill(UI.colour.fun);
+    noStroke();
+    rect(nextButton.box.x, nextButton.box.y, nextButton.box.width, nextButton.box.height, nextButton.box.roundedness);
+    pop();
+
+    //next text
+    push();
+    textFont(UI.font);
+    fill(nextButton.text.fill);
+    textSize(nextButton.text.size);
+    text("NEXT",nextButton.text.x, nextButton.text.y, nextButton.text.width);
+    pop();
+}
+
+}
+
+function drawTextMiddle(write){
+
+    //white box
+    push();
+    fill(255);
+    noStroke();
+    rect(100, 200, 450, 180, 10);
+    pop();
+
+    push();
+    textSize(24);
+    text(write, 120, 230, 430);
+            
+    pop();
+}
+
+function drawTextBox(x,y,w,h,write){
+
+    //white
+    push();
+    fill(255);
+    noStroke();
+    rect(x,y,w,h,10);
+    pop();
+
+    push();
+    textSize(18);
+    text(write,x+10, y+10, w-5, h-5);
+    pop();
 }
