@@ -34,7 +34,9 @@ let backPainMin = 10;
 //keeps track of how many times draw is called while user hasn't moved
 let stillnessCounter = 0;
 
-let tutorialStage = 0;
+let tutorialStage = 12;
+
+let mathProblemCalculated = false;
 
 // Our frog
 const frog = {
@@ -662,7 +664,13 @@ function checkTongueFlyOverlap() {
         // Check if it's an overlap
         const mathFlyEaten = (dmf < frog.tongue.size/2 + mathFly.size/2);
         if (mathFlyEaten) {
-        mathProblem();
+            if(gameState === "tutorial" && tutorialStage === 12){
+                tutorialStage += 1;
+            }
+            else{
+                mathProblem();
+            }
+        
         // Bring back the tongue
         frog.tongue.state = "inbound";
     }
@@ -675,8 +683,9 @@ function mathProblem(){
     mathFly.value1 = Math.floor(Math.random()*10);
     mathFly.value2 = Math.floor(Math.random()*10);
     UI.notificationText = mathFly.value1 + " + " + mathFly.value2+ " = ";
-    gameState = "math";
-
+    if(gameState === "play" || gameState === "math"){
+        gameState = "math";
+    }
 }
 
 function checkAnswer(){
@@ -697,12 +706,21 @@ function checkAnswer(){
      UI.points.wisdom -= 10;
     UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
    }
+   if(gameState === "math"){
    setTimeout(backToPlay, 1000);
+   }
+   else{
+    setTimeout(advanceTutorialStage, 1000);
+   }
 }
 
 function backToPlay(){
     gameState = "play";
     UI.notificationText="";
+}
+
+function advanceTutorialStage(){
+    tutorialStage += 1;
 }
 /**
  * Launch the tongue on click (if it's not launched yet)
@@ -763,7 +781,7 @@ function keyPressed(event){
             gameState = "chat";
         }
     }
-    else if( gameState === "math"){
+    else if( gameState === "math" || (gameState === "tutorial" && tutorialStage === 14)){
         if(event.key === "Enter"){
             checkAnswer();
         }
@@ -1776,11 +1794,11 @@ function drawTutorial(){
             moveTongue();
             checkTongueFlyOverlap();
 
-            drawUI();
-
             //fly appears
             drawFly();
             moveFly();
+
+            drawUI();
 
             //eating flies
             drawTextBox(50, 230, 245, 100, "Different coloured flies will increase the meter of the corresponding color. Try it out!");
@@ -1789,6 +1807,92 @@ function drawTutorial(){
             drawNextButton();
             break;
 
+        }
+        case 12:{
+            //set frog coords to bottom corner of screen
+            drawFrog();
+            moveFrog();
+
+            moveTongue();
+            checkTongueFlyOverlap();
+
+            fadeBackground(0, -height+60);
+            fadeBackground(0, 160);
+            
+            //math fly
+            mathFly.appears = true;
+            moveMathFly();
+            drawMathFly();
+
+            drawUI();
+
+            drawTextBox(50, 230, 245, 100, "Occasionally, you may encounter a math fly! This fly will move differently from the other flies.");
+
+            //next button
+            drawNextButton();
+            break;
+
+        }
+        case 13:{
+            //set frog coords to bottom corner of screen
+            drawFrog();
+
+            fadeBackground(0, 0);
+            
+            //math fly
+            mathFly.appears = true;
+           //moveMathFly();
+            drawMathFly();
+
+            drawUI();
+
+            drawTextMiddle('When caught, you will need to type your answer using the keyboard, then press "enter" to confirm.');
+
+            //next button
+            drawNextButton();
+            break;
+        }
+        case 14:{
+            
+            //set frog coords to bottom corner of screen
+            drawFrog();
+
+            fadeBackground(0, 0);
+            
+            //math fly
+            mathFly.appears = true;
+           //moveMathFly();
+            drawMathFly();
+
+            drawUI();
+
+            if(!mathProblemCalculated){
+                mathProblem();
+                mathProblemCalculated = true;
+            }
+            
+            backPain();
+
+            drawTextBox(50, 360, 400, 100, "Correct answers will increase wisdom while incorrect answers will decrease wisdom.")
+
+            break;
+        }
+        case 15:{
+            
+            //set frog coords to bottom corner of screen
+            drawFrog();
+
+            fadeBackground(0, 0);
+            
+
+            drawUI();
+
+    drawTextMiddle("");
+
+
+            //next button
+            drawNextButton();
+            break;
         }
     }
 
