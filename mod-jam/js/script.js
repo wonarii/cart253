@@ -34,7 +34,7 @@ let backPainMin = 10;
 //keeps track of how many times draw is called while user hasn't moved
 let stillnessCounter = 0;
 
-let tutorialStage = 12;
+let tutorialStage = 15;
 
 let mathProblemCalculated = false;
 
@@ -765,7 +765,7 @@ function mousePressed() {
 
     }
     //Tutorial
-    if(gameState === 'tutorial'){
+    if(gameState === 'tutorial' && tutorialStage != 14 && tutorialStage !== 15){
         if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width && mouseY > nextButton.box.y && mouseY < nextButton.box.y + nextButton.box.height){
             //moves the tutorial stage over by 1
             tutorialStage += 1;
@@ -796,10 +796,16 @@ function keyPressed(event){
             UI.notificationText += event.key;
         }
     }
-    else if(gameState === "chat"){
+    else if(gameState === "chat" || tutorialStage === 16){
         if(event.key === "Enter"){
-            gameState = "submitDialog"
+            if(tutorialStage === 16){
+                advanceTutorialStage();
+            }   
+            else{
+                gameState = "submitDialog"
+            }
         }
+            
         else if(event.key === "Backspace"){
             frogDialog.userDialog = frogDialog.userDialog.substring(0, frogDialog.userDialog.length -1);
         }
@@ -818,6 +824,12 @@ function keyPressed(event){
             frogDialog.userDialog = "";
             frogDialog.isTalking = false;
             gameState = "play";   
+        }
+    }
+    else if((tutorialStage === 15 && frogDialog.isTalking) || tutorialStage === 17){
+        if(event.key === "Enter"){
+            advanceTutorialStage();
+
         }
     }
 }
@@ -1249,7 +1261,6 @@ function fadeBackground(x,y){
 }
 
 function submitDialog(){
-    console.log("submitDialog");
     //print answer for 4 seconds
     //bg white bubble
     push();
@@ -1846,7 +1857,7 @@ function drawTutorial(){
 
             drawUI();
 
-            drawTextMiddle('When caught, you will need to type your answer using the keyboard, then press "enter" to confirm.');
+            drawTextMiddle('Correct answers will increase wisdom while incorrect answers will decrease wisdom.');
 
             //next button
             drawNextButton();
@@ -1873,7 +1884,7 @@ function drawTutorial(){
             
             backPain();
 
-            drawTextBox(50, 360, 400, 100, "Correct answers will increase wisdom while incorrect answers will decrease wisdom.")
+            drawTextBox(50, 360, 400, 100, 'When caught, you will need to type your answer using the keyboard, then press "enter" to confirm.')
 
             break;
         }
@@ -1881,22 +1892,44 @@ function drawTutorial(){
             
             //set frog coords to bottom corner of screen
             drawFrog();
+            moveFrog();
 
-            fadeBackground(0, 0);
-            
+             moveTongue();
+            checkTongueFlyOverlap();
+
+            //fly appears
+            drawFly();
+            moveFly();
 
             drawUI();
 
-    drawTextMiddle("");
+            frogDialog.isTalking = true;
+            frogDialog.dialogToPrint = "Hello dear tutorial student!";
+            dialog();
 
+            drawTextBox(100, 250, 400, 80, 'Sometimes, Frog may speak to you. Press "enter" to respond.');
+            break;
+        }
+        case 16:{
+            fadeBackground(0,0);
+            drawFrogBubble();
+            drawUserBubble();
 
-            //next button
-            drawNextButton();
+            drawTextBox(30, 220, 200, 100, 'Type your answer with the keyboard, then press "enter" to confirm.');
+            break;
+        }
+        case 17:{
+            fadeBackground(0,0);
+            drawFrogBubble();
+            drawUserBubble();
+
+            submitDialog();
+            drawTextBox(300, 360, 200, 100, 'Press "enter" again to exit the conversation.');
             break;
         }
     }
 
-
+console.log(tutorialStage);
 };
 
 function drawNextButton(){
