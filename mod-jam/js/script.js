@@ -730,6 +730,8 @@ function mousePressed() {
 
     //increases the click counter
     clickCounter += 1;
+    //resets the stillness counter
+    stillnessCounter = 0;
 
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
@@ -1188,7 +1190,6 @@ function checkMovement(){
     if(stillnessCounter > 400){
         meditate();
     }
-    console.log(stillnessCounter);
 
 }
 
@@ -1203,7 +1204,6 @@ function mouseIsMoving(){
 }
 
 function meditate(){
-    console.log("meditating");
     //draw eyes closed(just green)
     push();
     colorMode(HSB);
@@ -1216,6 +1216,7 @@ function meditate(){
 
     //increase wisdom
     UI.points.wisdom += 0.1;
+    UI.points.wisdom = constrain(UI.points.wisdom, 0, 150);
 }
 
 //-------CHAT GAME STATE--------//
@@ -2021,6 +2022,52 @@ function drawTutorial(){
             break;
 
         }
+          case 22:{
+            //meditation here
+            drawFrog();
+            moveFrog();
+
+             moveTongue();
+            checkTongueFlyOverlap();
+
+            //fly appears
+            drawFly();
+            moveFly();
+
+            //will be stucck at 20 for now
+            UI.points.fun = 20;
+            drawUI();
+
+            drawTextMiddle("If Frog's happiness gets too low, their speed will decrease. Try to avoid depression by catching yellow flies or talking to frog!");
+            backPain();
+            checkMovement();
+            depression();
+            drawNextButton();
+            break;
+
+        }
+        case 23:{
+            //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            
+            drawFrog();
+            moveTongue();
+           
+            drawUI();
+
+            drawTextBox(100, 100, 400, 50, "Are you ready to play?");
+            drawPlayButton();
+            drawTutorialButton();
+            backPain();
+            checkMovement();
+            depression();
+            drawNextButton();
+            break;
+
+        }
+        
     }
 };
 
