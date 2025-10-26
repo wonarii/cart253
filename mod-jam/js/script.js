@@ -1049,8 +1049,13 @@ function backPain(){
 
         //reduces health by 30 points
         UI.points.health -= 30;
-        UI.points.health = constrain(UI.points.health, -1, 150);
-     
+       
+        if(gameState === "tutorial"){
+            UI.points.health = constrain(UI.points.health, 1, 150);
+        }
+        else{
+            UI.points.health = constrain(UI.points.health, -1, 150);
+        }
     //sets background to blue
    //this is a reset from the red if you get back pain
     setTimeout(resetBg, 1000/2);
@@ -1988,6 +1993,29 @@ function drawTutorial(){
 
             drawTextMiddle("Careful not to meditate too long as your other meters will continue to drop.");
 
+            checkMovement();
+            drawNextButton();
+            break;
+
+        }
+        case 21:{
+            //meditation here
+            drawFrog();
+            moveFrog();
+
+             moveTongue();
+            checkTongueFlyOverlap();
+
+            //fly appears
+            drawFly();
+            moveFly();
+
+            drawUI();
+
+            drawTextBox(20,200,300, 100, "With old age also comes back pain. Try not to strain Frog too much or you might be met with sharp pain!");
+            drawTextBox(200, 320, 200, 100, "Excessive clicking triggers back pain. Click the mouse very quickly to test it out.");
+
+            backPain();
             checkMovement();
             drawNextButton();
             break;
