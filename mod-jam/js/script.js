@@ -22,7 +22,7 @@ let timerValue = 60*3;
 
 //keeps track of which state the game is in
 //options: start, play, tutorial, gameOver, chat, submitDialog
-let gameState = "tutorial"
+let gameState = "start"
 
 //counts the number of clicks per second
 //affects back pain
@@ -34,7 +34,7 @@ let backPainMin = 10;
 //keeps track of how many times draw is called while user hasn't moved
 let stillnessCounter = 0;
 
-let tutorialStage = 18;
+let tutorialStage = 0;
 
 let mathProblemCalculated = false;
 
@@ -738,15 +738,17 @@ function mousePressed() {
     }
   
     //START SCREEN
-    if(gameState === "start"){
+    if(gameState === "start" || (gameState === "tutorial" && tutorialStage === 23)){
         //if you press on the play button
         if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
+            gameReset();
         //game state switches to play
             gameState = "play";
         }
         //if you press on tutorial button
         if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
             //gamestate swtches to tutorial
+            tutorialStage = 0;
             gameState = "tutorial";
         }
 
@@ -761,6 +763,7 @@ function mousePressed() {
         }
         //if you press on tutorial button
         if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
+            tutorialStage = 0;
             //gamestate swtches to tutorial
             gameState = "tutorial";
         }
@@ -1548,12 +1551,18 @@ function gameReset(){
     timerValue= 60*3;
     endGame.subtitle = "Oops."
     UI.notificationText = "";
+    frogDialog.dialogToPrint = "hi"
     clickCounter = 0;
+    stillnessCounter = 0;
     frog.body.size = 150;
     frog.wrinkles.alpha = 0;
     frog.body.fill.h= 120;
     frog.body.fill.s= 87;
     frog.body.fill.b= 71;
+    tutorialStage = 0;
+    frogDialog.isTalking = false;
+    cataracts.alpha = 0;
+    cataracts.blur = 0;
 
 };
 
@@ -1760,7 +1769,7 @@ function drawTutorial(){
             //set frog coords to bottom corner of screen
             drawFrog();
             moveFrog();
-
+            moveTongue();
             drawUI();
 
             //fly appears
@@ -1943,7 +1952,7 @@ function drawTutorial(){
             frog.eyes.leftX = 100 -40;
             frog.eyes.rightX= 100 +40;
             drawFrog();
-
+            moveTongue();
             drawUI();
 
             //draw dark rectangle overtop everything
@@ -1958,6 +1967,9 @@ function drawTutorial(){
             break;
         }
         case 19:{
+
+            //randomly resetting the UI notification text because I don't know where else to do that
+            UI.notificationText = "";
             //meditation here
             drawFrog();
             moveFrog();
@@ -2063,11 +2075,9 @@ function drawTutorial(){
             backPain();
             checkMovement();
             depression();
-            drawNextButton();
             break;
 
         }
-        
     }
 };
 
