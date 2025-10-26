@@ -34,7 +34,7 @@ let backPainMin = 10;
 //keeps track of how many times draw is called while user hasn't moved
 let stillnessCounter = 0;
 
-let tutorialStage = 15;
+let tutorialStage = 18;
 
 let mathProblemCalculated = false;
 
@@ -322,7 +322,7 @@ function timeIt(){
         getOlder();
         
     }
-    if(gameState === "tutorial" && (tutorialStage === 7 || tutorialStage === 11)){
+    if(gameState === "tutorial" && (tutorialStage === 7 || tutorialStage === 11 || tutorialStage === 19 || tutorialStage === 20)){
         getOlder();
     }
 }
@@ -819,6 +819,10 @@ function keyPressed(event){
             if(frogDialog.userDialog != ""){
             UI.points.fun += 50;
             UI.points.fun = constrain(UI.points.fun, 0, 150);
+            }
+            else{
+                UI.points.fun -= 20;
+                UI.points.fun = constrain(UI.points.fun, 0, 150);
             }
             //reset user dialog
             frogDialog.userDialog = "";
@@ -1890,7 +1894,7 @@ function drawTutorial(){
         }
         case 15:{
             
-            //set frog coords to bottom corner of screen
+            
             drawFrog();
             moveFrog();
 
@@ -1927,9 +1931,69 @@ function drawTutorial(){
             drawTextBox(300, 360, 200, 100, 'Press "enter" again to exit the conversation.');
             break;
         }
-    }
+        case 18:{
+            //set frog coords to bottom corner of screen
+            frog.body.x = 100;
+            frog.eyes.leftX = 100 -40;
+            frog.eyes.rightX= 100 +40;
+            drawFrog();
 
-console.log(tutorialStage);
+            drawUI();
+
+            //draw dark rectangle overtop everything
+            fadeBackground(0, 0);
+
+            //next button
+            drawNextButton();
+
+            //initial text
+            drawTextMiddle("Saying anything to Frog will increase happiness but saying nothing will decrease happiness. Don't ignore frog! ");
+            
+            break;
+        }
+        case 19:{
+            //meditation here
+            drawFrog();
+            moveFrog();
+
+            moveTongue();
+            checkTongueFlyOverlap();
+
+            //fly appears
+            drawFly();
+            moveFly();
+
+            drawUI();
+            checkMovement();
+
+            drawTextMiddle("Another way to increase wisdom is to meditate. Try staying still without moving frog.")
+
+            drawNextButton();
+            break;
+
+        }
+         case 20:{
+            //meditation here
+            drawFrog();
+            moveFrog();
+
+             moveTongue();
+            checkTongueFlyOverlap();
+
+            //fly appears
+            drawFly();
+            moveFly();
+
+            drawUI();
+
+            drawTextMiddle("Careful not to meditate too long as your other meters will continue to drop.");
+
+            checkMovement();
+            drawNextButton();
+            break;
+
+        }
+    }
 };
 
 function drawNextButton(){
