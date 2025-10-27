@@ -371,9 +371,8 @@ else if(gameState === "math"){
     drawCataracts();
     //draws UI over everything (so math problem is visible)
     drawUI();
-    //back pain still exists even if you're doing math 
-    //also this is where i put the notif text so the math problem will display
-    backPain();
+    //will display the math problem
+    displayNotificationText();
 }
 //if the game state is chat then you are speaking to the frog
 else if(gameState === "chat"){
@@ -1170,7 +1169,10 @@ function backPain(){
    //this is a reset from the red if you get back pain
     setTimeout(resetBg, 1000/2);
     }
-       //ouch text
+      displayNotificationText();
+}
+
+function displayNotificationText(){
         push();
         textStyle(BOLD);
         textSize(32);
