@@ -1674,6 +1674,7 @@ function gameReset(){
     frogDialog.isTalking = false;
     cataracts.alpha = 0;
     cataracts.blur = 0;
+    mathProblemCalculated = false;
 
 };
 
