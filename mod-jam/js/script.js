@@ -854,6 +854,7 @@ function mousePressed() {
             //gamestate swtches to tutorial
             tutorialStage = 0;
             gameState = "tutorial";
+            gameReset();
         }
 
     }
@@ -870,6 +871,7 @@ function mousePressed() {
             tutorialStage = 0;
             //gamestate swtches to tutorial
             gameState = "tutorial";
+            gameReset();
         }
 
     }
