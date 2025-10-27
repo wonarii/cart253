@@ -1,13 +1,30 @@
 /**
- * Frogfrogfrog
- * Pippin Barr
+ * Frogfrogfrog: The Quest for Immortality
+ * Arielle Wong and Pippin Barr
  * 
- * A game of catching flies with your frog-tongue
+ * Gain immortality by achieving balance in health, wisdom and happiness. 
+ * Eat flies to keep those stats high and face the effects of old age!
  * 
  * Instructions:
+ * - Keep meters high
+ * - Frog dies if the green meter reaches 0
+ * - Frog doesn't achieve immortality if wisdom and happiness are not sufficient
+ * - Boost meter points by eating flies of the corresponding colours 
  * - Move the frog with your mouse
  * - Click to launch the tongue
  * - Catch flies
+ * - Math flies will stay within one area of the screen and disappear quickly
+ * - If caught, answer the math question correctly to boost wisdom
+ * - Answer using the keyboard and press enter to confirm
+ * - Pressing enter while Frog is talking will allow you to speak to them
+ * - Type your answer then press enter to confirm
+ * - Speaking to frog will increase happiness
+ * - Clicking too fast will result in back pain
+ * - Staying still will trigger a meditative state that boosts wisdom
+ * - Depression happens if the happiness meter is too low
+ * - Depression will lead to slower movement speed
+ * - Frog develops cataracts over time, you can't do anything about it
+ * 
  * 
  * Made with p5
  * https://p5js.org/
@@ -34,21 +51,28 @@ let backPainMin = 10;
 //keeps track of how many times draw is called while user hasn't moved
 let stillnessCounter = 0;
 
+//keeps track of which part of the tutorial you have reached
+//there are 23 stages
 let tutorialStage = 0;
 
+//checks if the math problem has been set up or not for the user
+//prevents infinitely cycling through math problems
 let mathProblemCalculated = false;
 
 // Our frog
 const frog = {
     // The frog's body has a position and size
     body: {
+        //frog's colour
         fill:{
             h:120,
             s:87,
             b:71,
         },
+        //frog's position
         x: 320,
         y: 510,
+        //frog's size
         size: 150
     },
     // The frog's tongue has a position, size, speed, and state
@@ -66,14 +90,17 @@ const frog = {
         rightX:320,
         y:455,
         size: 30,
+        //the black part of the eyes
         pupils:{
         size: 10,
         }
     },
+    //wrinkles will appear over time using the alpha
     wrinkles:{
         h:106,
         s: 51,
         b:42,
+        //transparency of the wrinkles
         alpha:0,
     }
 };
@@ -84,6 +111,7 @@ const fly = {
     x: 0,
     y: 200, // Will be random
     //for the sine wave
+    //height fly appears on the canvas
     offset: 100,
     angle: 0,
     scalar: 30,
@@ -96,15 +124,17 @@ const fly = {
     //1: wise
     //2: fun
     type:0,
+    //the wings flap very quickly
     wings:{
         x:undefined,
         y:undefined,
         sizeX: 10,
         sizeY: 5,
+        //white
         colour: 255,
     },
 };
-//math fly
+//math fly (same as fly apart from changes in the movements and effects)
 const mathFly = {
     appears: false,
     x: 100,
@@ -123,95 +153,124 @@ const mathFly = {
         sizeY: 5,
         colour: 255,
     },
+    //these are the numbers appearing in the math problem
     value1: 0,
     value2: 0,
 };
 
+//this controls the main user interface
+//ex: points meters at the top of the screen
 const UI = {
+    //font is established after the preload
     font: undefined,
+    //main colours used
     colour:{
 health:"#17B617" ,
 wisdom:"#5c42b1ff",
 fun:"#eba708ff",
 empty: "#d1d1d2ff"
     },
+    //amount of points in each meter goes from 0 to 150
     points:{
         health:150,
         wisdom:150,
         fun:150,
     },
+    //notification text appears in the middle of the screen 
+    //it is used by back pain but also math problems
     notificationText: "",
 }
 
+//quest for immortality title
 const title = {
     frogTitleFont: undefined,
     subtitleFont: undefined,
+    //transparency of the glow
     glowAlpha: 230,
+    //amount by which the glow will change (can be -2 or +1)
     glowChange: 1,
+    //position of title
     x:150,
     y:180,
+    //for the bobbing animation
     offset: 140,
     angle: 0,
     scalar: 5,
     speedOfSine: 0.05,
 }
 
+//messages used in the game over/success screens at the end of the game
 const endGame = {
+    //if your health reaches 0
     frogDeathMessages : ["Frog has died of tuberculosis.", "Frog just wasn't feeling it.", "Frog has succumbed to a heart attack.", "Frog sneezed too hard."],
+    //if you reached the end but are missinf wisdom
     funNotWise: ["Live fast, die young", 'Maybe buying that "vintage" motorcycle wasn\'t the best idea', "No matter how tempting, do not eat the deep fried icecream", "A life filled with fun is a life well lived."],
+    //reached end but missing fun
     wiseNotFun: ["Perhaps the greatest wisdom of all is learning to have fun", "So wise yet so unhappy..."],
+    //reached end and missing both wisdom and fun
     noWiseNoFun: ["A life spent only to extend it is a life wasted away", "All those chia seed smoothies, and for what?", "Time is so short"],
-    
-    
+    //the message that will end up being displayed. oops is a placeholder
     subtitle: "Oops.",
 }
 
+//frog cataracts
 const cataracts = {
     colour:{
         r:217,
         g:188,
         b:122,
     },
+    //transparency/intensity of the yellow
     alpha: 0,
+    //bluriness of vision
     blur:0,
 }
-
+//anything related to the dialog feature
 const frogDialog = {
-
+//keeps track of whether or not the frog is talking
     isTalking: false,
-wiseSayings : ["\“Appear weak when you are strong, and strong when you are weak.\” - Sun Tzu",
+    //dialog options if the frog is wise
+    wiseSayings : ["\“Appear weak when you are strong, and strong when you are weak.\” - Sun Tzu",
     "\“If you know the enemy and know yourself, you need not fear the result of a hundred battles.\” -Sun Tzu",
     "\“Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.\” - Sun Tzu",
     "Great power comes with great responsibility - Uncle Ben",
-
- ],
- filler:[
+    ],
+    //filler dialog (old people sayings)
+    filler:[
     "The weather these days… The farmers won’t be too happy.",
     "Did you know that my neighbour bought new types of trash bags? Wonder if it’s the divorce making them crazy.",
     "Back in my days, we didn’t have any of these weefees in our homes. We just had lead and arsenic.",
     "You should come visit more often. I made this new thing called strawberry-chicken pot pie.",
     "This reminds me of when my cousin drowned in the sewers.",
     "Remember my aunt’s best friend’s daughter’s husband’s uncles’ cousin? Yes, well, he’s studying to be a doctor. "
- ],
- responses:[
+    ],
+    //responses after being spoken to
+    responses:[
     "Oh! Interesting opinion…",
     "Hahah, you always say such silly things!",
     "Someone once said something similar to me…",
     "I love talking to you!",
- ],
-dialogToPrint:"hi",
-userDialog:"",
-answerIndex:0,
+    ],
+    //dialog that will be printed in the speech bubble
+    dialogToPrint:"hi",
+    //dialog the user types
+    userDialog:"",
+    //array index of which answer is chosen
+    answerIndex:0,
 };
 
+//next button in the tutorial
 const nextButton = {
+    //yellow box 
     box:{
         x:500,
         y:420,
         width:120,
         height:40,
+        //rounded corners
         roundedness:5
     },
+    //text in the button
     text:{
         size:24,
         fill:0,
@@ -219,13 +278,16 @@ const nextButton = {
         y:448,
         width:100,
     },
+    //how much glow around the button (varies for the flashing effect)
     glowIntensity: 0,
 
 }
 
 
-let backgroundColour = "#87ceeb";
+let backgroundColour = "#87ceeb"; //background colour of the game
 
+//runs before anything else
+//loads my fonts so they're ready to use!
 function preload(){
     title.frogTitleFont = loadFont('./assets/Chewy-Regular.ttf');
     title.subtitleFont = loadFont('./assets/TradeWinds-Regular.ttf'); 
@@ -238,60 +300,97 @@ function preload(){
  */
 function setup() {
     createCanvas(640, 480);
-//game timer, every third of a second, the timeIt method gets called
+    //game timer, every third of a second, the timeIt method gets called
     setInterval(timeIt, 1000/3);
     //for the click counter, it will -1 click every second
     setInterval(decreaseClickCount, 1000);
     // Give the fly its first random position
     resetFly();
-
 }
 
+/**
+ * Called every frame by the computer
+ * Main driver of my program
+ * Controls what is seen on the screen.
+ */
 function draw() {
+    //draw the beautiful blue background
     background(backgroundColour);
 
+    //if the game is in play mode
     if(gameState === "play"){
+    //move the fly across the screen
     moveFly();
+    //draw the fly
     drawFly();
+    //move the math fly
     moveMathFly();
+    //draw the math fly
     drawMathFly();
+    //move frog (follows the mouse)
     moveFrog();
+    //checks if frog should have depression and if so, implements it
     depression();
+    //moves Frog's tongue
     moveTongue();
+    //draws frog
     drawFrog();
+    //checks if user caught a fly
     checkTongueFlyOverlap();
+    //draws the cataracts (UI is after just so you can still see the UI even with cataracts)
     drawCataracts();
+    //draws the points meters
     drawUI();
+    //checks for strenuous activity and gives back pain accordingly
     backPain();
+    //makes the frog speak
     dialog();
+    //for meditation purposes, checks if Frog is moving
     checkMovement();
     //when the timer runs out
     if (timerValue == 0) {
+        //the game ends and we switch to game over phase
     gameState = "gameOver";
   }
 }
+//if we are at the start of the game, the start menu is displayed
 else if(gameState === "start"){
+    //displays the title screen and initial start menu
     startScreen();
 }
+//if we are in the game over state, we'll display the game over screen and end menu
 else if(gameState === "gameOver"){
+    //displays the end screen
     gameOver();
 }
+//if the state is math, a math fly is asking a math problem
 else if(gameState === "math"){
-
+//draws the frog
     drawFrog();
+    //draws cataracts
     drawCataracts();
+    //draws UI over everything (so math problem is visible)
     drawUI();
+    //back pain still exists even if you're doing math 
+    //also this is where i put the notif text so the math problem will display
     backPain();
 }
+//if the game state is chat then you are speaking to the frog
 else if(gameState === "chat"){
+    //frog still there
     drawFrog();
+    //cataracts still there
     drawCataracts();
+    //meters still there
     drawUI();
     //add a slight opacity filter 
     fadeBackground(0,0);
+    //speech bubble for Frog
     drawFrogBubble();
+    //speech bubble for you!
     drawUserBubble();
 }
+//if user submits a response to frog
 else if(gameState === "submitDialog"){
     drawFrog();
     drawCataracts();
@@ -300,10 +399,14 @@ else if(gameState === "submitDialog"){
     fadeBackground(0,0);
     drawFrogBubble();
     drawUserBubble();
+    //Frog's response to your insightful commentary
     submitDialog();
 
 }
+//if you're doing the tutorial
 if(gameState === "tutorial"){
+    //draw tutorial is the main driver for the tutorial
+    //controls the tutorial's stages
     drawTutorial();
 }
 }
@@ -318,10 +421,12 @@ function timeIt(){
     if(timerValue > 0 && gameState === "play"){
         //decreases the timer value
         timerValue --;
-        //agse the frog
+        //ages the frog
         getOlder();
         
     }
+    //only certain tutorial stages will require frog to age,
+    // others will have frog be "intemporel", unaffected by the claws of time
     if(gameState === "tutorial" && (tutorialStage === 7 || tutorialStage === 11 || tutorialStage === 19 || tutorialStage === 20)){
         getOlder();
     }
