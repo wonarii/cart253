@@ -874,7 +874,7 @@ function mousePressed() {
 
     }
     //Tutorial
-    if(gameState === 'tutorial' && tutorialStage != 14 && tutorialStage !== 15){
+    if(gameState === 'tutorial' && tutorialStage != 14 && tutorialStage !== 15 && tutorialStage !== 16 && tutorialStage !== 17 && tutorialStage !==23){
         if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width && mouseY > nextButton.box.y && mouseY < nextButton.box.y + nextButton.box.height){
             //moves the tutorial stage over by 1
             tutorialStage += 1;
