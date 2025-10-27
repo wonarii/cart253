@@ -1,18 +1,48 @@
-# TITLE OF PROJECT
+# FrogFrogFrog : The Quest for Immortality
 
-AUTHOR NAME
+Arielle Wong
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+[View this project online](https://wonarii.github.io/cart253/mod-jam/)
 
 ## Description
 
-This description should help the reader understand what the program is, anything they should know to be able to experience it (controls, special features, etc.), and what the desired user experience is. For example:
+This is a modification of the game [FrogFrogFrog](https://pippinbarr.com/frogfrogfrog/).
 
-> *The Mayor of Clown Town* is a simulator experience that allows the user to control a small town populated entirely by clowns.
+In this version, Frog is attempting to avoid death by achieving immortality.
+To do so, Frog must balance health, wisdom and happiness by eating well, exercising their mind and chatting with friends.
 
-> The experience is controlled via the mouse, with left click selecting a clown and bringing up a menu of options such as "slip of banana peel" or "get into impossible capacious clown-car."
+## Rules
 
-> The project is meant to give the user a sense of what it would be the mayor of a town of clowns, eventually getting the sense that clowns are not taking their civic duties seriously.
+To win the game, you must survive for 60 seconds while keeping the meters as high as possible.
+[Health](#health-meter) reaching 0 will result in death, but [wisdom](#wisdom-meter) and [happiness](#happiness-meter) can always be raised back up.
+Immortality is only achieved with high wisdom and happiness.
+
+### Old Age
+
+As the game advances, Frog will start aging. This will affect not only Frog's appearance but will also make them more vulnerable to things like [back pain](#back-pain) and cataracts.
+
+### Health Meter
+
+Frog's health is pictured as a green meter in the top left corner. It is represented by a green plus symbol.
+If this meter reaches 0, Frog will die and it will be game over.
+
+![Image of the health meter](./assets/images/health-meter.png)
+
+### Wisdom Meter
+
+### Happiness Meter
+
+### Flies
+
+Math fly
+
+Chatting with Frog
+
+Meditation
+
+### Back Pain
+
+Depression
 
 ## Screenshot(s)
 
