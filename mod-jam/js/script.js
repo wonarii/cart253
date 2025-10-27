@@ -2013,7 +2013,6 @@ function drawTutorial(){
                 mathProblemCalculated = true;
             }
             
-            backPain();
 
             drawTextBox(50, 360, 400, 100, 'When caught, you will need to type your answer using the keyboard, then press "enter" to confirm.')
 
