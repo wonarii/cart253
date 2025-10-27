@@ -450,12 +450,12 @@ function moveFly() {
 }
 
 /**
- * Draws the fly as a black circle
+ * Draws the fly 
  */
 function drawFly() {
     push();
     noStroke();
-    //new randomized fly colours!
+    //new randomized fly colours! (colour is reset when fly exits the canvas)
     fill(fly.color);
     ellipse(fly.x, fly.y, fly.size);
     pop();
@@ -463,6 +463,7 @@ function drawFly() {
 push();
 noStroke();
 let wingColour = color(fly.wings.colour);
+//slight transparency
 wingColour.setAlpha(1000);
 fill(wingColour);
 ellipse(fly.wings.x, fly.wings.y, fly.wings.sizeX, fly.wings.sizeY);
@@ -472,42 +473,57 @@ pop();
 
 }
 
+/**
+ * Moves the fly's wings in a randomized pattern
+ */
 function moveWings(x,y){
     fly.wings.x = x - Math.floor(Math.random() * 3);
     fly.wings.y = y -Math.floor(Math.random() * 8);
 }
 
+/**
+ * Moves the math fly's wings in a randomized pattern
+ */
 function moveMathWings(x,y){
     mathFly.wings.x = x - Math.floor(Math.random() * 3);
     mathFly.wings.y = y - Math.floor(Math.random() * 8);
 }
 
-
-
+/**
+ * Moves the math fly up and down and then random sideways movements
+ */
 function moveMathFly() {
-    //trying out a sine wave
+    //trying out a sine wave (up and down bobbing)
     mathFly.y = mathFly.offset + sin(mathFly.angle) * mathFly.scalar;
     mathFly.angle+= mathFly.speedOfSine;
     //random number between -2 and 2
+    //fly will randomly go left and right
     mathFly.direction = Math.floor(Math.random()*(2 +2)) - 2;
     mathFly.x += mathFly.direction;
+    //constrain so the fly doesn't leave the canvas
     mathFly.x = constrain(mathFly.x, 30, width-30);
 }
 
+/**
+ * Draws the math fly
+ */
 function drawMathFly(){
-
+    //if math fly isn't already there
     if(mathFly.appears === false){
     //rolls a dice to see if math fly appears
+    //it's a 200  sided dice!
     let diceRoll = Math.floor(Math.random()*200);
-
+    //if you roll a 1, a math fly will appear
     if(diceRoll === 1){
+        //set the boolean to true
         mathFly.appears = true;
         //math fly goes away after 2 seconds
         setTimeout(mathFlyDisappears, 2000);
     }
     }
-    
+    //if the math fly is on the canvas
     if(mathFly.appears === true){
+        //draws the math fly
      push();
     noStroke();
     fill(UI.colour.wisdom);
@@ -525,18 +541,24 @@ function drawMathFly(){
     pop();
     }
 }
-
-
+/**
+ * After 2 seconds, the math fly disappears
+ */
 function mathFlyDisappears(){
+    //set the boolean to false
     mathFly.appears = false;
+    //set a new random starting position for the next math fly
     mathFly.x = random(30, width-30);
-    mathFly.y = random(80, 300);
+    //set a new random height for the next math fly
+    mathFly.offset = random(80, 300);
 }
 /**
- * Resets the fly to the left with a random y
+ * Resets the fly to the left with a random height
  */
 function resetFly() {
+    //all the way left
     fly.x = 0;
+    //this is the height of the fly
     fly.offset = random(50, 300);
     //i want green flies more frequently so:
     let diceRoll = Math.floor(Math.random() * 6);
@@ -545,9 +567,10 @@ function resetFly() {
         fly.type = 0;
     }
     else{
-    //randomizing the fly types and giving them differetn colours
+    //randomizing the fly types 0-2
     fly.type = Math.floor(Math.random() * 3);
     }
+    //matching the fly colour to the type assigned
     switch(fly.type){
         case 0: {
         fly.color = UI.colour.health;
@@ -570,12 +593,16 @@ function resetFly() {
  */
 function moveFrog() {
     frog.body.x = mouseX;
+    //eyes also follow the body!
     frog.eyes.leftX = mouseX -40;
     frog.eyes.rightX= mouseX +40;
 }
 
-
+/**
+ * makes frog slower if happiness is low
+ */
 function depression(){
+    //if happinesss/fun is lower than 50 (1/3 the bar)
     if(UI.points.fun < 50){
         //halves the speed
         frog.tongue.speed = 10;
@@ -703,6 +730,7 @@ function drawFrog() {
     noStroke();
     colorMode(HSB);
     let wrinkleColour = color(frog.wrinkles.h, frog.wrinkles.s, frog.wrinkles.b);
+    //they will get darker with time
     wrinkleColour.setAlpha(frog.wrinkles.alpha);
     fill(wrinkleColour);
     //eye bags
@@ -715,6 +743,7 @@ function drawFrog() {
     noFill();
     strokeWeight(4);
     //forehead wrinkles
+    //based off the eye positions so they follow the frog's movements
     curve(frog.eyes.leftX + 10, frog.eyes.y+6 ,frog.eyes.leftX+30, frog.eyes.y,frog.eyes.leftX+50, frog.eyes.y,frog.eyes.leftX+75, frog.eyes.y+6);
     curve(frog.eyes.leftX, frog.eyes.y+15 ,frog.eyes.leftX+20, frog.eyes.y+9,frog.eyes.leftX+60, frog.eyes.y+9,frog.eyes.leftX+85, frog.eyes.y+15);
     curve(frog.eyes.leftX + 10, frog.eyes.y+23 ,frog.eyes.leftX+30, frog.eyes.y+17,frog.eyes.leftX+50, frog.eyes.y+17,frog.eyes.leftX+75, frog.eyes.y+23);
@@ -732,7 +761,6 @@ function drawFrog() {
     push();
     fill("#000000");
     noStroke();
-
     ellipse(frog.eyes.leftX, frog.eyes.y-10, frog.eyes.pupils.size);
     ellipse(frog.eyes.rightX, frog.eyes.y-10, frog.eyes.pupils.size);
     pop();
@@ -768,10 +796,12 @@ function checkTongueFlyOverlap() {
         // Check if it's an overlap
         const mathFlyEaten = (dmf < frog.tongue.size/2 + mathFly.size/2);
         if (mathFlyEaten) {
+            //for the tutorial math fly 
             if(gameState === "tutorial" && tutorialStage === 12){
                 tutorialStage += 1;
             }
             else{
+                //calculates a math problem
                 mathProblem();
             }
         
@@ -781,17 +811,27 @@ function checkTongueFlyOverlap() {
     }
 }
 
+/**
+ * Generates a math problem
+ */
 function mathProblem(){
     //get an extra 5 seconds of game time
     timerValue += 5*3;
+    //sets the first random number 0-9
     mathFly.value1 = Math.floor(Math.random()*10);
+    //sets the second random number 0-9
     mathFly.value2 = Math.floor(Math.random()*10);
+    //changes the notification text to display the equation
     UI.notificationText = mathFly.value1 + " + " + mathFly.value2+ " = ";
+    //changes the game state to math
     if(gameState === "play" || gameState === "math"){
         gameState = "math";
     }
 }
 
+/**
+ * Checks if the player answered the math question correctly
+ */
 function checkAnswer(){
    //verifies answer
    //gets only what is entered after the =
@@ -801,31 +841,45 @@ function checkAnswer(){
    if(answer == (mathFly.value1 + mathFly.value2)){
     //correct answer
     UI.notificationText = "Correct!";
+    //increases wisdom points
     UI.points.wisdom += 40;
     UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
 
    }
    else{
+    //incorrect answer
      UI.notificationText = "Incorrect.";
+     //decreases wisdom points
      UI.points.wisdom -= 10;
     UI.points.wisdom = constrain(UI.points.wisdom, 0 ,150);
    }
    if(gameState === "math"){
+    //displays the correct/incorrect message for 1 second then returns to regular gameplay
    setTimeout(backToPlay, 1000);
    }
    else{
+    //if you answer in the tutorial, you advance to the next stage of the tutorial
     setTimeout(advanceTutorialStage, 1000);
    }
 }
 
+/**
+ * Returns the player back to regular gameplay 
+ */
 function backToPlay(){
+    //switches the game state
     gameState = "play";
+    //resets the notification text to empty
     UI.notificationText="";
 }
 
+/**
+ * Advances the tutorial stage by 1
+ */
 function advanceTutorialStage(){
     tutorialStage += 1;
 }
+
 /**
  * Launch the tongue on click (if it's not launched yet)
  * also controls button presses
@@ -837,11 +891,12 @@ function mousePressed() {
     //resets the stillness counter
     stillnessCounter = 0;
 
+    //if frog's tongue is in their mouth, shoot it out
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
   
-    //START SCREEN
+    //START SCREEN and END OF TUTORIAL
     if(gameState === "start" || (gameState === "tutorial" && tutorialStage === 23)){
         //if you press on the play button
         if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
@@ -851,7 +906,7 @@ function mousePressed() {
         }
         //if you press on tutorial button
         if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
-            //gamestate swtches to tutorial
+            //gamestate switches to tutorial
             tutorialStage = 0;
             gameState = "tutorial";
             gameReset();
@@ -875,7 +930,7 @@ function mousePressed() {
         }
 
     }
-    //Tutorial
+    //Tutorial NEXT BUTTON
     if(gameState === 'tutorial' && tutorialStage != 14 && tutorialStage !== 15 && tutorialStage !== 16 && tutorialStage !== 17 && tutorialStage !==23){
         if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width && mouseY > nextButton.box.y && mouseY < nextButton.box.y + nextButton.box.height){
             //moves the tutorial stage over by 1
@@ -885,62 +940,84 @@ function mousePressed() {
 
 }
 
+/**
+ * Reacts to any key pressed on the keyboard
+ */
 function keyPressed(event){
+
+    //triggers the chat with Frog
+    //if Forg is talking and you're playing the game
     if(frogDialog.isTalking && gameState === "play"){
-        
+        //press enter to go to chat state
         if(event.key === "Enter"){
             gameState = "chat";
         }
     }
+    //if game state is math or tutorial is teaching math
     else if( gameState === "math" || (gameState === "tutorial" && tutorialStage === 14)){
+        //pressing enter confirms your answer and checks it
         if(event.key === "Enter"){
             checkAnswer();
         }
+        //pressing backspace will delete what you have typed
         else if(event.key === "Backspace"){
             //if the last two characters are not = then delete
             if(UI.notificationText.substring(UI.notificationText.length -2, UI.notificationText.length) != "= "){
+                //removes the last character of the string
                 UI.notificationText = UI.notificationText.substring(0, UI.notificationText.length-1);
             }
             
         }
+        //any other key will print in the notification text
         else{
             UI.notificationText += event.key;
         }
     }
+    //if you're chatting with frog (gameplay and tutorial)
     else if(gameState === "chat" || tutorialStage === 16){
+        //enter submits your answer
         if(event.key === "Enter"){
+            //if doing the tutorial, you move on
             if(tutorialStage === 16){
                 advanceTutorialStage();
             }   
             else{
+                //game state changes to submitDialog
                 gameState = "submitDialog"
             }
         }
-            
+            //backspace deletes what you've typed
         else if(event.key === "Backspace"){
             frogDialog.userDialog = frogDialog.userDialog.substring(0, frogDialog.userDialog.length -1);
         }
         else{
+            //anything else will print in your speech bubble
             frogDialog.userDialog += event.key;
         }
     }
+    //if your response has been sent to frog
     else if(gameState === "submitDialog"){
+        //enter will exit chat mode
         if(event.key === "Enter"){
             //only get points if you say something to the frog
             if(frogDialog.userDialog != ""){
             UI.points.fun += 50;
             UI.points.fun = constrain(UI.points.fun, 0, 150);
             }
+            //say nothing, lose points heheh
             else{
                 UI.points.fun -= 20;
                 UI.points.fun = constrain(UI.points.fun, 0, 150);
             }
             //reset user dialog
             frogDialog.userDialog = "";
+            //Frog is no longer talking
             frogDialog.isTalking = false;
+            //back to regular gameplay
             gameState = "play";   
         }
     }
+    //During specific stages of the tutorial, Enter key triggers the next stage
     else if((tutorialStage === 15 && frogDialog.isTalking) || tutorialStage === 17){
         if(event.key === "Enter"){
             advanceTutorialStage();
@@ -948,18 +1025,24 @@ function keyPressed(event){
         }
     }
 }
-
+/**
+ * Draws the frog's cataracts
+ */
 function drawCataracts(){
     //draws a big rectangle over whole screen
     push();
+    //yellow!
     let cataractsColour = color(cataracts.colour.r, cataracts.colour.g, cataracts.colour.b);
+    //transparent so we can still see Frog
     cataractsColour.setAlpha(cataracts.alpha);
     fill(cataractsColour);
     noStroke();
     rect(0,0,width,height);
     pop();
 
+    //after a certain time, the blur will appear!
     if(timerValue <= 20*3){
+        //blurs the entire screen 
         filter(BLUR, cataracts.blur);
     }
 }
@@ -968,13 +1051,15 @@ function drawCataracts(){
  * Displays the user interface (three points bars)
  * 
  */
-
 function drawUI(){
     drawHealthBar();
    drawWisdomBar();
     drawFunBar();
 }
 
+/**
+ * Draws the health bar and icon (green one)
+ */
 function drawHealthBar(){
     //back bar
     push();
@@ -986,6 +1071,7 @@ function drawHealthBar(){
     push();
     noStroke();
     fill(UI.colour.health);
+    //will match the amount of points 
     rect(50, 30, UI.points.health, 20, 5, 0, 0, 5);
     pop();
     //border bar
@@ -999,19 +1085,25 @@ function drawHealthBar(){
     push();
     strokeWeight(6);
     noFill();
+    //just a + sign
     rect(20, 25, 10, 30, 2);
     rect(10, 35, 30, 10, 2);
     pop();
     //colour
     push();
     noStroke();
+    //green
     fill(UI.colour.health);
+    //+ sign
     rect(20, 25, 10, 30, 2);
     rect(10, 35, 30, 10, 2);
     pop();
   
 }
 
+/**
+ * Draws the wisdom meter and its icon (blue one)
+ */
 function drawWisdomBar(){
     //back bar
     push();
@@ -1023,6 +1115,7 @@ function drawWisdomBar(){
     push();
     noStroke();
     fill(UI.colour.wisdom);
+    //matches with the amount of wisdom points!
     rect(width/3+50, 30, UI.points.wisdom, 20,  5, 0, 0, 5);
     pop();
     //stroke
@@ -1036,6 +1129,7 @@ function drawWisdomBar(){
     push();
    strokeWeight(6);
     noFill();
+    //trying to draw a brain
     ellipse(width/3+18, 38, 36,25);
     ellipse(width/3+29, 44, 20,29);
     pop();
@@ -1043,12 +1137,16 @@ function drawWisdomBar(){
     push();
     noStroke();
     fill(UI.colour.wisdom);
+    //brain
     ellipse(width/3+18, 38, 36,25);
     ellipse(width/3+29, 44, 20,29);
     pop();
     
 }
 
+/**
+ * Draws the fun/happiness meter and its icon (yellow bar)
+ */
 function drawFunBar(){
     //back bar
     push();
@@ -1060,6 +1158,7 @@ function drawFunBar(){
     push();
     noStroke();
     fill(UI.colour.fun);
+    //corresponds to ammount of fun points we have
     rect(width/3*2+50, 30, UI.points.fun, 20,5, 0, 0, 5);
     pop();
     //stroke bar
@@ -1079,6 +1178,7 @@ function drawFunBar(){
     push();
     noStroke();
     fill(UI.colour.fun);
+    //yellow circle
     circle(width/3*2 +20, 40, 37);
     pop();
     //smile 
@@ -1096,6 +1196,10 @@ function drawFunBar(){
     pop();
 }
 
+/**
+ * When eaten, different fly types have different effects
+ * This calculates the effects and applies them
+ */
 function flyEffect(){
     //checks the type of fly and then adds/removes points from the bars accordingly!
     switch(fly.type){
@@ -1169,11 +1273,17 @@ function backPain(){
         }
     //sets background to blue
    //this is a reset from the red if you get back pain
+   //happens after half a second
     setTimeout(resetBg, 1000/2);
     }
+    //displays the notification text in the center of the screen
       displayNotificationText();
 }
 
+/**
+ * Displays the notification text in the middle of the screen
+ * used by math and back pain
+ */
 function displayNotificationText(){
         push();
         textStyle(BOLD);
@@ -1182,9 +1292,13 @@ function displayNotificationText(){
         pop();
 }
 
+/**
+ * Resets the background to blue
+ */
 function resetBg(){
     backgroundColour = "#87ceeb";
-    //avoids interfering with the math problem
+    //avoids interfering with the math problem 
+    //if back pain triggered right before math, it could cause problems and erase the maht problem completely
     if(gameState !== "math"){
     UI.notificationText = "";}
 }
@@ -1193,6 +1307,7 @@ function resetBg(){
  * Displays the frog's dialog
  */
 function dialog(){
+    //check if the frog should be saying anything
     checkTalking();
     if(frogDialog.isTalking){
         //draw speech bubble
@@ -1214,17 +1329,23 @@ function checkTalking(){
             //lucky roll, frog starts talking
             frogDialog.isTalking = true;
             frogDialog.dialogToPrint = decideDialog();
-            //after 3 seconds, the dialog will be reset
+            //after 4 seconds, the dialog will be reset
             setTimeout(resetDialog, 4000);
         }
+        //any other roll will result in frog staying silent
     }
 }
 
+/**
+ * Frog stops talking
+ */
 function resetDialog(){
     frogDialog.isTalking = false;
 }
 
-
+/**
+ * Draws Frog's speech bubble 
+ */
 function drawSpeechBubble(){
     //check which side to draw the sppech bubble
     //if frog in right half
@@ -1253,6 +1374,9 @@ function drawSpeechBubble(){
     }
 }
 
+/**
+ * Chooses which dialog Frog will say
+ */
 function decideDialog(){
     //if frog wisdom is over half, it might say wise things
     if(UI.points.wisdom > 75){
@@ -1262,6 +1386,7 @@ function decideDialog(){
             let wiseDialogIndex = Math.floor(Math.random()*4);
             return frogDialog.wiseSayings[wiseDialogIndex];
         }
+        //otherwise, frog just says filler dialog
     }
     //generate random dialog from filler
     let fillerDialogIndex = Math.floor(Math.random()*6);
@@ -1271,6 +1396,9 @@ function decideDialog(){
     return frogDialog.filler[fillerDialogIndex];
 }
 
+/**
+ * Prints Frog's dialog in the speech bubble
+ */
 function printDialog(dialog){
     if(frog.body.x > width/2){
     //bubble on left
@@ -1281,32 +1409,37 @@ function printDialog(dialog){
     pop();
     }
     else{
-        //bubble on right
+    //bubble on right
     push();
     textAlign(CENTER);
     textSize(10);
     text(dialog, frog.body.x + 90, frog.body.y - 140, 100);
     pop();
     }
-
-   
 }
 
+/**
+ * Check if user is moving Frog
+ */
 function checkMovement(){
+    //if mouse is still
     if(!mouseIsMoving()){
+        //increase stillness counter
         stillnessCounter += 1;
     }
     else{
+        //otherwsie, reset counter to 0
         stillnessCounter = 0;
     }
     //if stay still too long you start meditating:)
-
     if(stillnessCounter > 400){
         meditate();
     }
-
 }
 
+/**
+ * Checks if the mouse is moving
+ */
 function mouseIsMoving(){
     //checks if mouse is moving
     if(movedX !== 0 || movedY !== 0){
@@ -1317,6 +1450,9 @@ function mouseIsMoving(){
     }
 }
 
+/**
+ * Frog closes eyes and meditates (wisdom increase)
+ */
 function meditate(){
     //draw eyes closed(just green)
     push();
@@ -1327,7 +1463,6 @@ function meditate(){
     ellipse(frog.eyes.rightX, frog.eyes.y, frog.eyes.size);
     pop();
 
-
     //increase wisdom
     UI.points.wisdom += 0.1;
     UI.points.wisdom = constrain(UI.points.wisdom, 0, 150);
@@ -1335,6 +1470,9 @@ function meditate(){
 
 //-------CHAT GAME STATE--------//
 
+/**
+ * Draws Frog's initial dialog in a bubble
+ */
 function drawFrogBubble(){
     //bg white bubble
     push();
@@ -1354,6 +1492,9 @@ function drawFrogBubble(){
     pop();
 }
 
+/**
+ * Draws the user's response to Frog
+ */
 function drawUserBubble(){
     //bg white bubble
     push();
@@ -1373,17 +1514,25 @@ function drawUserBubble(){
     text(frogDialog.userDialog,width-320,230, 260);
     pop();
 }
-
+/**
+ * Makes the background darker
+ */
 function fadeBackground(x,y){
+    //draws a big rectangle over everything
     push();
     noStroke();
+    //black rectangle
     let rectColor = color(0);
+    //transparent rectangle
     rectColor.setAlpha(100);
     fill(rectColor);
     rect(x,y,width,height);
     pop();
 }
 
+/**
+ * Displays Frog's response to your text
+ */
 function submitDialog(){
     //print answer for 4 seconds
     //bg white bubble
@@ -1400,18 +1549,23 @@ function submitDialog(){
     fill(0);
     textAlign(LEFT);
     textSize(18);
+    //randomly generated earlier
     text(frogDialog.responses[frogDialog.answerIndex],60,330, 200);
     pop();
 }
 
 //--------START SCREEN--------------//
+/**
+ * The starting page of the game
+ */
 function startScreen(){
-     moveTongue();
+     
     //set frog coords to bottom corner of screen
     frog.body.x = 100;
     frog.eyes.leftX = 100 -40;
     frog.eyes.rightX= 100 +40;
     drawFrog();
+    moveTongue();
 
 
     //yellow rectangle
@@ -1419,8 +1573,8 @@ function startScreen(){
     noStroke();
     fill(UI.colour.fun);
     rect(20, 70, 600, 150, 20);
-
     pop();
+
     //frogfrogfrog title
     push();
     textSize(32);
@@ -1430,8 +1584,10 @@ function startScreen(){
     textFont(title.frogTitleFont);
     text('FrogFrogFrog:', 230, 80);
     pop();
+
     //text shine
     titleAnimation();
+    
     //subtitle
     push();
     textSize(48);
@@ -1448,8 +1604,11 @@ function startScreen(){
     drawTutorialButton();
 }
 
+/**
+ * Animates the title to glow and bob up and down
+ */
 function titleAnimation(){
-
+    //alternates the glow's alpha/transparency
     if(title.glowAlpha > 230){
         title.glowChange = -2;
     }
@@ -1459,8 +1618,10 @@ function titleAnimation(){
 
     title.glowAlpha += title.glowChange;
     
+    //bobs the title up and down
     title.y = title.offset + sin(title.angle) * title.scalar;
     title.angle += title.speedOfSine;
+    //draws the glow of the title
     push();
     textSize(48);
     let titleGlow = color(255);
@@ -1473,12 +1634,16 @@ function titleAnimation(){
     pop();
 }
 
+/**
+ * Displays the PLAY button
+ */
 function drawPlayButton(){
   
     //back shadow
     push();
     noStroke();
     fill(UI.colour.wisdom);
+    //hover purposes
     if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
   	rect(218, 253, 209, 89, 20);
     }else{
@@ -1489,12 +1654,12 @@ function drawPlayButton(){
     push();
     noStroke();
     fill(UI.colour.fun);
+    //hover purposes
     if(mouseX> 220 && mouseX<425 && mouseY>255 && mouseY <340){
   	rect(218, 248, 204, 84, 20);
     }else{
   	rect(220, 250, 200, 80, 20);
     } 
-    
     pop();
     //text
     push();
@@ -1512,11 +1677,15 @@ function drawPlayButton(){
     
 }
 
+/**
+ * Display the tutorial button
+ */
 function drawTutorialButton(){
     //back shadow
     push();
     noStroke();
     fill(UI.colour.wisdom);
+    //hoverr
     if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
   	rect(218, 353, 209, 89, 20);
     }else{
@@ -1526,6 +1695,7 @@ function drawTutorialButton(){
     push();
     noStroke();
     fill(UI.colour.fun);
+    //hover
     if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
   	rect(218, 348, 209, 84, 20);
     }else{
@@ -1535,6 +1705,7 @@ function drawTutorialButton(){
     push();
     textSize(32);
     textFont(UI.font);
+    //hoverr
     if(mouseX> 220 && mouseX<425 && mouseY>355 && mouseY <440){
   	fill(UI.colour.health);
     }else{
@@ -1545,7 +1716,9 @@ function drawTutorialButton(){
 }
 //--------ENDGAME STUFF--------------//
 
-//placeholders for now
+/**
+ * Screen displayed when you win/lose the game
+ */
 function gameOver(){
     //different situations based on points bars
 
@@ -1614,8 +1787,9 @@ function gameOver(){
     drawTutorialButton();
 
 }
-
-
+/**
+ * Displays the RETRY BUTTOn
+ */
 function drawPlayAgainButton(){
   
     //back shadow
@@ -1649,46 +1823,62 @@ function drawPlayAgainButton(){
     }else{
   	fill(0);
     } 
+    //wanted it to say "reincaranate" but that was too long so i just stuck with retry
     text('RETRY', 267, 302);
     pop();
 
     
 }
 
+/**
+ * Resets all variables to their initial values
+ * Hopefully didn't forget any...
+ */
 function gameReset(){
+    //meters back to full
     UI.points.health = 150;
     UI.points.fun = 150;
     UI.points.wisdom = 150;
+    //timer back at 60 seconds
     timerValue= 60*3;
+    //placeholder text
     endGame.subtitle = "Oops."
     UI.notificationText = "";
     frogDialog.dialogToPrint = "hi"
+    //no back pain yet
     clickCounter = 0;
+    //no stillness
     stillnessCounter = 0;
+    //reverse aging
     frog.body.size = 150;
     frog.wrinkles.alpha = 0;
     frog.body.fill.h= 120;
     frog.body.fill.s= 87;
     frog.body.fill.b= 71;
+    //tutorial back at stage 0
     tutorialStage = 0;
+    //Frog is quiet
     frogDialog.isTalking = false;
+    //no cataracts yet
     cataracts.alpha = 0;
     cataracts.blur = 0;
+    //no math to be seen
     mathProblemCalculated = false;
-
 };
 
 
 
 //-----------------------TUTORIAL RELATED THINGS HERE!!!!!!!!!!---------------//
 
+/**
+ * Controls the flow of the tutorial
+ */
 function drawTutorial(){
-
-    
     //using a switch to control the tutorial's flow
     switch(tutorialStage){
         case 0:{
-            
+            //introduces the game's concept
+
             //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1709,6 +1899,8 @@ function drawTutorial(){
             break;
         }    
         case 1:{
+            //explains the health meter
+
              //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1717,7 +1909,7 @@ function drawTutorial(){
 
             drawUI();
 
-            //draw dark rectangle overtop everything
+            //draw dark rectangle overtop everything (except sliver at the top!)
             fadeBackground(0, 80);
 
             //next button
@@ -1730,6 +1922,7 @@ function drawTutorial(){
             break;
         }  
         case 2:{
+            //explains the wisdom meter
              //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1738,7 +1931,7 @@ function drawTutorial(){
 
             drawUI();
 
-            //draw dark rectangle overtop everything
+            //draw dark rectangle overtop everything except sliver at top
             fadeBackground(0, 80);
 
             //next button
@@ -1752,6 +1945,8 @@ function drawTutorial(){
             break;
         }  
         case 3:{
+            //exlpains happiness meter
+
                  //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1760,7 +1955,7 @@ function drawTutorial(){
 
             drawUI();
 
-            //draw dark rectangle overtop everything
+            //draw dark rectangle overtop everything except top part
             fadeBackground(0, 80);
 
             //next button
@@ -1774,7 +1969,8 @@ function drawTutorial(){
             break;
         }
         case 4:{
-                 //set frog coords to bottom corner of screen
+            //hints at the game timer (still a bit of a mystery, that's on purpose)
+            //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
             frog.eyes.rightX= 100 +40;
@@ -1782,7 +1978,7 @@ function drawTutorial(){
 
             drawUI();
 
-            //draw dark rectangle overtop everything
+            //draw dark rectangle overtop everything except the meters
             fadeBackground(0, 80);
 
             //next button
@@ -1793,7 +1989,8 @@ function drawTutorial(){
             break;
         }
           case 5:{
-                 //set frog coords to bottom corner of screen
+            //introducing....
+            //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
             frog.eyes.rightX= 100 +40;
@@ -1812,6 +2009,8 @@ function drawTutorial(){
             break;
         }
         case 6:{
+            //old age!
+
             //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1831,6 +2030,7 @@ function drawTutorial(){
             break;
         }
         case 7:{
+            //show meters decreasing and frog getting older
             //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1839,7 +2039,7 @@ function drawTutorial(){
 
             drawUI();
 
-            //draw dark rectangle overtop everything
+            //draw dark rectangle overtop everything except meters
             fadeBackground(0, 80);
 
             //next button
@@ -1850,7 +2050,7 @@ function drawTutorial(){
             break;
         }
         case 8:{
-
+            //explain flies
             //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -1866,6 +2066,7 @@ function drawTutorial(){
             drawFly();
             moveFly();
 
+            //background will be dark except where the fly passes
             fadeBackground(0, -height+80);
             fadeBackground(0, 170);
 
@@ -1878,7 +2079,7 @@ function drawTutorial(){
         }
 
         case 9:{
-            //set frog coords to bottom corner of screen
+            //explain frog movement YOU CANNOT CATCH FLIES AT THIS STAGE YET
             drawFrog();
             moveFrog();
             moveTongue();
@@ -1902,7 +2103,7 @@ function drawTutorial(){
             break;
         }
         case 10:{
-              //set frog coords to bottom corner of screen
+            //explain tongue mechanics
             drawFrog();
             moveFrog();
 
@@ -1918,6 +2119,7 @@ function drawTutorial(){
             drawFly();
             moveFly();
 
+            //dark except fly corridor
             fadeBackground(0, -height+80);
             fadeBackground(0, 170);
 
@@ -1929,7 +2131,8 @@ function drawTutorial(){
             break;
         }
         case 11:{
-            //set frog coords to bottom corner of screen
+            //Explain different fly colors
+
             drawFrog();
             moveFrog();
 
@@ -1951,13 +2154,15 @@ function drawTutorial(){
 
         }
         case 12:{
-            //set frog coords to bottom corner of screen
+            //explain math fly
+
             drawFrog();
             moveFrog();
 
             moveTongue();
             checkTongueFlyOverlap();
 
+            //math fly corridor
             fadeBackground(0, -height+60);
             fadeBackground(0, 160);
             
@@ -1976,7 +2181,7 @@ function drawTutorial(){
 
         }
         case 13:{
-            //set frog coords to bottom corner of screen
+            //Explain math fly effects
             drawFrog();
 
             fadeBackground(0, 0);
@@ -1995,8 +2200,8 @@ function drawTutorial(){
             break;
         }
         case 14:{
-            
-            //set frog coords to bottom corner of screen
+            //explain math problems
+          
             drawFrog();
             
             //math fly
@@ -2006,6 +2211,7 @@ function drawTutorial(){
 
             drawUI();
 
+            //calculates a math problem (just once, we don't need more than 1)
             if(!mathProblemCalculated){
                 mathProblem();
                 mathProblemCalculated = true;
@@ -2014,11 +2220,11 @@ function drawTutorial(){
             displayNotificationText();
 
             drawTextBox(50, 360, 400, 100, 'When caught, you will need to type your answer using the keyboard, then press "enter" to confirm.')
-
+            //to change cases, you will need to press enter
             break;
         }
         case 15:{
-            
+            //introduce dialog
             
             drawFrog();
             moveFrog();
@@ -2032,31 +2238,37 @@ function drawTutorial(){
 
             drawUI();
 
+            //tutorial dialog
             frogDialog.isTalking = true;
             frogDialog.dialogToPrint = "Hello dear tutorial student!";
             dialog();
-
+            //must press enter to move on
             drawTextBox(100, 250, 400, 80, 'Sometimes, Frog may speak to you. Press "enter" to respond.');
             break;
         }
         case 16:{
+            //explain responding to frog
             fadeBackground(0,0);
             drawFrogBubble();
             drawUserBubble();
 
             drawTextBox(30, 220, 200, 100, 'Type your answer with the keyboard, then press "enter" to confirm.');
+            //must press enter to move on
             break;
         }
         case 17:{
+            //frog answers, explain how to exit chat mode
             fadeBackground(0,0);
             drawFrogBubble();
             drawUserBubble();
 
             submitDialog();
+            //must press enter to move on
             drawTextBox(300, 360, 200, 100, 'Press "enter" again to exit the conversation.');
             break;
         }
         case 18:{
+            //explain effects of chatting
             //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -2077,6 +2289,7 @@ function drawTutorial(){
             break;
         }
         case 19:{
+            //introduce meditation
 
             //randomly resetting the UI notification text because I don't know where else to do that
             UI.notificationText = "";
@@ -2101,7 +2314,7 @@ function drawTutorial(){
 
         }
          case 20:{
-            //meditation here
+            //warn of meditation's dark side
             drawFrog();
             moveFrog();
 
@@ -2122,7 +2335,7 @@ function drawTutorial(){
 
         }
         case 21:{
-            //meditation here
+            //explain back pain
             drawFrog();
             moveFrog();
 
@@ -2145,7 +2358,7 @@ function drawTutorial(){
 
         }
           case 22:{
-            //meditation here
+            //explain depression
             drawFrog();
             moveFrog();
 
@@ -2169,6 +2382,7 @@ function drawTutorial(){
 
         }
         case 23:{
+            //last stage, displays the buttons to either play or redo the tutorial
             //set frog coords to bottom corner of screen
             frog.body.x = 100;
             frog.eyes.leftX = 100 -40;
@@ -2191,6 +2405,9 @@ function drawTutorial(){
     }
 };
 
+/**
+ * Draws the next button for the tutorial
+ */
 function drawNextButton(){
 
     //next glow
@@ -2206,10 +2423,10 @@ function drawNextButton(){
     pop();
 
 
-//hover?
+//hover
 if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width && mouseY > nextButton.box.y && mouseY < nextButton.box.y + nextButton.box.height){
 
-//yellow box
+//green box
     push();
     fill(UI.colour.health);
     noStroke();
@@ -2226,6 +2443,7 @@ if(mouseX > nextButton.box.x && mouseX < nextButton.box.x+nextButton.box.width &
 
 }
 else{
+    //not hover/regulr mode
 //yellow box
     push();
     fill(UI.colour.fun);
@@ -2244,6 +2462,9 @@ else{
 
 }
 
+/**
+ * Draws a nice white text box in the center of the screen
+ */
 function drawTextMiddle(write){
 
     //white box
@@ -2255,11 +2476,16 @@ function drawTextMiddle(write){
 
     push();
     textSize(24);
+    //takes the text we sent it
     text(write, 120, 230, 430);
             
     pop();
 }
 
+
+/**
+ * Draws a small text box according to the numbers sent 
+ */
 function drawTextBox(x,y,w,h,write){
 
     //white
@@ -2269,6 +2495,7 @@ function drawTextBox(x,y,w,h,write){
     rect(x,y,w,h,10);
     pop();
 
+    //text is what we sent (write)
     push();
     textSize(18);
     text(write,x+10, y+10, w-5, h-5);
