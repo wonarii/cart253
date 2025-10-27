@@ -1998,8 +1998,6 @@ function drawTutorial(){
             
             //set frog coords to bottom corner of screen
             drawFrog();
-
-            fadeBackground(0, 0);
             
             //math fly
             mathFly.appears = true;
@@ -2013,6 +2011,7 @@ function drawTutorial(){
                 mathProblemCalculated = true;
             }
             
+            displayNotificationText();
 
             drawTextBox(50, 360, 400, 100, 'When caught, you will need to type your answer using the keyboard, then press "enter" to confirm.')
 
