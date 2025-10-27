@@ -1182,7 +1182,9 @@ function displayNotificationText(){
 
 function resetBg(){
     backgroundColour = "#87ceeb";
-    UI.notificationText = "";
+    //avoids interfering with the math problem
+    if(gameState !== "math"){
+    UI.notificationText = "";}
 }
 
 /**
