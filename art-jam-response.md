@@ -37,9 +37,6 @@ Really great smile. I had such a hard time figuring out the smile for my portrai
 
 But where’s my interaction? ;-;
 
-I went snooping in the commits and I see that this may be a case of the procrastination…
-GitHub really tells on you with the commit history, huh?
-
 *****
 
 ## Chloé Guérin
