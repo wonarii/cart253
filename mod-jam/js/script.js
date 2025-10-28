@@ -1864,6 +1864,7 @@ function gameReset(){
     cataracts.blur = 0;
     //no math to be seen
     mathProblemCalculated = false;
+    frogDialog.userDialog = "";
 };
 
 
