@@ -90,26 +90,62 @@ Chatting with Frog is a great way to quickly increase [happiness](#happiness-met
 
 ### Meditation
 
+Meditation happens after staying still for a certain period of time. This means no moving the mouse and no clicking (catching [flies](#flies)). 
+
+You can tell when Frog is meditating by their eyes. They will be closed (green).
+
+During meditation, Frog will gain [wisdom](#wisdom-meter). However, the other meters will continue to decrease, so be careful not to meditate too long!
+
+![Image of Frog meditating (eyes are closed)](./assets/images/frog-meditating.png)
+
 ### Back Pain
+
+Back pain is triggered by excessive mouse clicking. When Frog gets back pain, the screen will turn red and Frog will lose [health](#health-meter).
+
+Back pain will get worse with [age](#old-age), meaning less clicks will be required to trigger back pain as time advances.
+
+Try not to strain Frog too much, accurate and precise clicks are better than excessive random clicks!
 
 ### Depression
 
+When Frog's [happiness](#happiness-meter) gets too low, Frog will develop depression. This will result in slower movement, making it harder to catch flies.
+
+To fix this, raise Frog's [happiness](#happiness-meter) by catching yellow [flies](#flies) or [chatting with Frog](#chatting-with-frog).
+
 ## Screenshot(s)
 
-This bit should have some images of the program running so that the reader has a sense of what it looks like. For example:
+![Image of the main landing screen of the game](./assets/images/start-screen.png)
 
-> ![Image of a clown face](./assets/images/clown.png)
+![Screenshot of the game](./assets/images/gameplay.png)
 
 ## Attribution
 
-This bit should attribute any code, assets or other elements used taken from other sources. For example:
+This project uses [p5.js](https://p5js.org).
 
-> - This project uses [p5.js](https://p5js.org).
-> - The clown image is a capture of the clown from the Apple emoji character set.
-> - The barking sound effect is "single dog bark 1" by crazymonke9 from freesound.org: https://freesound.org/people/crazymonke9/sounds/418107/
+### Fonts
+
+Fonts were all from [Google Fonts](https://fonts.google.com/?safe=active)
+
+FrogFrogFrog title: [Chewy-Regular](https://fonts.google.com/specimen/Chewy?query=chewy&safe=active)
+
+The Quest for Immortality title: [TradeWinds-Regular](https://fonts.google.com/specimen/Trade+Winds?query=trade&safe=active)
+
+Buttons: [TitanOne-Regular](https://fonts.google.com/specimen/Titan+One?query=titan&safe=active)
+
+### Code
+
+[Original FrogFrogFrog game](https://github.com/pippinbarr/cart253/tree/main/topics/making/examples):
+
+The base template of the game.
+
+[Game timer code](https://editor.p5js.org/denaplesk2/sketches/ryIBFP_lG):
+
+Used to create a game that lasts 60 seconds and also activates aging at a slower pace.
+
+[Button Hovers](https://editor.p5js.org/ehersh/sketches/Fb6hxZmzQ):
+
+Used for all the buttons in the menus and tutorial. The hover changes the colour and size of the button.
 
 ## License
 
-This bit should include the license you want to apply to your work. For example:
-
-> This project is licensed under a Creative Commons Attribution ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)) license with the exception of libraries and other components with their own licenses.
+This project is licensed under a Creative Commons Attribution ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)) license with the exception of libraries and other components with their own licenses.
