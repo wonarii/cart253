@@ -1,3 +1,7 @@
+# Mod Jam Response
+
+## Sounds
+
 To start this off, I really loved the use of sounds by multiple games! I think having sound effects and music playing really added so much to the game, making it feel more alive and engaging. Sound effects broke up the monotony of repetitive actions. The sounds also helped give the games different moods. Some examples of games that really pulled this off were:
 
 [Fly Demise](https://lazer6769.github.io/Cart-253/Topics/frogmodjam/frogfrogfrog/) by Jordan Lobasso
@@ -14,7 +18,7 @@ Again, like Lanna’s game, this one provided lots of audio feedback that helped
 
 All these successful uses of sounds make me want to try something similar out for my next project too. Adding sound effects to the games provides extra feedback to users outside of visual feedback which can help them learn the game faster and make connections between actions and events.
 
-
+##Frustration
 
 The second thing I noticed when playing these games is that the games I felt people wanted to play over and over again were the games they lost quickly. 
 Games that offered a challenge made players want to push themselves and win. That, combined with simple commands, made games that were frustrating but incredibly rewarding if you succeeded. This tends to draw people in.
