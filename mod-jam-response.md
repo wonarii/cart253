@@ -18,7 +18,7 @@ Again, like Lanna’s game, this one provided lots of audio feedback that helped
 
 All these successful uses of sounds make me want to try something similar out for my next project too. Adding sound effects to the games provides extra feedback to users outside of visual feedback which can help them learn the game faster and make connections between actions and events.
 
-##Frustration
+## Frustration
 
 The second thing I noticed when playing these games is that the games I felt people wanted to play over and over again were the games they lost quickly. 
 Games that offered a challenge made players want to push themselves and win. That, combined with simple commands, made games that were frustrating but incredibly rewarding if you succeeded. This tends to draw people in.
