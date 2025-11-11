@@ -1,10 +1,7 @@
 /**
- * Variation Menu
- * Pippin Barr
+ * Menu system for the number guessing game
+ * Arielle Wong and Pippin Barr
  * 
- * A relatively simple example of a set of variations within a single
- * project. (When we learn Object-Oriented Programming this will be a
- * LOT easier.)
  */
 
 "use strict";
@@ -27,8 +24,8 @@ function draw() {
         case "menu":
             menuDraw();
             break;
-        case "red-variation":
-            redDraw();
+        case "base":
+            baseDraw();
             break
         case "green-variation":
             greenDraw();
@@ -48,8 +45,8 @@ function mousePressed() {
         case "menu":
             menuMousePressed();
             break;
-        case "red-variation":
-            redMousePressed();
+        case "base":
+            baseMousePressed();
             break
         case "green-variation":
             greenMousePressed();
@@ -69,8 +66,8 @@ function keyPressed(event) {
         case "menu":
             menuKeyPressed(event);
             break;
-        case "red-variation":
-            redKeyPressed(event);
+        case "base":
+            baseKeyPressed(event);
             break
         case "green-variation":
             greenKeyPressed(event);

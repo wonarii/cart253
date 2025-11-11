@@ -5,9 +5,9 @@
  */
 
 const menuText = `
-(R) Red variation
+(B) Base Game
 (G) Green variation
-(B) Blue variation`
+(2) Blue variation`
 
 /**
  * Display the main menu
@@ -28,9 +28,9 @@ function menuDraw() {
  */
 function menuKeyPressed(event) {
     switch (event.keyCode) {
-        case 82:
-            state = "red-variation";
-            redSetup();
+        case 66:
+            state = "base";
+            baseSetup();
             break;
 
         case 71:
@@ -38,7 +38,7 @@ function menuKeyPressed(event) {
             greenSetup();
             break;
 
-        case 66:
+        case 12://random value not good
             state = "blue-variation";
             blueSetup();
             break;
