@@ -14,6 +14,8 @@ const colours = {
     yellow: "#fdca32ff",
 }
 
+let input;
+
 //preload
 //runs before anything else
 //loads my fonts so they're ready to use!
@@ -39,7 +41,7 @@ function baseSetup() {
 function baseDraw() {
     background(colours.backgroundColour);
     drawQuestionMark();
-    // drawInputField();
+    drawInputField();
     // drawGuessButton();
     // drawGuesses();
 
@@ -68,7 +70,12 @@ function drawQuestionMark(){
     fill(colours.yellow);
     textSize(72);
     text("?", width/2,height/4);
-
     pop();
+}
 
+//https://p5js.org/reference/p5/input/
+function drawInputField(){
+    input = createInput('');
+    //invisible input:(
+    input.position(screen.width, screen.height/2-50);
 }
