@@ -32,22 +32,15 @@ let input;
 //array of previous guesses
 let guesses;
 
-//preload
-//runs before anything else
-//loads my fonts so they're ready to use!
-function preload(){
-    fonts.bagel = loadFont("./assets/BagelFatOne-Regular.ttf");
-    fonts.montserrat = loadFont("./assets/Montserrat-VariableFont_wght.ttf");
-}
-
-
-
-
-
 /**
  * This will be called just before the red variation starts
  */
 function baseSetup() {
+    //PROBLEMATIC fonts
+    // Wait for the fonts to load
+    // fonts.bagel = await loadFont("./assets/BagelFatOne-Regular.ttf");
+    // fonts.montserrat = await loadFont("./assets/Montserrat-VariableFont_wght.ttf");
+
     //input is created here otherwise it draws a new field every frame;-;
     //issue now is that the input will not move when screen is resized
     //let's just hope no one changes the window size while playing...
@@ -144,12 +137,11 @@ function drawGuesses(){
     //all the guesses
     push();
     textFont(fonts.montserrat);
-    textStyle(BOLD);
     fill(colours.white);
     textSize(18);
+    textWeight(500);
     textWrap(WORD);
-    text(guesses, width/7*6+uiOffset, height/7 +40, 10, height - 100);
-
+    text(guesses, width/7*6-40+uiOffset, height/7 +40, 90, height - 150);
     pop();
 }
 
@@ -190,7 +182,7 @@ function verifyGuess(){
 
 function incorrectGuess(){
     //add incorrect guess to the array of guesses
-    guesses.push(input.value());
+    guesses.push(" "+input.value());
     //reset the input field
     input.value("");
     //screen flashes red

@@ -11,8 +11,11 @@ let state = "menu";
 /**
  * Create the canvas
 */
-function setup() {
+async function setup() {
     createCanvas(500, 500);
+    fonts.bagel = await loadFont("./assets/BagelFatOne-Regular.ttf");
+    fonts.montserrat = await loadFont("./assets/Montserrat-VariableFont_wght.ttf");
+
 }
 
 

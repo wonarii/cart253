@@ -28,6 +28,14 @@ function drawCongrats(){
     textSize(72);
     text("You win!", width/2,height/4);
     pop();
+
+    push();
+    textFont(fonts.montserrat);
+    textAlign(CENTER, CENTER);
+    fill(colours.yellow);
+    textSize(24);
+    text("It took you " + (guesses.length+1) + " guesses!", width/2,height/4 + 80);
+    pop();
 }
 
 function drawPlayAgainButton(){
