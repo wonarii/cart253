@@ -47,7 +47,7 @@ function baseDraw() {
     background(colours.backgroundColour);
     drawQuestionMark();
     drawInputField();
-    // drawGuessButton();
+    drawGuessButton();
     // drawGuesses();
 
 }
@@ -81,4 +81,22 @@ function drawQuestionMark(){
 //https://p5js.org/reference/p5/input/
 function drawInputField(){
     
+}
+
+function drawGuessButton(){
+
+    //box
+    push();
+    fill(colours.yellow);
+    rect(width/2.7, height/5*3, 130 , 50, 5);
+    pop();
+
+    //text
+    push();
+    textFont(fonts.bagel);
+    textAlign(CENTER, CENTER);
+    fill(colours.backgroundColour);
+    textSize(24);
+    text("GUESS", width/2,height/5*3+20);
+    pop();
 }

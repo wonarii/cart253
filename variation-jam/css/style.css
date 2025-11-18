@@ -21,4 +21,13 @@ body {
 
 /*********
 Editing the input field to be cuter!
+https: //www.w3schools.com/css/css_form.asp
 **********/
+
+input{
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size:large;
+  width:160px;
+}
