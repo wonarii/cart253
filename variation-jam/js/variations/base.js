@@ -32,7 +32,12 @@ function preload(){
  * This will be called just before the red variation starts
  */
 function baseSetup() {
-
+    //input is created here otherwise it draws a new field every frame;-;
+    //issue now is that the input will not move when screen is resized
+    //let's just hope no one changes the window size while playing...
+    input = createInput('');
+    //https://www.w3schools.com/howto/howto_js_get_current_window.asp
+    input.position(window.innerWidth/2-90, window.innerHeight/2-30);
 }
 
 /**
@@ -75,7 +80,5 @@ function drawQuestionMark(){
 
 //https://p5js.org/reference/p5/input/
 function drawInputField(){
-    input = createInput('');
-    //invisible input:(
-    input.position(screen.width, screen.height/2-50);
+    
 }
