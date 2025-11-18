@@ -70,9 +70,8 @@ function baseSetup() {
 function baseDraw() {
     background(backgroundColour);
     drawQuestionMark();
-    //drawInputField();
     drawGuessButton();
-    // drawGuesses();
+    drawGuesses();
 
 }
 
@@ -105,8 +104,6 @@ function drawGuessButton(){
     } 
     pop();
 
-   
-
     //text
     push();
     textFont(fonts.bagel);
@@ -126,6 +123,35 @@ function drawGuessButton(){
     
 }
 
+function drawGuesses(){
+    //header
+    push();
+    textFont(fonts.bagel);
+    textAlign(CENTER, CENTER);
+    fill(colours.white);
+    textSize(18);
+    text("GUESSES", width/7*6+uiOffset,height/7);
+    pop();
+
+    //line under
+    push();
+    noFill();
+    stroke(colours.white);
+    strokeWeight(3);
+    line(width/7*6 - 50 + uiOffset, height/7+20, width/7*6 + 50 + uiOffset, height/7+20);
+    pop();
+
+    //all the guesses
+    push();
+    textFont(fonts.montserrat);
+    textStyle(BOLD);
+    fill(colours.white);
+    textSize(18);
+    textWrap(WORD);
+    text(guesses, width/7*6+uiOffset, height/7 +40, 10, height - 100);
+
+    pop();
+}
 
 /**
  * This will be called whenever a key is pressed while the red variation is active
