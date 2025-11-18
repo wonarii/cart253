@@ -3,6 +3,7 @@
  * Vanilla version if you will.
  */
 
+let theRandomNumber;
 
 const fonts = {
     bagel: undefined,
@@ -37,9 +38,15 @@ function baseSetup() {
     //input is created here otherwise it draws a new field every frame;-;
     //issue now is that the input will not move when screen is resized
     //let's just hope no one changes the window size while playing...
+    //https://p5js.org/reference/p5/input/
     input = createInput('');
     //https://www.w3schools.com/howto/howto_js_get_current_window.asp
     input.position(window.innerWidth/2-90, window.innerHeight/2-30);
+
+    //sets up the random number for the game!
+    theRandomNumber = Math.floor(Math.random()*100)+1; //generates a random number between 1 and 100.
+    //for cheating purposes
+    console.log(theRandomNumber);
 }
 
 /**
@@ -48,7 +55,7 @@ function baseSetup() {
 function baseDraw() {
     background(colours.backgroundColour);
     drawQuestionMark();
-    drawInputField();
+    //drawInputField();
     drawGuessButton();
     // drawGuesses();
 
@@ -67,7 +74,23 @@ function baseKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the red variation is active
  */
 function baseMousePressed() {
+    //checks if user clicked on the guess button
+    if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
+    //verifies the user's guess
+        verifyGuess();
+    }
 
+
+}
+
+function verifyGuess(){
+    if(input.value() == theRandomNumber){
+        //correct guess
+        console.log("yay!");
+    }
+    else{
+        //incorrect guess
+    }
 }
 
 function drawQuestionMark(){
@@ -80,10 +103,6 @@ function drawQuestionMark(){
     pop();
 }
 
-//https://p5js.org/reference/p5/input/
-function drawInputField(){
-    
-}
 
 function drawGuessButton(){
 
