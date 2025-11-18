@@ -11,7 +11,9 @@ const fonts = {
 
 const colours = {
     backgroundColour : "#36243eff",
+    white: "#fff9e1ff",
     yellow: "#fdca32ff",
+    darkerYellow: "#d48318ff",
 }
 
 let input;
@@ -87,16 +89,35 @@ function drawGuessButton(){
 
     //box
     push();
+     //hover purposes
+    if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
+    //on hover
+     fill(colours.darkerYellow);
+  	rect(width/2.7-2, height/5*3-2, 134 , 54, 7);
+    }else{
+        //regular button
     fill(colours.yellow);
-    rect(width/2.7, height/5*3, 130 , 50, 5);
+  	rect(width/2.7, height/5*3, 130 , 50, 5);
+    } 
     pop();
+
+   
 
     //text
     push();
     textFont(fonts.bagel);
     textAlign(CENTER, CENTER);
-    fill(colours.backgroundColour);
+    if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
+    //on hover
+        fill(colours.white);
+    }
+    else{
+        //regular button
+        fill(colours.backgroundColour);
+    }
     textSize(24);
     text("GUESS", width/2,height/5*3+20);
     pop();
+
+    
 }
