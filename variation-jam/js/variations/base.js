@@ -19,7 +19,8 @@ const colours = {
     darkerYellow: "#d48318ff",
     red:"#932424ff",
     purple:"#95148eff",
-    lilac:"#b470c2ff",
+    lilac:"#c174d1ff",
+    darkerLilac:"#a44eb5ff",
 }
 
 //specifically the current bg colour
@@ -151,6 +152,20 @@ function drawGuesses(){
 
 function drawWizard(){
 
+    //body
+    push();
+    noStroke();
+    fill(colours.purple);
+    ellipse(90, 500, 140, 300);
+    pop();
+
+    //body cut
+    push();
+    noStroke();
+    fill(colours.backgroundColour);
+    rect(0,445, 300, 500);
+    pop();
+
     //hat
     push();
     noStroke();
@@ -163,9 +178,25 @@ function drawWizard(){
     ellipse(0, 0, 170, 70);
     pop();
     
-    //ears
-    
+    //ear L
+    push();
+    noStroke();
+    fill(colours.lilac);
+    translate(80, 340);
+    rotate(2.6);
+    //using rects to get rounded corners
+    rect(0,0, 40, 40, 5);
+    pop();
 
+     //ear R
+    push();
+    noStroke();
+    fill(colours.darkerLilac);
+    translate(120, 300);
+    rotate(2.4);
+    //using rects to get rounded corners
+    rect(0,0, 40, 40, 5);
+    pop();
 
     //head
     push();
@@ -175,10 +206,30 @@ function drawWizard(){
     pop();
 
     //eyes
+    push();
+    noStroke();
+    fill(colours.white);
+    ellipse(70, 340, 34, 44);
+    ellipse(120, 320, 30, 40);
+    pop();
 
     //pupils
+    push();
+    noStroke();
+    fill(colours.backgroundColour);
+    ellipse(70, 340, 28, 38);
+    ellipse(120, 320, 24, 34);
+    pop();
 
-    //outline?
+    //mouth
+     push();
+    noStroke();
+    fill(colours.backgroundColour);
+    //happy
+    triangle(90, 350, 110, 340, 115, 360);
+    //upset
+    //triangle(90, 365, 100, 340, 115, 360);
+    pop();
 
 
 }
