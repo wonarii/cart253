@@ -110,5 +110,14 @@ function winBaseKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the winBase variation is active
  */
 function winBaseMousePressed() {
-
+    //play again button
+    if(mouseX> width/3 && mouseX<width/3 + 170 && mouseY>height/2 && mouseY <height/2 +50){
+    state = "base";
+    baseSetup();
+    }
+    //main menu button
+    if(mouseX> width/3 && mouseX<width/3 + 170 && mouseY>height/7*4.5 && mouseY <height/7*4.5 +50){
+    state = "menu";
+    //there's no setup for menu
+    }
 }
