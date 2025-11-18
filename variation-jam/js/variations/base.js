@@ -18,6 +18,8 @@ const colours = {
     yellow: "#fdca32ff",
     darkerYellow: "#d48318ff",
     red:"#932424ff",
+    purple:"#95148eff",
+    lilac:"#b470c2ff",
 }
 
 //specifically the current bg colour
@@ -65,6 +67,8 @@ function baseDraw() {
     drawQuestionMark();
     drawGuessButton();
     drawGuesses();
+    //drawWizardSpeech();
+    drawWizard();
 
 }
 
@@ -143,6 +147,40 @@ function drawGuesses(){
     textWrap(WORD);
     text(guesses, width/7*6-40+uiOffset, height/7 +40, 90, height - 150);
     pop();
+}
+
+function drawWizard(){
+
+    //hat
+    push();
+    noStroke();
+    fill(colours.purple);
+    //hat point
+    triangle(30, 360, 135, 280, 20, 220);
+    //hat brim
+    translate(80, 310);
+    rotate(2.6);
+    ellipse(0, 0, 170, 70);
+    pop();
+    
+    //ears
+    
+
+
+    //head
+    push();
+    noStroke();
+    fill(colours.lilac);
+    circle(90, 340, 100);
+    pop();
+
+    //eyes
+
+    //pupils
+
+    //outline?
+
+
 }
 
 /**
