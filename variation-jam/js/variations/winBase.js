@@ -17,7 +17,7 @@ function winBaseDraw() {
     background(colours.backgroundColour);
     drawCongrats();
     drawPlayAgainButton();
-    //drawMainMenuButton();
+    drawMainMenuButton();
 }
 
 function drawCongrats(){
@@ -59,6 +59,39 @@ function drawPlayAgainButton(){
     }
     textSize(24);
     text("PLAY AGAIN", width/2,height/2+20);
+    pop();
+
+}
+
+function drawMainMenuButton(){
+//box
+    push();
+     //hover purposes
+    if(mouseX> width/3 && mouseX<width/3 + 170 && mouseY>height/7*4.5 && mouseY <height/7*4.5 +50){
+    //on hover
+     fill(colours.darkerYellow);
+  	rect(width/3-2, height/7*4.5-2, 174 , 54, 7);
+    }else{
+        //regular button
+    fill(colours.yellow);
+  	rect(width/3, height/7*4.5, 170 , 50, 5);
+    } 
+    pop();
+
+    //text
+    push();
+    textFont(fonts.bagel);
+    textAlign(CENTER, CENTER);
+    if(mouseX> width/3 && mouseX<width/3 + 170 && mouseY>height/7*4.5 && mouseY <height/7*4.5 +50){
+    //on hover
+        fill(colours.white);
+    }
+    else{
+        //regular button
+        fill(colours.backgroundColour);
+    }
+    textSize(24);
+    text("MAIN MENU", width/2,height/7*4.5+20);
     pop();
 
 }
