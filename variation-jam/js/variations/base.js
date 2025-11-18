@@ -5,21 +5,32 @@
 
 let theRandomNumber;
 
+//all my fonts
 const fonts = {
     bagel: undefined,
     montserrat: undefined,
 }
 
+//all my colors
 const colours = {
     backgroundColour : "#36243eff",
     white: "#fff9e1ff",
     yellow: "#fdca32ff",
     darkerYellow: "#d48318ff",
+    red:"#932424ff",
 }
 
+//specifically the current bg colour
+let backgroundColour = "#36243eff";
 
+//will control the shake
+let uiOffset = 0;
 
+//input field
 let input;
+
+//array of previous guesses
+let guesses;
 
 //preload
 //runs before anything else
@@ -49,13 +60,15 @@ function baseSetup() {
     theRandomNumber = Math.floor(Math.random()*100)+1; //generates a random number between 1 and 100.
     //for cheating purposes
     console.log(theRandomNumber);
+    //empty array to store guesses
+    guesses = [];
 }
 
 /**
  * This will be called every frame when the base variation is called
  */
 function baseDraw() {
-    background(colours.backgroundColour);
+    background(backgroundColour);
     drawQuestionMark();
     //drawInputField();
     drawGuessButton();
@@ -71,7 +84,7 @@ function drawQuestionMark(){
     textAlign(CENTER, CENTER);
     fill(colours.yellow);
     textSize(72);
-    text("?", width/2,height/4);
+    text("?", width/2+uiOffset,height/4);
     pop();
 }
 
@@ -84,11 +97,11 @@ function drawGuessButton(){
     if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
     //on hover
      fill(colours.darkerYellow);
-  	rect(width/2.7-2, height/5*3-2, 134 , 54, 7);
+  	rect(width/2.7-2+uiOffset, height/5*3-2, 134 , 54, 7);
     }else{
         //regular button
     fill(colours.yellow);
-  	rect(width/2.7, height/5*3, 130 , 50, 5);
+  	rect(width/2.7+uiOffset, height/5*3, 130 , 50, 5);
     } 
     pop();
 
@@ -107,7 +120,7 @@ function drawGuessButton(){
         fill(colours.backgroundColour);
     }
     textSize(24);
-    text("GUESS", width/2,height/5*3+20);
+    text("GUESS", width/2+uiOffset,height/5*3+20);
     pop();
 
     
@@ -149,3 +162,35 @@ function verifyGuess(){
     }
 }
 
+function incorrectGuess(){
+    //add incorrect guess to the array of guesses
+    guesses.push(input.value());
+    //reset the input field
+    input.value("");
+    //screen flashes red
+    backgroundColour = colours.red;
+    //resets the screen to regular colour after .2 seconds
+    setTimeout(resetBackground, 200);
+    //little shaky shake
+    setTimeout(shakeScreenR, 1);
+    setTimeout(shakeScreenL, 25);
+    setTimeout(shakeScreenR, 50);
+    setTimeout(shakeScreenL, 75);
+    setTimeout(shakeScreenR, 100);
+    setTimeout(shakeScreenL, 125);
+    setTimeout(shakeScreenR, 150);
+    setTimeout(shakeScreenL, 175);
+}
+
+function resetBackground(){
+    backgroundColour = colours.backgroundColour;
+    uiOffset = 0;
+}
+
+function shakeScreenR(){
+    uiOffset = 3;
+}
+
+function shakeScreenL(){
+    uiOffset = -3;
+}
