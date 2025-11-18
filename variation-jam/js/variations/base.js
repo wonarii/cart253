@@ -17,6 +17,8 @@ const colours = {
     darkerYellow: "#d48318ff",
 }
 
+
+
 let input;
 
 //preload
@@ -61,37 +63,7 @@ function baseDraw() {
 
 }
 
-/**
- * This will be called whenever a key is pressed while the red variation is active
- */
-function baseKeyPressed(event) {
-    if (event.keyCode === 27) {
-        state = "menu";
-    }
-}
 
-/**
- * This will be called whenever the mouse is pressed while the red variation is active
- */
-function baseMousePressed() {
-    //checks if user clicked on the guess button
-    if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
-    //verifies the user's guess
-        verifyGuess();
-    }
-
-
-}
-
-function verifyGuess(){
-    if(input.value() == theRandomNumber){
-        //correct guess
-        console.log("yay!");
-    }
-    else{
-        //incorrect guess
-    }
-}
 
 function drawQuestionMark(){
     push();
@@ -140,3 +112,40 @@ function drawGuessButton(){
 
     
 }
+
+
+/**
+ * This will be called whenever a key is pressed while the red variation is active
+ */
+function baseKeyPressed(event) {
+    if (event.keyCode === 27) {
+        state = "menu";
+    }
+}
+
+/**
+ * This will be called whenever the mouse is pressed while the red variation is active
+ */
+function baseMousePressed() {
+    //checks if user clicked on the guess button
+    if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
+    //verifies the user's guess
+        verifyGuess();
+    }
+
+
+}
+
+function verifyGuess(){
+    if(input.value() == theRandomNumber){
+        //correct guess
+        console.log("yay!");
+        state = "winBase";
+        winBaseSetup();
+    }
+    else{
+        //incorrect guess
+        incorrectGuess();
+    }
+}
+

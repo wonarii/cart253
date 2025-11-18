@@ -33,6 +33,9 @@ function draw() {
         case "blue-variation":
             blueDraw();
             break;
+        case "winBase":
+            winBaseDraw();
+            break;
     }
 }
 
@@ -54,6 +57,9 @@ function mousePressed() {
         case "blue-variation":
             blueMousePressed();
             break;
+        case "winBase":
+            winBaseMousePressed();
+            break;
     }
 }
 
@@ -74,6 +80,9 @@ function keyPressed(event) {
             break;
         case "blue-variation":
             blueKeyPressed(event);
+            break;
+        case "winBase":
+            winBaseKeyPressed(event);
             break;
     }
 }
