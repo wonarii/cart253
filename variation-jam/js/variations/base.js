@@ -337,15 +337,43 @@ function incorrectGuess(){
   //change wizard dialog
     if(!Number.isInteger(int(guesses[guesses.length -1]))){
         wizardDialog = allMyData.base.notANumber;
+        //change to sad 
+        wizard.mouth.x1 = wizard.sadMouth.x1;
+        wizard.mouth.y1 = wizard.sadMouth.y1;
+        wizard.mouth.x2 = wizard.sadMouth.x2;
+        wizard.mouth.y2 = wizard.sadMouth.y2;
+        wizard.mouth.x3 = wizard.sadMouth.x3;
+        wizard.mouth.y3 = wizard.sadMouth.y3;
     }
     else if(guesses[guesses.length -1] < 1 || guesses[guesses.length -1] > 100 ){
         wizardDialog = allMyData.base.invalid;
+              //change to sad 
+        wizard.mouth.x1 = wizard.sadMouth.x1;
+        wizard.mouth.y1 = wizard.sadMouth.y1;
+        wizard.mouth.x2 = wizard.sadMouth.x2;
+        wizard.mouth.y2 = wizard.sadMouth.y2;
+        wizard.mouth.x3 = wizard.sadMouth.x3;
+        wizard.mouth.y3 = wizard.sadMouth.y3;
     }
     else if(guesses[guesses.length -1]  > theRandomNumber){
         wizardDialog = allMyData.base.tooHigh + guesses[guesses.length -1] + ".";
+              //change to happy
+        wizard.mouth.x1 = wizard.happyMouth.x1;
+        wizard.mouth.y1 = wizard.happyMouth.y1;
+        wizard.mouth.x2 = wizard.happyMouth.x2;
+        wizard.mouth.y2 = wizard.happyMouth.y2;
+        wizard.mouth.x3 = wizard.happyMouth.x3;
+        wizard.mouth.y3 = wizard.happyMouth.y3;
     }
     else{
         wizardDialog = allMyData.base.tooLow + guesses[guesses.length -1]  + ".";
+        //change to happy
+        wizard.mouth.x1 = wizard.happyMouth.x1;
+        wizard.mouth.y1 = wizard.happyMouth.y1;
+        wizard.mouth.x2 = wizard.happyMouth.x2;
+        wizard.mouth.y2 = wizard.happyMouth.y2;
+        wizard.mouth.x3 = wizard.happyMouth.x3;
+        wizard.mouth.y3 = wizard.happyMouth.y3;
     }
 
 

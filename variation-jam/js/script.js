@@ -33,8 +33,8 @@ function draw() {
         case "base":
             baseDraw();
             break
-        case "green-variation":
-            greenDraw();
+        case "catch-variation":
+            catchDraw();
             break;
         case "reverse-variation":
             reverseDraw();
@@ -57,8 +57,8 @@ function mousePressed() {
         case "base":
             baseMousePressed();
             break
-        case "green-variation":
-            greenMousePressed();
+        case "catch-variation":
+            catchMousePressed();
             break;
         case "reverse-variation":
             reverseMousePressed();
@@ -81,8 +81,8 @@ function keyPressed(event) {
         case "base":
             baseKeyPressed(event);
             break
-        case "green-variation":
-            greenKeyPressed(event);
+        case "catch-variation":
+            catchKeyPressed(event);
             break;
         case "reverse-variation":
             reverseKeyPressed(event);

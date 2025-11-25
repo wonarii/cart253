@@ -6,7 +6,7 @@
 
 const menuText = `
 (B) Base Game
-(G) Green variation
+(C) Catch variation
 (R) Reverse variation`
 
 /**
@@ -33,9 +33,9 @@ function menuKeyPressed(event) {
             baseSetup();
             break;
 
-        case 71:
-            state = "green-variation";
-            greenSetup();
+        case 67://c
+            state = "catch-variation";
+            catchSetup();
             break;
 
         case 82://R
