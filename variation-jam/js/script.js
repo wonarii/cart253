@@ -8,6 +8,9 @@
 
 let state = "menu";
 
+
+let allMyData;
+
 /**
  * Create the canvas
 */
@@ -15,7 +18,7 @@ async function setup() {
     createCanvas(500, 500);
     fonts.bagel = await loadFont("./assets/BagelFatOne-Regular.ttf");
     fonts.montserrat = await loadFont("./assets/Montserrat-VariableFont_wght.ttf");
-
+    allMyData = await loadJSON("./assets/data/numberGame.json");
 }
 
 

@@ -1,0 +1,12 @@
+{
+    "description": "All the dialog lines for the wizard in the Number Guessing Game.",
+    "base":{
+        "instructions": "I'm thinking of a number between 1 and 100... Try and guess it!",
+        "tooLow": "Try again. My number is higher than ",
+        "tooHigh": "Nope! My number is lower than ",
+        "invalid": "... It needs to be a number between 1 and 100!"
+
+    }
+
+
+}

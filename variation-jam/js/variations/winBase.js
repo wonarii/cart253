@@ -66,7 +66,7 @@ function drawPlayAgainButton(){
         fill(colours.backgroundColour);
     }
     textSize(24);
-    text("PLAY AGAIN", width/2,height/2+20);
+    text("PLAY AGAIN", width/2,height/2+25);
     pop();
 
 }
@@ -99,7 +99,7 @@ function drawMainMenuButton(){
         fill(colours.backgroundColour);
     }
     textSize(24);
-    text("MAIN MENU", width/2,height/7*4.5+20);
+    text("MAIN MENU", width/2,height/7*4.5+25);
     pop();
 
 }

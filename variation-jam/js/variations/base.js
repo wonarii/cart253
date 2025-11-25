@@ -35,6 +35,10 @@ let input;
 //array of previous guesses
 let guesses;
 
+//current thing the wizard is saying
+//default is set to the instructions!
+let wizardDialog;
+
 /**
  * This will be called just before the red variation starts
  */
@@ -58,6 +62,9 @@ function baseSetup() {
     console.log(theRandomNumber);
     //empty array to store guesses
     guesses = [];
+
+    //wizard will say the instructions
+    wizardDialog = allMyData.base.instructions;
 }
 
 /**
@@ -68,7 +75,7 @@ function baseDraw() {
     drawQuestionMark();
     drawGuessButton();
     drawGuesses();
-    //drawWizardSpeech();
+    drawWizardSpeech();
     drawWizard();
 
 }
@@ -115,7 +122,7 @@ function drawGuessButton(){
         fill(colours.backgroundColour);
     }
     textSize(24);
-    text("GUESS", width/2+uiOffset,height/5*3+20);
+    text("GUESS", width/2+uiOffset,height/5*3+25);
     pop();
 
     
@@ -156,14 +163,14 @@ function drawWizard(){
     push();
     noStroke();
     fill(colours.purple);
-    ellipse(90, 500, 140, 300);
+    ellipse(90 + uiOffset, 500, 140, 300);
     pop();
 
     //body cut
     push();
     noStroke();
     fill(colours.backgroundColour);
-    rect(0,445, 300, 500);
+    rect(0 + uiOffset,445, 300, 500);
     pop();
 
     //hat
@@ -171,9 +178,9 @@ function drawWizard(){
     noStroke();
     fill(colours.purple);
     //hat point
-    triangle(30, 360, 135, 280, 20, 220);
+    triangle(30 + uiOffset, 360, 135 + uiOffset, 280, 20 + uiOffset, 220);
     //hat brim
-    translate(80, 310);
+    translate(80+ uiOffset, 310);
     rotate(2.6);
     ellipse(0, 0, 170, 70);
     pop();
@@ -182,7 +189,7 @@ function drawWizard(){
     push();
     noStroke();
     fill(colours.lilac);
-    translate(80, 340);
+    translate(80+ uiOffset, 340);
     rotate(2.6);
     //using rects to get rounded corners
     rect(0,0, 40, 40, 5);
@@ -192,7 +199,7 @@ function drawWizard(){
     push();
     noStroke();
     fill(colours.darkerLilac);
-    translate(120, 300);
+    translate(120+ uiOffset, 300);
     rotate(2.4);
     //using rects to get rounded corners
     rect(0,0, 40, 40, 5);
@@ -202,23 +209,23 @@ function drawWizard(){
     push();
     noStroke();
     fill(colours.lilac);
-    circle(90, 340, 100);
+    circle(90+ uiOffset, 340, 100);
     pop();
 
     //eyes
     push();
     noStroke();
     fill(colours.white);
-    ellipse(70, 340, 34, 44);
-    ellipse(120, 320, 30, 40);
+    ellipse(70+ uiOffset, 340, 34, 44);
+    ellipse(120+ uiOffset, 320, 30, 40);
     pop();
 
     //pupils
     push();
     noStroke();
     fill(colours.backgroundColour);
-    ellipse(70, 340, 28, 38);
-    ellipse(120, 320, 24, 34);
+    ellipse(70+ uiOffset, 340, 28, 38);
+    ellipse(120+ uiOffset, 320, 24, 34);
     pop();
 
     //mouth
@@ -226,7 +233,7 @@ function drawWizard(){
     noStroke();
     fill(colours.backgroundColour);
     //happy
-    triangle(90, 350, 110, 340, 115, 360);
+    triangle(90+ uiOffset, 350, 110+ uiOffset, 340, 115+ uiOffset, 360);
     //upset
     //triangle(90, 365, 100, 340, 115, 360);
     pop();
@@ -234,6 +241,33 @@ function drawWizard(){
 
 }
 
+
+function drawWizardSpeech(){
+    
+    //speech bubble
+    push();
+    fill(colours.white);
+    noStroke();
+    rect(20+ uiOffset,30,150,170, 20);
+    pop();
+
+    //speechbubble tail
+     push();
+    fill(colours.white);
+    noStroke();
+    triangle(100+ uiOffset, 190, 130+ uiOffset, 190, 100+ uiOffset, 220);
+    pop();
+    //text
+    push();
+    fill(colours.backgroundColour);
+    noStroke();
+    textFont(fonts.montserrat);
+    textSize(14);
+    textAlign(LEFT, CENTER);
+    text(wizardDialog, 32+ uiOffset, 42, 140, 160);
+    pop();
+
+}
 /**
  * This will be called whenever a key is pressed while the red variation is active
  */
@@ -272,6 +306,19 @@ function verifyGuess(){
 function incorrectGuess(){
     //add incorrect guess to the array of guesses
     guesses.push(" "+input.value());
+
+  //change wizard dialog
+    if(guesses[guesses.length -1] < 1 || guesses[guesses.length -1] > 100 ){
+        wizardDialog = allMyData.base.invalid;
+    }
+    else if(guesses[guesses.length -1]  > theRandomNumber){
+        wizardDialog = allMyData.base.tooHigh + guesses[guesses.length -1] + ".";
+    }
+    else{
+        wizardDialog = allMyData.base.tooLow + guesses[guesses.length -1]  + ".";
+    }
+
+
     //reset the input field
     input.value("");
     //screen flashes red
@@ -287,6 +334,8 @@ function incorrectGuess(){
     setTimeout(shakeScreenL, 125);
     setTimeout(shakeScreenR, 150);
     setTimeout(shakeScreenL, 175);
+
+  
 }
 
 function resetBackground(){
