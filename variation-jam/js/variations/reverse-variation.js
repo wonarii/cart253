@@ -84,6 +84,14 @@ function reverseMousePressed() {
 
 function guessNumber(){
     let yourGuess = input.value();
+    //check if its a number
+    if(Number.isInteger(yourGuess)){
     wizardDialog = allMyData.reverse.guess + yourGuess + "?";
     //give user option to say yes/no
+    //future plans for later
+    }
+    else{
+        //not a  number
+         wizardDialog = allMyData.reverse.notANumber;
+    }
 }

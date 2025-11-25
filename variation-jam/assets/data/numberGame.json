@@ -10,7 +10,11 @@
     },
     "reverse":{
         "instructions": "Enter a number between 1 and 100 and I will try to guess it!",
-        "guess": "Is your number... "
+        "guess": "Is your number... ",
+        "notANumber": "Are you trying to trick me? I don't think you entered a number between 1 and 100..."
+    },
+    "catch":{
+        "instructions": "I'm thinking of a number between 1 and 100... Catch your guess!"
     }
 
 
