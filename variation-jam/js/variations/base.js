@@ -39,6 +39,33 @@ let guesses;
 //default is set to the instructions!
 let wizardDialog;
 
+const wizard = {
+    mouth:{
+        x1:90,
+        y1:350,
+        x2:110,
+        y2:340,
+        x3:115,
+        y3:360
+    },
+    happyMouth:{
+        x1:90,
+        y1:350,
+        x2:110,
+        y2:340,
+        x3:115,
+        y3:360
+    },
+    sadMouth:{
+         x1:90,
+        y1:365,
+        x2:100,
+        y2:340,
+        x3:115,
+        y3:360
+    }
+}
+
 /**
  * This will be called just before the red variation starts
  */
@@ -233,7 +260,7 @@ function drawWizard(){
     noStroke();
     fill(colours.backgroundColour);
     //happy
-    triangle(90+ uiOffset, 350, 110+ uiOffset, 340, 115+ uiOffset, 360);
+    triangle(wizard.mouth.x1+ uiOffset, wizard.mouth.y1, wizard.mouth.x2+ uiOffset,wizard.mouth.y2, wizard.mouth.x3+ uiOffset, wizard.mouth.y3);
     //upset
     //triangle(90, 365, 100, 340, 115, 360);
     pop();
@@ -308,7 +335,10 @@ function incorrectGuess(){
     guesses.push(" "+input.value());
 
   //change wizard dialog
-    if(guesses[guesses.length -1] < 1 || guesses[guesses.length -1] > 100 ){
+    if(!Number.isInteger(int(guesses[guesses.length -1]))){
+        wizardDialog = allMyData.base.notANumber;
+    }
+    else if(guesses[guesses.length -1] < 1 || guesses[guesses.length -1] > 100 ){
         wizardDialog = allMyData.base.invalid;
     }
     else if(guesses[guesses.length -1]  > theRandomNumber){

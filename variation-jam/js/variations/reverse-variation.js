@@ -86,5 +86,4 @@ function guessNumber(){
     let yourGuess = input.value();
     wizardDialog = allMyData.reverse.guess + yourGuess + "?";
     //give user option to say yes/no
-
 }
