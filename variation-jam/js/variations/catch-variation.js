@@ -14,6 +14,8 @@ const bowl = {
 
 
 
+let numbers = [];
+
 /**
  * This will be called just before the catch variation starts
  */
@@ -33,15 +35,18 @@ function catchSetup() {
  * This will be called every frame when the catch variation is active
  */
 function catchDraw() {
-     background(backgroundColour);
-     drawBowl();
+    background(backgroundColour);
+    moveBowl();
+    drawBowl();
     drawGuessBox();
     drawGuessButtonCatch();
     drawGuesses();
     drawWizardSpeech();
     drawWizard();
-    //drawNumbers();
-    moveBowl();
+    drawNumbers();
+    moveNumbers();
+    //spawnNumber();
+    
     
 }
 
@@ -126,6 +131,36 @@ function drawBowl(){
     pop();
 }
 
+function moveNumbers(){
+    //move down
+    for(let number of numbers){
+        number.y += number.speed;
+    }
+}
+
+function drawNumbers(){
+    for(let number of numbers){
+        push();
+        noStroke();
+        fill(colours.white);
+        textAlign(CENTER, CENTER);
+        text(number.value, number.x, number.y);
+        pop();
+    }
+}
+
+function spawnNumber(){
+    //generate random number
+    let number = {
+    x:random(180, 360),
+    y:0,
+    speed: random(0.3, 1.8),
+    value:Math.floor(Math.random()*100)+1
+}
+
+return number;
+}
+
 /**
  * This will be called whenever a key is pressed while the catch variation is active
  */
@@ -139,5 +174,10 @@ function catchKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the catch variation is active
  */
 function catchMousePressed() {
+//checks if user clicked on the guess button
+    if(mouseX> width/8*6 && mouseX<width/8*6 + 110 && mouseY>height/5*4 && mouseY <height/5*4 +40){
+    //verifies the user's guess
+        //verifyCaughtGuess();
+    }
 
 }
