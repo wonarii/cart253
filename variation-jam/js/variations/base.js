@@ -196,7 +196,7 @@ function drawWizard(){
     //body cut
     push();
     noStroke();
-    fill(colours.backgroundColour);
+    fill(backgroundColour);
     rect(0 + uiOffset,445, 300, 500);
     pop();
 
