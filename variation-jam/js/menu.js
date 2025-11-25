@@ -7,7 +7,7 @@
 const menuText = `
 (B) Base Game
 (G) Green variation
-(2) Blue variation`
+(R) Reverse variation`
 
 /**
  * Display the main menu
@@ -38,9 +38,9 @@ function menuKeyPressed(event) {
             greenSetup();
             break;
 
-        case 12://random value not good
-            state = "blue-variation";
-            blueSetup();
+        case 82://R
+            state = "reverse-variation";
+            reverseSetup();
             break;
     }
 }
