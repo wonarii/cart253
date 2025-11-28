@@ -29,6 +29,11 @@ function catchSetup() {
 
     //wizard will say the instructions
     wizardDialog = allMyData.catch.instructions;
+
+    //we'll spawn 3 numbers to start us off
+    for(let i =0; i < 3; i++){
+    numbers.push(spawnNumber());
+    }
 }
 
 /**
@@ -38,14 +43,16 @@ function catchDraw() {
     background(backgroundColour);
     moveBowl();
     drawBowl();
+    drawBowlBox();
+    drawNumbers();
+    moveNumbers();
+    checkBowlCollision();
     drawGuessBox();
     drawGuessButtonCatch();
     drawGuesses();
     drawWizardSpeech();
     drawWizard();
-    drawNumbers();
-    moveNumbers();
-    //spawnNumber();
+    
     
     
 }
@@ -122,7 +129,11 @@ function drawBowl(){
     ellipse(bowl.x, bowl.y, 60, 50);
     pop();
 
-    //box to cut ellipse
+   
+}
+
+function drawBowlBox(){
+ //box to cut ellipse
     push();
     fill(backgroundColour);
     noStroke();
@@ -131,11 +142,32 @@ function drawBowl(){
     pop();
 }
 
+function checkBowlCollision(){
+    //go through each number in array and check if it is iin the bowl
+    for(number in numbers){
+        //if number is in bowl
+        if(number.x < bowl.x+30 && number.x > bowl.x -30 && number.y > bowl.y && number.y < bowl.y+25){
+            //set the caught number to the one in the bowl
+            numberCaught = number.value;
+            //remove number from existence and respawn a new one instead
+            number = spawnNumber();
+        }
+    }
+}
+
 function moveNumbers(){
     //move down
-    for(let number of numbers){
-        number.y += number.speed;
+    for(let i =0; i < numbers.length; i++){
+        numbers[i].y += numbers[i].speed;
+        //if number leaves the canvas
+        if(numbers[i].y > height){
+            //respawn a new one to replace it
+            //y will be set back to 0
+            numbers[i] = spawnNumber();
+        }
     }
+
+    
 }
 
 function drawNumbers(){
@@ -144,6 +176,7 @@ function drawNumbers(){
         noStroke();
         fill(colours.white);
         textAlign(CENTER, CENTER);
+        textSize(16);
         text(number.value, number.x, number.y);
         pop();
     }
@@ -154,7 +187,7 @@ function spawnNumber(){
     let number = {
     x:random(180, 360),
     y:0,
-    speed: random(0.3, 1.8),
+    speed: random(1, 4),
     value:Math.floor(Math.random()*100)+1
 }
 
