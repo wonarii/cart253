@@ -324,6 +324,7 @@ function baseMousePressed() {
 
 function verifyGuess(){
     if(input.value() == theRandomNumber){
+        sounds.win.play();
         //correct guess
         winner = "You";
         state = "winBase";
@@ -338,6 +339,8 @@ function verifyGuess(){
 }
 
 function incorrectGuess(guess){
+
+    sounds.incorrect.play();
     //add incorrect guess to the array of guesses
     guesses.push(" "+ guess);
 

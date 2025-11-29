@@ -148,6 +148,8 @@ function checkBowlCollision(){
     for(let i =0; i < numbers.length; i++){
         //if number is in bowl
         if(numbers[i].x < bowl.x+30 && numbers[i].x > bowl.x -30 && numbers[i].y > bowl.y && numbers[i].y < bowl.y+25){
+            sounds.catch.play();
+            
             //set the caught number to the one in the bowl
             numberCaught = numbers[i].value;
             //remove number from existence and respawn a new one instead
@@ -218,8 +220,9 @@ function catchMousePressed() {
 
 function verifyCaughtGuess(){
      if(numberCaught == theRandomNumber){
+        sounds.win.play();
         //correct guess
-        winner = "You";
+        winner = "You catch";
         state = "winBase";
         winBaseSetup();
     }

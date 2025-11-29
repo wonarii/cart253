@@ -161,17 +161,20 @@ function reverseMousePressed() {
     if(reverseGameState == "start"){
  //checks if user clicked on the submit button
     if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
-    //the wizard will now guess your number
+    sounds.buttonClick.play();
+        //the wizard will now guess your number
         guessNumber();
     }
     }   
     else{
 //no button
     if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*4- 20 && mouseY <height/5*4 +30){
+        sounds.buttonClick.play();
         chooseNo();
     }
     //YES button
     else if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
+        sounds.win.play();
         wizardWin();
     }
     }

@@ -26,7 +26,7 @@ function drawCongrats(winner){
     textAlign(CENTER, CENTER);
     fill(colours.yellow);
     textSize(72);
-    if(winner == "You"){
+    if(winner == "You" || winner == "You catch"){
     text("You win!", width/2,height/4);
     }
     else{
@@ -39,7 +39,7 @@ function drawCongrats(winner){
     textAlign(CENTER, CENTER);
     fill(colours.yellow);
     textSize(24);
-    if(winner == "You"){
+    if(winner == "You" || winner == "You catch"){
     text("It took you " + (guesses.length+1) + " guesses!", width/2,height/4 + 80);
     }
     else{
@@ -130,12 +130,25 @@ function winBaseKeyPressed(event) {
 function winBaseMousePressed() {
     //play again button
     if(mouseX> width/3 && mouseX<width/3 + 170 && mouseY>height/2 && mouseY <height/2 +50){
-    state = "base";
-    baseSetup();
+    sounds.buttonClick.play();
+    if (winner == "You"){
+            state = "base";
+        baseSetup();
+    }
+    else if( winner == "You catch"){
+        state = "catch-variation";
+        catchSetup();
+    }
+    else{
+        state = "reverse-variation";
+        reverseSetup();
+    }
+
     }
     //main menu button
     if(mouseX> width/3 && mouseX<width/3 + 170 && mouseY>height/7*4.5 && mouseY <height/7*4.5 +50){
-    state = "menu";
+    sounds.buttonClick.play();
+        state = "menu";
     //there's no setup for menu
     }
 }

@@ -13,13 +13,18 @@ const menuText = `
  * Display the main menu
  */
 function menuDraw() {
-    background(0);
+
+    background(backgroundColour);
+
+drawWizard();
+
 
     push();
     fill(255);
-    textSize(32);
+    textSize(30);
+    textFont(fonts.montserrat);
     textAlign(CENTER, CENTER);
-    text(menuText, width / 2, height / 2);
+    text(menuText, width / 2, height / 3);
     pop();
 }
 
@@ -27,6 +32,8 @@ function menuDraw() {
  * Listen to the keyboard
  */
 function menuKeyPressed(event) {
+
+    sounds.buttonClick.play();
     switch (event.keyCode) {
         case 66:
             state = "base";
