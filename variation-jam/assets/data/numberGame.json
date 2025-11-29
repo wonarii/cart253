@@ -20,6 +20,9 @@
     },
     "catch":{
         "instructions": "I'm thinking of a number between 1 and 100... Catch your guess!"
+    },
+    "menu":{
+        "description":"Hello, I'm Sumi the wizard cat! How about playing a game with me?"
     }
 
 

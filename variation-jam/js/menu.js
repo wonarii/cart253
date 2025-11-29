@@ -14,10 +14,22 @@ const menuText = `
  */
 function menuDraw() {
 
+    wizardDialog = allMyData.menu.description;
+
     background(backgroundColour);
 
 drawWizard();
 
+drawWizardSpeechMenu();
+
+//title
+push();
+    textFont(fonts.bagel);
+    textAlign(CENTER, CENTER);
+    fill(colours.yellow);
+    textSize(48);
+    text("Guess that number!", width/2+uiOffset,height/6);
+    pop();
 
     push();
     fill(255);
@@ -26,6 +38,33 @@ drawWizard();
     textAlign(CENTER, CENTER);
     text(menuText, width / 2, height / 3);
     pop();
+}
+
+
+function drawWizardSpeechMenu(){
+//speech bubble
+    push();
+    fill(colours.white);
+    noStroke();
+    rect(200,300,220,130, 20);
+    pop();
+
+    //speechbubble tail
+     push();
+    fill(colours.white);
+    noStroke();
+    triangle(200, 370, 200, 340, 180, 360);
+    pop();
+    //text
+    push();
+    fill(colours.backgroundColour);
+    noStroke();
+    textFont(fonts.montserrat);
+    textSize(16);
+    textAlign(LEFT, CENTER);
+    text(wizardDialog, 220,290,200,150);
+    pop();
+
 }
 
 /**
