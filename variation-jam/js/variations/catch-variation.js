@@ -30,8 +30,8 @@ function catchSetup() {
     //wizard will say the instructions
     wizardDialog = allMyData.catch.instructions;
 
-    //we'll spawn 3 numbers to start us off
-    for(let i =0; i < 3; i++){
+    //we'll spawn 4 numbers to start us off
+    for(let i =0; i < 4; i++){
     numbers.push(spawnNumber());
     }
 }
@@ -144,13 +144,13 @@ function drawBowlBox(){
 
 function checkBowlCollision(){
     //go through each number in array and check if it is iin the bowl
-    for(number in numbers){
+    for(let i =0; i < numbers.length; i++){
         //if number is in bowl
-        if(number.x < bowl.x+30 && number.x > bowl.x -30 && number.y > bowl.y && number.y < bowl.y+25){
+        if(numbers[i].x < bowl.x+30 && numbers[i].x > bowl.x -30 && numbers[i].y > bowl.y && numbers[i].y < bowl.y+25){
             //set the caught number to the one in the bowl
-            numberCaught = number.value;
+            numberCaught = numbers[i].value;
             //remove number from existence and respawn a new one instead
-            number = spawnNumber();
+            numbers[[i]] = spawnNumber();
         }
     }
 }
@@ -210,7 +210,19 @@ function catchMousePressed() {
 //checks if user clicked on the guess button
     if(mouseX> width/8*6 && mouseX<width/8*6 + 110 && mouseY>height/5*4 && mouseY <height/5*4 +40){
     //verifies the user's guess
-        //verifyCaughtGuess();
+        verifyCaughtGuess();
     }
 
+}
+
+function verifyCaughtGuess(){
+     if(numberCaught == theRandomNumber){
+        //correct guess
+        state = "winBase";
+        winBaseSetup();
+    }
+    else{
+        //incorrect guess
+        incorrectGuess(numberCaught);
+    }
 }

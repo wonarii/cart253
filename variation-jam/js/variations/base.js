@@ -326,13 +326,15 @@ function verifyGuess(){
     }
     else{
         //incorrect guess
-        incorrectGuess();
+        incorrectGuess(input.value());
+         //reset the input field
+        input.value("");
     }
 }
 
-function incorrectGuess(){
+function incorrectGuess(guess){
     //add incorrect guess to the array of guesses
-    guesses.push(" "+input.value());
+    guesses.push(" "+ guess);
 
   //change wizard dialog
     if(!Number.isInteger(int(guesses[guesses.length -1]))){
@@ -377,8 +379,7 @@ function incorrectGuess(){
     }
 
 
-    //reset the input field
-    input.value("");
+   
     //screen flashes red
     backgroundColour = colours.red;
     //resets the screen to regular colour after .2 seconds
@@ -392,8 +393,6 @@ function incorrectGuess(){
     setTimeout(shakeScreenL, 125);
     setTimeout(shakeScreenR, 150);
     setTimeout(shakeScreenL, 175);
-
-  
 }
 
 function resetBackground(){
