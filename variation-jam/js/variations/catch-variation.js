@@ -30,6 +30,10 @@ function catchSetup() {
     //wizard will say the instructions
     wizardDialog = allMyData.catch.instructions;
 
+    //reset numberCaught
+    numberCaught = "";
+    //empty out numbers
+    numbers = [];
     //we'll spawn 4 numbers to start us off
     for(let i =0; i < 4; i++){
     numbers.push(spawnNumber());
@@ -215,6 +219,7 @@ function catchMousePressed() {
 function verifyCaughtGuess(){
      if(numberCaught == theRandomNumber){
         //correct guess
+        winner = "You";
         state = "winBase";
         winBaseSetup();
     }

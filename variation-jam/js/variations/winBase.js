@@ -15,18 +15,23 @@ function winBaseSetup() {
  */
 function winBaseDraw() {
     background(colours.backgroundColour);
-    drawCongrats();
+    drawCongrats(winner);
     drawPlayAgainButton();
     drawMainMenuButton();
 }
 
-function drawCongrats(){
+function drawCongrats(winner){
     push();
     textFont(fonts.bagel);
     textAlign(CENTER, CENTER);
     fill(colours.yellow);
     textSize(72);
+    if(winner == "You"){
     text("You win!", width/2,height/4);
+    }
+    else{
+    text("Wizard wins!", width/2,height/4); 
+    }
     pop();
 
     push();
@@ -34,7 +39,12 @@ function drawCongrats(){
     textAlign(CENTER, CENTER);
     fill(colours.yellow);
     textSize(24);
+    if(winner == "You"){
     text("It took you " + (guesses.length+1) + " guesses!", width/2,height/4 + 80);
+    }
+    else{
+    text("It took her a single guess!", width/2,height/4 + 80);
+    }
     pop();
 }
 

@@ -5,6 +5,8 @@
 
 let theRandomNumber;
 
+let winner = "";
+
 //all my fonts
 const fonts = {
     bagel: undefined,
@@ -323,7 +325,7 @@ function baseMousePressed() {
 function verifyGuess(){
     if(input.value() == theRandomNumber){
         //correct guess
-        console.log("yay!");
+        winner = "You";
         state = "winBase";
         winBaseSetup();
     }

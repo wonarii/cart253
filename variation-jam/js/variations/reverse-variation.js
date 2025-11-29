@@ -13,6 +13,10 @@ let noCount = 0;
  * This will be called just before the reverse variation starts
  */
 function reverseSetup() {
+    //setup the game state
+    reverseGameState = "start";
+    //setup the noCount
+    noCount = 0;
     //sets up the input for the user just like in base game
     input = createInput('');
     //https://www.w3schools.com/howto/howto_js_get_current_window.asp
@@ -30,7 +34,7 @@ function reverseDraw() {
     if(reverseGameState == "submitted"){
         drawYesNo();
     }
-    else if(reverseGameState == "start"{
+    else if(reverseGameState == "start"){
     drawSubmitButton();
     }
     
@@ -168,7 +172,7 @@ function reverseMousePressed() {
     }
     //YES button
     else if(mouseX> width/2.7 && mouseX<width/2.7 + 130 && mouseY>height/5*3 && mouseY <height/5*3 +50){
-        chooseYes();
+        wizardWin();
     }
     }
  }
@@ -226,9 +230,12 @@ function chooseNo(){
     
 }
 
+
 //the wizard won!
 function wizardWin(){
-
+    winner = 'Sumi';
+     state = "winBase";
+    winBaseSetup();
 
 }
 
