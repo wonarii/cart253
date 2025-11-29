@@ -11,7 +11,12 @@
     "reverse":{
         "instructions": "Enter a number between 1 and 100 and I will try to guess it!",
         "guess": "Is your number... ",
-        "notANumber": "Are you trying to trick me? I don't think you entered a number between 1 and 100..."
+        "notANumber": "Are you trying to trick me? I don't think you entered a number between 1 and 100...",
+        "outOfBounds": "Something tells me the number you entered isn't between 1 and 100...",
+        "choseNo":"No? ...but... Are you sure? Why don't you try to input your number again...",
+        "no2Times":"...hmm maybe reread before submitting your number again, my wizard powers aren't wrong very often...",
+        "no3Times": "You think I'm cheating?? I would never. I'm just a very talented wizard. Try with another number.",
+        "no4Times": "No I'm sure this time. I win!"
     },
     "catch":{
         "instructions": "I'm thinking of a number between 1 and 100... Catch your guess!"

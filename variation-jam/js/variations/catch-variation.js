@@ -52,9 +52,6 @@ function catchDraw() {
     drawGuesses();
     drawWizardSpeech();
     drawWizard();
-    
-    
-    
 }
 
 

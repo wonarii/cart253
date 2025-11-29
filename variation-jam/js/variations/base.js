@@ -18,9 +18,12 @@ const colours = {
     yellow: "#fdca32ff",
     darkerYellow: "#d48318ff",
     red:"#932424ff",
+    lighterRed:"#c76060ff",
     purple:"#95148eff",
     lilac:"#c174d1ff",
     darkerLilac:"#a44eb5ff",
+    green: "#b6e552ff",
+    darkerGreen: "#73a30bff",
 }
 
 //specifically the current bg colour
